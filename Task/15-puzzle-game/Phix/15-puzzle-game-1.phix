@@ -1,0 +1,31 @@
+constant ESC=27, UP=328, LEFT=331, RIGHT=333, DOWN=336
+sequence board = tagset(15)&0, solve = board
+integer pos = 16
+
+procedure print_board()
+    for i=1 to length(board) do
+        puts(1,iff(i=pos?"   ":sprintf("%3d",{board[i]})))
+        if mod(i,4)=0 then puts(1,"\n") end if
+    end for
+    puts(1,"\n")
+end procedure
+
+procedure move(integer d)
+    integer new_pos = pos+{+4,+1,-1,-4}[d]
+    if new_pos>=1 and new_pos<=16
+    and (mod(pos,4)=mod(new_pos,4) -- same col, or row:
+     or floor((pos-1)/4)=floor((new_pos-1)/4)) then
+        {board[pos],board[new_pos]} = {board[new_pos],0}
+        pos = new_pos
+    end if
+end procedure
+
+for i=1 to 5 do move(rand(4)) end for
+while 1 do
+    print_board()
+    if board=solve then exit end if
+    integer c = find(wait_key(),{ESC,UP,LEFT,RIGHT,DOWN})-1
+    if c=0 then exit end if
+    move(c)
+end while
+puts(1,"solved!\n")

@@ -1,0 +1,86 @@
+#!/usr/bin/env python3
+"""
+OpenCog Language Evaluator
+
+Evaluates a specific language's AI capabilities in detail.
+"""
+
+import sys
+import json
+from pathlib import Path
+
+# Add lib directory to path
+sys.path.insert(0, str(Path(__file__).parent.parent / "lib"))
+
+from opencog_analyzer import OpenCogAnalyzer
+
+
+def main():
+    if len(sys.argv) < 2:
+        print("Usage: opencog-eval-lang <language-name>")
+        print()
+        print("Example: opencog-eval-lang Python")
+        sys.exit(1)
+    
+    language = sys.argv[1]
+    
+    # Get repository root
+    script_dir = Path(__file__).parent.parent.parent
+    analyzer = OpenCogAnalyzer(str(script_dir))
+    
+    # Check if language exists
+    if language not in analyzer.get_all_languages():
+        print(f"Error: Language '{language}' not found in repository")
+        print()
+        print("Use 'ls Lang/' to see available languages")
+        sys.exit(1)
+    
+    print("=" * 80)
+    print(f"OpenCog Language Evaluation: {language}")
+    print("=" * 80)
+    print()
+    
+    # Get detailed analysis
+    analysis = analyzer.analyze_language(language)
+    profile = analyzer.generate_language_profile(language)
+    
+    print(f"Language: {language}")
+    print(f"Total Tasks Implemented: {profile['total_tasks_implemented']}")
+    print(f"AI-Related Tasks: {profile['ai_tasks_implemented']}")
+    print(f"Category Coverage: {profile['category_coverage']:.1f}%")
+    print(f"Categories Covered: {profile['categories_covered']} / {profile['total_categories']}")
+    print()
+    
+    print("AI Category Breakdown:")
+    print("-" * 80)
+    print(f"{'Category':<30} {'Tasks Implemented':<20}")
+    print("-" * 80)
+    
+    for category, count in sorted(profile['detailed_coverage'].items(), 
+                                   key=lambda x: x[1], reverse=True):
+        print(f"{category:<30} {count:<20}")
+    
+    if not profile['detailed_coverage']:
+        print("  No AI-categorized tasks found")
+    
+    print()
+    print("=" * 80)
+    
+    # Show some example tasks per category
+    if analysis['category_breakdown']:
+        print()
+        print("Example Tasks by Category:")
+        print("-" * 80)
+        
+        for category, tasks in sorted(analysis['category_breakdown'].items()):
+            print(f"\n{category}:")
+            for task in sorted(tasks)[:5]:  # Show first 5
+                print(f"  - {task}")
+            if len(tasks) > 5:
+                print(f"  ... and {len(tasks) - 5} more")
+    
+    print()
+
+
+if __name__ == '__main__':
+    main()

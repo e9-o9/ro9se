@@ -1,0 +1,23 @@
+local fn Factors( n as int ) as CFArrayRef
+  CFMutableArrayRef mutArray = fn MutableArrayNew
+
+  for int factor = 1 to sqr(n)
+    if ( n mod factor == 0 )
+      MutableArrayAddObject( mutArray, @(factor) )
+      if ( n/factor != factor )
+        MutableArrayAddObject( mutArray, @(n/factor) )
+      end if
+    end if
+  next
+  CFArrayRef result = fn ArraySortedArrayUsingSelector( mutArray, @"compare:" )
+end fn = result
+
+mda (0) = {1,2,3,4,5,6,7,8,9,10,20,40,60,80,100,200,300,400,512,677,768,966,1000,1024,2048,4096}
+
+int i, n
+for i = 0 to mda_count -1
+  n = mda_integer(i)
+  print fn StringWithFormat( @"Factors of %4d: [%@]", n, fn ArrayComponentsJoinedByString( fn Factors( n ), @", " ) )
+next
+
+HandleEvents

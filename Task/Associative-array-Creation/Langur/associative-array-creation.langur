@@ -1,0 +1,12 @@
+var h = {1: "abc", "1": 789}
+
+# may assign with existing or non-existing hash key (if hash is mutable)
+h[7] = 49
+
+writeln h[1]
+writeln h[7]
+writeln h["1"]
+
+# using an alternate value in case of invalid index; prevents exception
+writeln h[1; 42]
+writeln h[2; 42]

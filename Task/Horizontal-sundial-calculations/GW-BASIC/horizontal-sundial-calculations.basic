@@ -1,0 +1,20 @@
+10 ' Horizontal sundial calculations
+20 INPUT "Enter latitude       => "; LAT
+30 INPUT "Enter longitude      => "; LNG
+40 INPUT "Enter legal meridian => "; REF
+50 PRINT
+60 LET PI = 4 * ATN(1)
+70 LET SLAT = SIN(LAT * PI / 180)
+80 PRINT "    sine of latitude:   "; USING "#.##^^^^"; SLAT
+90 PRINT "    diff longitude:     "; USING "####.###"; LNG - REF
+100 PRINT
+110 PRINT "Hour, sun hour angle, dial hour line angle from 6am to 6pm"
+120 FOR H% = -6 TO 6
+130  LET HRA = 15 * H%
+140  LET HRA = HRA - (LNG - REF) ' correct for longitude difference
+150  LET HLA = ATN(SLAT * TAN(HRA * PI / 180)) * 180 / PI
+160  PRINT "HR="; USING "+##"; H%;
+170  PRINT "; HRA="; USING "+###.###"; HRA;
+180  PRINT "; HLA="; USING "+###.###"; HLA
+190 NEXT H%
+200 END

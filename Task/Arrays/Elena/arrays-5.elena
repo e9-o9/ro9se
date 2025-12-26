@@ -1,0 +1,3 @@
+    system'Console.writeLine(array[0]);
+    system'Console.writeLine(stackAllocatedArray[1]);
+    system'Console.writeLine(dynamicArray[2]);

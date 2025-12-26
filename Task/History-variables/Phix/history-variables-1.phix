@@ -1,0 +1,13 @@
+without js -- (desktop/Phix only)
+sequence history = {}
+
+type hv(object o)
+    history = append(history,o)
+    return true
+end type
+
+hv test = 1
+test = 2
+test = 3
+?{"current",test}
+?{"history",history}

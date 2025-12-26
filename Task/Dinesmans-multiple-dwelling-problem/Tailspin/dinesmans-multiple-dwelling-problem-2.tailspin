@@ -1,0 +1,29 @@
+permutations templates
+  when <|=1> do [1] !
+  otherwise
+    n is $;
+    expand templates
+      p is $;
+      1..$n -> templates
+        k is $;
+        [$p(..$k - 1)..., $n, $p($k..)...] !
+      end !
+    end expand
+    $n - 1 -> # -> expand !
+end permutations
+
+names is ['Baker', 'Cooper', 'Fletcher', 'Miller', 'Smith'];
+
+5 -> permutations -> $names($)
+  -> if <|?($(.. as i; -> if <|='Baker'> -> $i)... matches <~|=5>)>
+  -> if <|?($(.. as i; -> if <|='Cooper'> -> $i)... matches <~|=1>)>
+  -> if <|?($(.. as i; -> if <|='Fletcher'> -> $i)... matches <~|=1|=5>)>
+  -> templates
+       miller is $(.. as i; -> if <|='Miller'> -> $i)...;
+       $ -> if <|?($(.. as i; -> if <|='Cooper'> -> $i)... matches <|..$miller>)> !
+     end
+  -> if <|?(($(.. as i; -> if <|='Smith'> -> $i)...) - ($(.. as i; -> if <|='Fletcher'> -> $i)...) matches <~|=1|=-1>)>
+  -> if <|?(($(.. as i; -> if <|='Cooper'> -> $i)...) - ($(.. as i; -> if <|='Fletcher'> -> $i)...) matches <~|=1|=-1>)>
+  -> $(.. as i; -> '$i;:$;$#10;')
+  -> $(..:-1)
+  -> '$...;$#10;' !

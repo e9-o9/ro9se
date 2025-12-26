@@ -1,0 +1,17 @@
+with javascript_semantics
+constant powers = sq_power(tagset(9),tagset(9))
+
+function munchausen(integer n)
+    integer n0 = n
+    atom total = 0
+    while n!=0 do
+        integer r = remainder(n,10)
+        if r then total += powers[r] end if
+        n = floor(n/10)
+    end while
+    return (total==n0)
+end function
+
+for m in tagset(5000) & 438579088 do
+    if munchausen(m) then ?m end if
+end for

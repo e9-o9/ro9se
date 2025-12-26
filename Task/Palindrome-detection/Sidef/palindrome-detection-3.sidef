@@ -1,0 +1,11 @@
+func palindrome(s) {
+    if (s.len <= 1) {
+        true
+    }
+    elsif (s.first != s.last) {
+        false
+    }
+    else {
+        __FUNC__(s.first(-1).last(-1))
+    }
+}

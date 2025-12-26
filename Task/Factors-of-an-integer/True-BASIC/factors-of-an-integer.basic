@@ -1,0 +1,16 @@
+SUB printfactors(n)
+    IF n < 1 THEN EXIT SUB
+    PRINT n; "=>";
+    FOR i = 1 TO n / 2
+        IF REMAINDER(n, i) = 0 THEN PRINT i;
+    NEXT i
+    PRINT n
+END SUB
+
+CALL printfactors(11)
+CALL printfactors(21)
+CALL printfactors(32)
+CALL printfactors(45)
+CALL printfactors(67)
+CALL printfactors(96)
+END

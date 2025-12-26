@@ -1,0 +1,32 @@
+function isNumber(string s)
+    return scanf(s,"%f")!={}
+-- Alt: isNumberString(object s) and
+--  return string(s) and scanf(s,"%f")!={}, or even
+--  return string(s) and scanf(substitute(trim(s),",",""),"%f")!={}
+end function
+
+constant tests = {"#a","#A","0xA","0(16)A","#FF","255","0",
+                  "0.","0.0","000.000","0e0","0e-2000"," ",
+                  ".14",".05","-5.2","0xf","ten","1B","#1B",
+                  " 12  ",trim(" 12  "),"1","0o16","0o18",
+                  "0b10101111_11110000_11110000_00110011",
+                  "1_000","50e","+123","+ 123","-0b10101",
+                  "NaN","+.345","12..34","12e3.4","0-2",
+                  "192.168.0.1","1.2e","1 2","12.34","",
+                  "beef","#beef","1,000,000","Inf","1/2",
+                  "1.5e+27","0x10.5","1."}
+
+sequence numeric = {},
+         notnumb = {}
+for i=1 to length(tests) do
+    string ti = tests[i]
+    if isNumber(ti) then
+        numeric = append(numeric,ti)
+    else
+        notnumb = append(notnumb,ti)
+    end if
+end for
+puts(1,"numeric: ")
+pp(numeric,{pp_Indent,9})
+puts(1,"\nnot numeric: ")
+pp(notnumb,{pp_Indent,13})

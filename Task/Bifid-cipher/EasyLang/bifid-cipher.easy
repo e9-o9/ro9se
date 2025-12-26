@@ -1,0 +1,62 @@
+proc prepare &s$ .
+   for e$ in strchars s$
+      h = strcode e$
+      if h >= 97
+         h -= 32
+      .
+      if h >= 65 and h <= 91
+         if h = 74
+            h = 73
+         .
+         r$ &= strchar h
+      .
+   .
+   swap s$ r$
+.
+func$ encr msg$ key$ .
+   prepare msg$
+   len h[] len msg$ * 2
+   for i to len msg$
+      c$ = substr msg$ i 1
+      j = strpos key$ c$ - 1
+      h[i] = j div 5
+      h[len msg$ + i] = j mod 5
+   .
+   for i = 1 step 2 to len h[] - 1
+      j = h[i] * 5 + h[i + 1] + 1
+      r$ &= substr key$ j 1
+   .
+   return r$
+.
+func$ decr msg$ key$ .
+   for i to len msg$
+      c$ = substr msg$ i 1
+      j = strpos key$ c$ - 1
+      h[] &= j div 5
+      h[] &= j mod 5
+   .
+   mid = len h[] div 2
+   for i = 1 to mid
+      j = h[i] * 5 + h[i + mid] + 1
+      r$ &= substr key$ j 1
+   .
+   return r$
+.
+key$ = "ABCDEFGHIKLMNOPQRSTUVWXYZ"
+h$ = encr "ATTACKATDAWN" key$
+print h$
+print decr h$ key$
+print ""
+#
+key$ = "BGWKZQPNDSIOAXEFCLUMTHYVR"
+h$ = encr "FLEEATONCE" key$
+print h$
+print decr h$ key$
+print ""
+h$ = encr "ATTACKATDAWN" key$
+print h$
+print decr h$ key$
+print ""
+h$ = encr "The invasion will start on the first of January" key$
+print h$
+print decr h$ key$

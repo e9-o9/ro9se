@@ -1,0 +1,78 @@
+{{language|V (Vlang)
+|exec=machine
+|gc=allowed
+|checking=static
+|safety=safe
+|strength=strong
+|site=https://vlang.io
+|hopl=no
+}}
+{{provides|Concurrency}}{{provides|File access}}{{provides|File system access}}{{provides|First class functions}}{{provides|Network access}}{{provides|Objects}}{{provides|Signal handling}}{{language programming paradigm|concurrent}}{{language programming paradigm|Generic}}{{language programming paradigm|Imperative}}
+<span style="font-size:2em;strong;">The V Programming Language</span>
+
+''Simple, fast, safe, compiled. For developing maintainable software.''
+<br />
+<br />
+'''Note: V (or Vlang). There was a language naming collision, so V (Vlang) was chosen.'''
+
+V (Vlang) is used here on Rosetta Code to disambiguate from the other language called [[:Category:V|V]].
+
+V is an easier to learn, read, and use language. 
+
+[https://vlang.io V] first appeared in 2019 in a trial web sandbox, "The V Playground". 
+
+V's design has been influenced by Go, Oberon, Rust, Swift, Kotlin, and Python. [https://github.com/vlang/v/wiki/FAQ For V's FAQ] 
+
+V's sources are published at [https://github.com/vlang/v GitHub], presently on version [https://github.com/vlang/v/releases 0.4.x].
+
+V's compiler tool is similar in implementation to a multi purpose command processor: ''prompt$ v help''
+
+V language review and documentation are [https://github.com/vlang/v/blob/master/doc/docs.md here]. 
+
+==Helpful links==
+* [https://en.everybodywiki.com/V_(programming_language) V in Wiki]
+* [https://www.youtube.com/watch?v=ZO3vlwqvTrc V language overview and introduction] by Erdet Nasufi
+* [https://www.youtube.com/watch?v=pchEsYwA74Q V language overview and introduction] on behalf of the Sydney Computing Society
+* [https://www.youtube.com/watch?v=_dIAcNp9bJs V language overview and presentation] for IBM
+* Some of the code snippets are available at the archived [//github.com/v-community/v_rosetta V-Community (V Rosetta) GitHub]
+* More info on the below can be found at [https://modules.vlang.io/ modules used by V]
+
+{| class="wikitable"
+! No. !! Module name !! !! No. !! Module name !! !! No. !! Module name
+|-
+| 1 || [https://modules.vlang.io/arrays.html arrays] || || 2 || [https://modules.vlang.io/benchmark.html benchmark] || || 3 || [https://modules.vlang.io/bitfield.html bifield]
+|-
+| 4 || [https://modules.vlang.io/cli.html cli] || || 5 || [https://modules.vlang.io/clipboard.html clipboard] || || 6 || [https://modules.vlang.io/compress.html compress]
+|-
+| 7 || [https://modules.vlang.io/context.html context] || || 8 || [https://modules.vlang.io/crypto.html crypto] || || 9 || [https://modules.vlang.io/net.websocket.html websocket]
+|-
+| 10 || [https://modules.vlang.io/datatypes.html datatypes] || || 11 || [https://modules.vlang.io/main.html main] || || 12 || [https://modules.vlang.io/dl.html dl]
+|-
+| 13 || [https://modules.vlang.io/dlmalloc.html dlmalloc] || || 14 || [https://modules.vlang.io/encoding.html encoding] || || 15 || [https://modules.vlang.io/eventbus.html eventbus]
+|-
+| 16 || [https://modules.vlang.io/flag.html flag] || || 17 || [https://modules.vlang.io/fontstash.html fontstash] || || 18 || [https://modules.vlang.io/gg.html gg]
+|-
+| 19 || [https://modules.vlang.io/gx.html gx] || || 20 || [https://modules.vlang.io/hash.html hash] || || 21 || [https://modules.vlang.io/io.html io]
+|-
+| 22 || [https://modules.vlang.io/json.html json] || || 23 || [https://modules.vlang.io/log.html log] || || 24 || [https://modules.vlang.io/math.html math]
+|-
+| 25 || [https://modules.vlang.io/db.mssql.html mssql] || || 26 || [https://modules.vlang.io/db.mysql.html mysql] || || 27 || [https://modules.vlang.io/net.html net]
+|-
+| 28 || [https://modules.vlang.io/orm.html orm] || ||  29 || [https://modules.vlang.io/os.html os] || || 30 || [https://modules.vlang.io/pg.html pg]
+|-
+| 31 || [https://modules.vlang.io/picoev.html picoev] || || 32 || [https://modules.vlang.io/veb.html veb] || || 33 || [https://modules.vlang.io/picohttpparser.html picohttpparser]
+|-
+| 34 || [https://modules.vlang.io/rand.html rand]|| || 35 || [https://modules.vlang.io/readline.html readline] || || 36 || [https://modules.vlang.io/regex.html regex]
+|-
+| 37 || [https://modules.vlang.io/runtime.html runtime] || || 38 || [https://modules.vlang.io/semver.html semver] || || 39 || [https://modules.vlang.io/sokol.sapp.html sokol.sapp]
+|-
+| 40 || [https://modules.vlang.io/db.sqlite.html sqlite] || || 41 || [https://modules.vlang.io/stbi.html stbi] || || 42 || [https://modules.vlang.io/strconv.html strconv]
+|-
+| 43 || [https://modules.vlang.io/strings.html strings] || || 44 || [https://modules.vlang.io/sync.html sync] || || 45 || [https://modules.vlang.io/szip.html szip]
+|-
+| 46 || [https://modules.vlang.io/term.html term] || || 47 || [https://modules.vlang.io/time.html time] || || 48 || [https://modules.vlang.io/toml.html toml]
+|-
+| 49 || [https://modules.vlang.io/vweb.html vweb] || || 50 || [https://modules.vlang.io/wasm.html wasm] || || 51 || [https://modules.vlang.io/maps.html maps]
+|-
+| 52 || [https://modules.vlang.io/sokol.audio.html sokol.audio] || || 53 || [https://modules.vlang.io/x.ttf.html ttf] || || 54 || [https://modules.vlang.io/x.json2.html json2]
+|}

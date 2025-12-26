@@ -1,0 +1,39 @@
+$lines
+
+$constant search_limit = 20000
+
+var a, b, count = integer
+dim integer sumf(search_limit)
+
+print "Searching up to"; search_limit; " for amicable pairs:"
+
+rem - set up the table of proper divisor sums
+
+for a = 1 to search_limit
+   sumf(a) = 1
+next a
+
+for a = 2 to search_limit
+   b = a + a
+   while (b > 0) and (b <= search_limit) do
+      begin
+         sumf(b) = sumf(b) + a
+         b = b + a
+      end
+next a
+
+rem - search for pairs using the table
+
+count = 0
+for a = 2 to search_limit
+   b = sumf(a)
+   if (b > a) and (b < search_limit) then
+      if a = sumf(b) then
+        begin
+          print using "#####  #####"; a; b
+          count = count + 1
+        end
+next a
+print count; " pairs were found"
+
+end

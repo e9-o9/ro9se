@@ -1,0 +1,130 @@
+#!/usr/bin/env python3
+"""
+OpenCog Hypergraph Analysis Tool
+
+Analyzes task specialization at the subcategory level and generates
+functionality hypergraphs revealing patterns of peak performance by
+language and paradigm.
+
+Usage:
+    opencog-hypergraph [options]
+
+Options:
+    --report            Print subcategory and paradigm reports
+    --export-graph      Export hypergraph to JSON
+    --export-matrix     Export paradigm matrix to JSON
+    --subcategory NAME  Analyze specific subcategory
+    --all               Run all analyses (default)
+"""
+
+import sys
+import argparse
+from pathlib import Path
+
+# Add parent directory to path
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
+from lib.hypergraph_analyzer import HypergraphAnalyzer
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description='OpenCog Hypergraph Analysis Tool',
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+  opencog-hypergraph --report
+  opencog-hypergraph --export-graph
+  opencog-hypergraph --subcategory symbolic_reasoning/logic_fundamentals
+  opencog-hypergraph --all
+        """
+    )
+    
+    parser.add_argument('--report', action='store_true',
+                       help='Print subcategory and paradigm reports')
+    parser.add_argument('--export-graph', action='store_true',
+                       help='Export hypergraph to JSON')
+    parser.add_argument('--export-matrix', action='store_true',
+                       help='Export paradigm matrix to JSON')
+    parser.add_argument('--subcategory', type=str,
+                       help='Analyze specific subcategory (format: category/subcategory)')
+    parser.add_argument('--all', action='store_true',
+                       help='Run all analyses')
+    
+    args = parser.parse_args()
+    
+    # Default to --all if no options specified
+    if not any([args.report, args.export_graph, args.export_matrix, 
+                args.subcategory, args.all]):
+        args.all = True
+    
+    # Initialize analyzer
+    repo_root = Path(__file__).parent.parent.parent
+    analyzer = HypergraphAnalyzer(str(repo_root))
+    
+    # Run requested analyses
+    if args.all or args.report:
+        analyzer.print_subcategory_report()
+        print("\n")
+        analyzer.print_paradigm_matrix()
+    
+    if args.all or args.export_graph:
+        output_file = repo_root / "opencog" / "data" / "hypergraph.json"
+        analyzer.export_hypergraph(str(output_file))
+    
+    if args.all or args.export_matrix:
+        output_file = repo_root / "opencog" / "data" / "paradigm-matrix.json"
+        analyzer.export_paradigm_matrix(str(output_file))
+    
+    if args.subcategory:
+        # Analyze specific subcategory
+        parts = args.subcategory.split('/')
+        if len(parts) != 2:
+            print("Error: Subcategory must be in format 'category/subcategory'")
+            sys.exit(1)
+        
+        category, subcategory = parts
+        
+        print("=" * 80)
+        print(f"Analyzing: {category}/{subcategory}")
+        print("=" * 80)
+        print()
+        
+        # Get all languages implementing this subcategory
+        lang_performance = []
+        
+        for lang in analyzer.get_all_languages():
+            subcat_analysis = analyzer.analyze_language_subcategories(lang)
+            if (category, subcategory) in subcat_analysis:
+                tasks = subcat_analysis[(category, subcategory)]
+                paradigms = analyzer.get_language_paradigms(lang)
+                lang_performance.append({
+                    'language': lang,
+                    'task_count': len(tasks),
+                    'tasks': tasks,
+                    'paradigms': paradigms
+                })
+        
+        # Sort by task count
+        lang_performance.sort(key=lambda x: x['task_count'], reverse=True)
+        
+        print(f"Languages implementing {subcategory}:")
+        print("-" * 80)
+        
+        for idx, data in enumerate(lang_performance[:20], 1):
+            paradigm_str = ', '.join(data['paradigms']) if data['paradigms'] else 'unknown'
+            print(f"{idx:3}. {data['language']:<30} {data['task_count']:3} tasks  "
+                  f"[{paradigm_str}]")
+        
+        print(f"\nTotal: {len(lang_performance)} languages")
+        print("=" * 80)
+    
+    if args.all:
+        print("\n" + "=" * 80)
+        print("Hypergraph analysis complete!")
+        print("Data exported to opencog/data/")
+        print("=" * 80)
+
+
+if __name__ == "__main__":
+    main()

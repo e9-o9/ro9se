@@ -1,0 +1,15 @@
+program looksay;
+    s := "1";
+    loop for i in [1..10] do
+        print(s);
+        s := looksay(s);
+    end loop;
+
+    proc looksay(s);
+        loop init r := ""; while s /= "" do
+            p := span(s, s(1));
+            r +:= str(#p) + p(1);
+        end loop;
+        return r;
+    end proc;
+end looksay;

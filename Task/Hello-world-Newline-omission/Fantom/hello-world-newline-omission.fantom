@@ -1,0 +1,29 @@
+class Main {
+  Void main() {
+    // Print with newline
+    echo("Hello, World!")
+    // Or
+    Env.cur.out.printLine("Hello, World!")
+
+    // Print without a newline
+    Env.cur.out.print("Goodbye, world!")
+
+    // Also can get a reference to the standard output stream
+    out := Env.cur.out
+
+    out.print("Goodbye, world!")
+    out.flush() // and flush buffer if needed
+    // or method chain
+    out.print("Goodbye, world!").flush()
+
+    // Also we can an implement a user-defined method
+    print("Hello, world! I'm back!");
+
+  }
+
+  // User-defined 'print' method
+  private Void print(Str s) {
+      Env.cur.out.print(s)
+  }
+
+}

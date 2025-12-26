@@ -1,0 +1,9 @@
+import extensions;
+
+public program()
+{
+   var A := Integer.new();
+   var B := Integer.new();
+
+   Console.loadLine(A,B).printLine(A + B)
+}

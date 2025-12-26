@@ -1,0 +1,77 @@
+#!/usr/bin/env bash
+# OpenCog Reasoning Task Analyzer
+
+set -e -u -o pipefail
+
+root=$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd -P)
+
+cd "$root"
+
+# Run the Python reasoning task analyzer
+python3 -c "
+import sys
+import os
+
+# Add parent directory to path
+sys.path.insert(0, os.path.abspath('.'))
+
+from opencog import OpenCogWorkbench
+
+# Initialize workbench
+workbench = OpenCogWorkbench(tasks_dir='opencog/reasoning-tasks')
+
+# Get statistics
+stats = workbench.get_statistics()
+
+print('='*80)
+print('OpenCog Reasoning Task Analysis')
+print('='*80)
+print()
+print(f\"Total Reasoning Tasks: {stats['tasks']['total']}\")
+print(f\"Total Agents: {stats['agents']['total']}\")
+print(f\"Total Patterns: {stats['patterns']['total']}\")
+print(f\"Total Strategies: {stats['strategies']['total']}\")
+print()
+print('Agent Roles:')
+for role, count in stats['agents']['by_role'].items():
+    print(f\"  {role}: {count}\")
+print()
+print('Pattern Categories:')
+for category, count in stats['patterns']['by_category'].items():
+    print(f\"  {category}: {count}\")
+print()
+print('Strategy Types:')
+for stype, count in stats['strategies']['by_type'].items():
+    print(f\"  {stype}: {count}\")
+print()
+
+# Show task recommendations if task ID provided
+if len(sys.argv) > 1:
+    task_id = sys.argv[1]
+    if task_id in workbench.tasks:
+        print('='*80)
+        print(f\"Task: {workbench.tasks[task_id].name}\")
+        print('='*80)
+        print()
+        print(f\"Description: {workbench.tasks[task_id].description}\")
+        print(f\"Tags: {', '.join(workbench.tasks[task_id].tags)}\")
+        print()
+        
+        recs = workbench.get_task_recommendations(task_id)
+        
+        print('Recommended Patterns:')
+        for pattern in recs['recommended_patterns'][:5]:
+            print(f\"  - {pattern['name']} (Quality: {pattern['quality']})\")
+        print()
+        
+        print('Recommended Strategies:')
+        for strategy in recs['recommended_strategies'][:5]:
+            print(f\"  - {strategy['name']} (Type: {strategy['type']}, Success Rate: {strategy['success_rate']:.2f})\")
+        print()
+    else:
+        print(f\"Task '{task_id}' not found. Available tasks:\")
+        for tid in sorted(workbench.tasks.keys())[:10]:
+            print(f\"  - {tid}\")
+        if len(workbench.tasks) > 10:
+            print(f\"  ... and {len(workbench.tasks) - 10} more\")
+" "$@"

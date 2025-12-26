@@ -1,0 +1,16 @@
+permutations templates
+  when <|=1> do [1] !
+  otherwise
+    n is $;
+    expand templates
+      p is $;
+      1..$n -> templates
+        k is $;
+        [$p(..$k - 1)..., $n, $p($k..)...] !
+      end !
+    end expand
+    $n - 1 -> # -> expand !
+end permutations
+
+alpha is ['ABCD'...];
+[ $alpha::length -> permutations -> '$alpha($)...;' ] !

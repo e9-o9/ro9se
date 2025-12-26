@@ -1,0 +1,2 @@
+writeln "{{dt//:dt(2006-01-02)}}"
+writeln "{{dt//:dt(Monday, January 2, 2006)}}"

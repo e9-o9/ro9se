@@ -1,0 +1,26 @@
+$ include "seed7_05.s7i";
+  include "gethttp.s7i";
+
+const proc: main is func
+  local
+    var array string: wordList is 0 times "";
+    var set of string: words is (set of string).value;
+    var string: word is "";
+    var string: drow is "";
+    var integer: count is 0;
+  begin
+    wordList := split(lower(getHttp("wiki.puzzlers.org/pub/wordlists/unixdict.txt")), "\n");
+    for word range wordList do
+      drow := reverse(word);
+      if drow not in words then
+        incl(words, word);
+      else
+        if count < 5 then
+          writeln(word <& " " <& drow);
+        end if;
+        incr(count);
+      end if;
+    end for;
+    writeln;
+    writeln("Semordnilap pairs: " <& count);
+  end func;

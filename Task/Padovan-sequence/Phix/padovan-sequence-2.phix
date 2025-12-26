@@ -1,0 +1,61 @@
+%!  padovan_recurrent(-P) is multi.
+padovan_recurrent(1).
+padovan_recurrent(1).
+padovan_recurrent(P) :- padovan_recurrent(1, 1, 1, P).
+
+padovan_recurrent( _,  _, P , P).
+padovan_recurrent(P0, P1, P2, P) :- P3 is P0 + P1, padovan_recurrent(P1, P2, P3, P).
+
+%!  padovan_truncated(+N, -P) is det.
+padovan_truncated(N, P) :-
+    P is floor(1.324717957244746 ^ (N - 1) / 1.0453567932525329623 + 0.5).
+
+padovan_l_system(['B'      | LS]) --> ['A'], padovan_l_system(LS).
+padovan_l_system(['C'      | LS]) --> ['B'], padovan_l_system(LS).
+padovan_l_system(['A', 'B' | LS]) --> ['C'], padovan_l_system(LS).
+padovan_l_system([])              --> [].
+
+fibonacci_l_system(['B'      | LS]) --> ['A'], fibonacci_l_system(LS).
+fibonacci_l_system(['A', 'B' | LS]) --> ['B'], fibonacci_l_system(LS).
+fibonacci_l_system([])              --> [].
+
+l_system(_, String, String).
+l_system(DCG, String0, String) :-
+    once(phrase(call(DCG, String1), String0)),
+    l_system(DCG, String1, String).
+
+:- meta_predicate l_system(3, -).
+%!  l_system(:DCG, +String) is multi.
+l_system(DCG, String) :- l_system(DCG, ['A'], String).
+
+task :-
+    format("The first 20 Padovan numbers are:~n"),
+    foreach(
+        limit(20, padovan_recurrent(Padovan)),
+        format("~d ", [Padovan])
+    ),
+    format("~nThe first 10 strings produced by the L-system are:~n"),
+    foreach(
+        limit(10, l_system(padovan_l_system, LString)),
+        format("~s ", [LString])
+    ),
+    nl,
+    run_tests(padovan_sequence).
+
+:- begin_tests(padovan_sequence).
+
+test(recurrence_and_floor_are_same_sequence) :-
+    once(findnsols(64, PR, padovan_recurrent(PR), PRs)),
+    numlist(0, 63, Ns),
+    maplist(padovan_truncated, Ns, PTs),
+    assertion(PRs == PTs).
+
+test(lengths_of_first_32_strings_is_Padovan_sequence) :-
+    once(findnsols(32, PR, padovan_recurrent(PR), PRs)),
+    once(findnsols(32, PL, (
+        l_system(padovan_l_system, String),
+        length(String, PL)
+    ), PLs)),
+    assertion(PRs == PLs).
+
+:- end_tests(padovan_sequence).

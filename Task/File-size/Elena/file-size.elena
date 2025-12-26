@@ -1,0 +1,9 @@
+import system'io;
+import extensions;
+
+public program()
+{
+    Console.printLine(File.assign("input.txt").Length);
+
+    Console.printLine(File.assign("\input.txt").Length)
+}

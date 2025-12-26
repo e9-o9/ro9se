@@ -1,0 +1,1 @@
+fib(n)=real(2/sqrt(5)/I^n*sinh(n*log(I*(1+sqrt(5))/2)))\/1;

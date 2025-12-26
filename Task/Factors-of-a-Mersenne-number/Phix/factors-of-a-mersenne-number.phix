@@ -1,0 +1,40 @@
+with javascript_semantics
+function modpow(atom x, n, m)
+    atom {i,y,z} = {n,1,x}
+    while i do
+        if odd(i) then
+            y = mod(y*z,m)
+        end if
+        z = mod(z*z,m)
+        i = floor(i/2)
+    end while
+    return y
+end function
+
+function mersenne_factor(integer p)
+    if not is_prime(p) then return -1 end if
+    atom limit = sqrt(power(2,p))-1
+    integer k = 1
+    while 1 do
+        atom q = 2*p*k + 1
+        if q>=limit then exit end if
+        if find(mod(q,8),{1,7})
+        and is_prime(q,true)
+        and modpow(2,p,q)=1 then
+            return q
+        end if
+        k += 1
+    end while
+    return 0
+end function
+
+constant tests = {2,3,4,5,7,11,13,17,19,23,29,31,37,41,43,47,
+                  53,59,67,71,73,79,83,929,937,941,953,967}
+for t in tests do
+    integer r = mersenne_factor(t)
+    switch r
+        case  0: printf(1,"M%d is prime\n",{t})
+        case -1: printf(1,"M%d is not prime\n",{t})
+        else     printf(1,"A factor of M%d is %d\n",{t,r})
+    end switch
+end for

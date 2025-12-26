@@ -1,0 +1,6 @@
+factorial templates
+  when <|0..> do
+    @ set 1;
+    1..$ -> @ set $@ * $;
+    $@ !
+end factorial

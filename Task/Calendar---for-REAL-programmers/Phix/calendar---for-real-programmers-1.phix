@@ -1,0 +1,2 @@
+--return repeat(' ',left)&s&repeat(' ',right)
+return repeat(' ',left)&upper(s)&repeat(' ',right)

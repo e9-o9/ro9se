@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# OpenCog Analyzer - Main analysis tool
+
+set -e -u -o pipefail
+
+root=$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd -P)
+
+cd "$root"
+
+# Run the Python analyzer
+python3 opencog/lib/opencog_analyzer.py "$@"

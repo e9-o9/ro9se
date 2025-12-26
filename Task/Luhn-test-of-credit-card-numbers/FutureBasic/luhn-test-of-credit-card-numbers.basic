@@ -1,0 +1,18 @@
+include "NSLog.incl"
+
+local fn luhn( n as long )
+  int r = 0, nx2(9) = {0,2,4,6,8,1,3,5,7,9}
+  nslog(@"%20ld  \b", n)
+  while n
+    r += n % 10 + nx2(n / 10 % 10)
+    n /= 100
+  wend
+  if r % 10 then nslog( @"fail") else nslog( @"pass")
+end fn
+
+fn luhn(49927398716)
+fn luhn(49927398717)
+fn luhn(1234567812345678)
+fn luhn(1234567812345670)
+
+handleevents

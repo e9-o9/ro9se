@@ -1,0 +1,46 @@
+$ include "seed7_05.s7i";
+  include "bitdata.s7i";
+
+const proc: writeAscii (inout msbOutBitStream: outStream, in string: ascii) is func
+  local
+    var char: ch is ' ';
+  begin
+    for ch range ascii do
+      if ch > '\127;' then
+        raise RANGE_ERROR;
+      else
+        putBits(outStream, ord(ch), 7);
+      end if;
+    end for;
+  end func;
+
+const proc: finishWriteAscii (inout msbOutBitStream: outStream) is func
+  begin
+    putBits(outStream, 0, 7);  # Write a terminating NUL char.
+    flush(outStream);
+  end func;
+
+const func string: readAscii (inout msbInBitStream: inStream) is func
+  result
+    var string: stri is "";
+  local
+    var char: ch is ' ';
+  begin
+    repeat
+      ch := chr(getBits(inStream, 7));
+      if ch <> '\0;' then
+        stri &:= ch;
+      end if;
+    until ch = '\0;';
+  end func;
+
+const proc: main is func
+  local
+    var msbOutBitStream: outStream is msbOutBitStream.value;
+    var msbInBitStream: inStream is msbInBitStream.value;
+  begin
+    writeAscii(outStream,  "Hello, Rosetta Code!");
+    finishWriteAscii(outStream);
+    inStream := openMsbInBitStream(getBytes(outStream));
+    writeln(literal(readAscii(inStream)));
+  end func;

@@ -1,0 +1,100 @@
+#!/usr/bin/env bash
+# OpenCog Agent-Zero Orchestrator
+
+set -e -u -o pipefail
+
+root=$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd -P)
+
+cd "$root"
+
+# Show usage if no arguments
+if [ $# -eq 0 ]; then
+    echo "Usage: opencog-agent-zero <task_id> [mode]"
+    echo ""
+    echo "Orchestrate a reasoning task using Agent-Zero"
+    echo ""
+    echo "Arguments:"
+    echo "  task_id    ID of the reasoning task to solve"
+    echo "  mode       Orchestration mode: autonomous, collaborative, or guided (default: autonomous)"
+    echo ""
+    echo "Example:"
+    echo "  opencog-agent-zero analogical-problem-solving autonomous"
+    exit 0
+fi
+
+task_id="$1"
+mode="${2:-autonomous}"
+
+# Run the Python orchestrator
+python3 -c "
+import sys
+import os
+import json
+
+# Add parent directory to path
+sys.path.insert(0, os.path.abspath('.'))
+
+from opencog import OpenCogWorkbench
+
+# Initialize workbench
+print('Initializing OpenCog Workbench...')
+workbench = OpenCogWorkbench(tasks_dir='opencog/reasoning-tasks')
+
+task_id = '$task_id'
+mode = '$mode'
+
+if task_id not in workbench.tasks:
+    print(f\"Error: Task '{task_id}' not found.\")
+    print()
+    print('Available tasks (first 20):')
+    for tid in sorted(workbench.tasks.keys())[:20]:
+        print(f\"  - {tid}\")
+    if len(workbench.tasks) > 20:
+        print(f\"  ... and {len(workbench.tasks) - 20} more\")
+    sys.exit(1)
+
+task = workbench.tasks[task_id]
+
+print('='*80)
+print('Agent-Zero Task Orchestration')
+print('='*80)
+print()
+print(f\"Task: {task.name}\")
+print(f\"Description: {task.description}\")
+print(f\"Mode: {mode}\")
+print()
+
+print('Getting recommendations...')
+recs = workbench.get_task_recommendations(task_id)
+
+print()
+print('Recommended Patterns:')
+for pattern in recs['recommended_patterns'][:3]:
+    print(f\"  - {pattern['name']} (Quality: {pattern['quality']})\")
+
+print()
+print('Recommended Strategies:')
+for strategy in recs['recommended_strategies'][:3]:
+    print(f\"  - {strategy['name']} (Type: {strategy['type']}, Success Rate: {strategy['success_rate']:.2f})\")
+
+print()
+print(f\"Orchestrating task in {mode.upper()} mode...\")
+print()
+
+result = workbench.solve_task(task_id, orchestration_mode=mode)
+
+print('='*80)
+print('Orchestration Result')
+print('='*80)
+print()
+print(f\"Success: {result.get('success', 'Unknown')}\")
+print(f\"Patterns Used: {', '.join(result.get('patterns_used', []))}\")
+if 'strategy' in result:
+    print(f\"Strategy: {result['strategy']}\")
+if 'agents_involved' in result:
+    print(f\"Agents Involved: {len(result['agents_involved'])}\")
+if 'message' in result:
+    print()
+    print(f\"Message: {result['message']}\")
+print()
+"

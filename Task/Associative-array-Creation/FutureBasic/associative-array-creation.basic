@@ -1,0 +1,23 @@
+void local fn DoIt
+  CFDictionaryRef dict1 = fn DictionaryWithObjects( @"Alpha", @"A", @"Bravo", @"B", @"Charlie", @"C", @"Delta", @"D", NULL ) // must be NULL-terminated
+
+  CFDictionaryRef dict2 = @{@"A":@"Alpha", @"B":@"Bravo", @"C":@"Charlie", @"D":@"Delta"} // shorthand syntax
+
+  CFMutableDictionaryRef dict3 = fn MutableDictionaryNew
+  dict3[@"A"] = @"Alpha"
+  dict3[@"B"] = @"Bravo"
+  dict3[@"C"] = @"Charlie"
+  dict3[@"D"] = @"Delta"
+
+  CFMutableDictionaryRef dict4 = fn MutableDictionaryWithDictionary( @{@"A":@"Alpha", @"B":@"Bravo", @"C":@"Charlie", @"D":@"Delta"} )
+
+  print fn DictionaryObjectForKey( dict1, @"A" )
+  print dict1[@"B"]
+  print dict2[@"C"]
+  print dict3[@"D"]
+  print dict4
+end fn
+
+fn DoIt
+
+HandleEvents

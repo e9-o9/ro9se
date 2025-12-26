@@ -1,0 +1,28 @@
+with javascript_semantics
+procedure solve_babbage_problem() -- (so that return quits 3 loops)
+    sequence cands = {0},   -- n-digit candidates (n initially 0)
+             nextc = {}     -- n+1-digit candidates, aka next ""
+    integer p10 = 1,        -- power of 10 for adding prefixes
+            r10 = 10,       -- power of 10 for getting remainder
+            cc = 0          -- count of calculations
+    for digits=1 to 6 do    -- aka 1..length("269696")
+        for prefix=0 to 9*p10 by p10 do
+            for cand in sq_add(prefix,cands) do
+                atom square = cand*cand
+                cc += 1
+                if remainder(square,r10) = remainder(269696,r10) then
+                    if digits=6 then
+                        printf(1,"Solution: %d (%d calcs)\n",{cand,cc})
+                        return -- leave solve_babbage_problem()
+                    end if
+                    nextc &= cand -- add candidate for next iteration
+                end if
+            end for
+        end for
+        {cands,nextc} = {nextc,{}}
+        printf(1,"%d-digit candidates: %v\n",{digits,cands})
+        p10 *= 10
+        r10 *= 10
+    end for
+end procedure
+solve_babbage_problem()

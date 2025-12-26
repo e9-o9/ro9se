@@ -1,0 +1,73 @@
+%\n { 0a }  %\s { 20 }  %\0 { 00 }
+%newline { [ LIT2 \n -Console/write ] DEO }
+%plural { [ LIT2 "s -Console/write ] DEO }
+
+|18 @Console/write
+
+|100
+
+#63
+&loop
+	DUP print/verse
+	newline	
+	#01 EQUk ?/done
+	POP #01 SUB
+	!/done
+
+    &done
+	    POP2
+
+BRK
+
+@print/verse ( num -- )
+	DUP /bottle ;msgs/wall /str
+	DUP /bottle newline
+	;msgs/take /str
+	#01 SUB /bottle ;msgs/wall !/str
+
+@print/bottle ( num -- )
+	DUP #00 EQU ?/bottle/zero
+	DUP #01 EQU ?/bottle/one
+	/dec ;msgs/bottle /str
+	plural
+	!/bottle/end
+
+	&bottle/one ( num -- )
+		/dec ;msgs/bottle /str
+		!/bottle/end
+
+	&bottle/zero ( num -- )
+		POP ;msgs/no-more /str
+		;msgs/bottle /str
+		plural
+		( >> )
+
+	&bottle/end
+		;msgs/of-beer
+		( >> )
+
+@print/str ( str -- )
+	LDAk .Console/write DEO
+	INC2 LDAk ?/str
+	POP2 JMP2r
+
+@print/dec ( byte -- )
+	DUP #64 DIV /dec/try
+	DUP #0a DIV /dec/try
+	( >> )
+
+	&dec/try/num ( num -- )
+		#0a DIVk MUL SUB
+		[ LIT "0 ] ADD .Console/write DEO
+		JMP2r
+
+	&dec/try ( num -- )
+		DUP ?/dec/try/num
+		POP JMP2r
+
+@msgs [
+	&no-more "No \s "more \0
+	&bottle  \s "bottle \0
+	&of-beer \s "of \s "beer \s \0
+	&wall    "on \s "the \s "wall \n \0
+	&take    "Take \s "one \s "down, \s "pass \s "it \s "around \n \0 ]

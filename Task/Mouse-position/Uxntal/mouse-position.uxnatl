@@ -1,0 +1,24 @@
+%<space> { [ LIT2 20 -Console/write ] DEO }
+%<newline> { [ LIT2 0a -Console/write ] DEO }
+
+|10 @Console/vector $2 &read $1 &pad $4 &type $1 &write $1 &error $1
+|90 @Mouse/vector $2 &x $2 &y $2 &state $1 &pad $3 &scrollx $2 &scrolly $2
+
+|0100
+    ;on-mouse .Mouse/vector DEO2
+    BRK
+
+@on-mouse
+    .Mouse/x DEI2 <phex>
+    <space>
+    .Mouse/y DEI2 <phex>
+    <newline>
+    BRK
+
+@<phex> ( short* -: )
+    SWP /b
+    &b ( byte -: )
+        DUP #04 SFT /c
+    &c ( byte -: )
+        #0f AND DUP #09 GTH #27 MUL ADD [ LIT "0 ] ADD #18 DEO
+        JMP2r

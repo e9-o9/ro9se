@@ -1,0 +1,13 @@
+t0 = time()
+mx = 6
+mn = 1
+dice = possible_dice(6)
+show_dice(dice,find_non_trans(dice,3),3)
+printf(1,"%s\n\n",elapsed(time()-t0))
+
+t0 = time()
+mx = 6
+mn = 0
+dice = possible_dice(6)
+show_dice(dice,find_non_trans(dice,3),3)
+printf(1,"%s\n\n",elapsed(time()-t0))

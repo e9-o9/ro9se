@@ -1,0 +1,32 @@
+val data = qs:block END
+    start     stop     increment     comment
+    -2        2        1             Normal
+    -2        2        0             Zero increment
+    -2        2        -1            Increments away from stop value
+    -2        2        10            First increment is beyond stop value
+    2         -2       1             Start more than stop: positive increment
+    2         2        1             Start equal stop: positive increment
+    2         2        -1            Start equal stop: negative increment
+    2         2        0             Start equal stop: zero increment
+    0         0        0             Start equal stop equal zero: zero increment
+END
+
+# Process data string into table.
+# We could have just started with a list of lists, of course.
+var table = submatches(data, by=RE/([^ ]+) +([^ ]+) +([^ ]+) +(.+)\n?/)
+
+for i in 2..len(table) {
+    table[i] = map(table[i], by=[number, number, number, _])
+}
+
+for test in less(table, of=1) {
+    val start, stop, inc, comment = test
+    {
+        val s = series(start .. stop, inc=inc)
+        catch {
+            writeln "{{comment}}\nERROR: {{_err'msg:L200(...)}}\n"
+        } else {
+            writeln "{{comment}}\nresult: {{s}}\n"
+        }
+    }
+}

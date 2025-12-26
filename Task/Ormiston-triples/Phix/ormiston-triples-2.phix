@@ -1,0 +1,42 @@
+requires("1.0.3")
+requires(WINDOWS)
+requires(64,true)
+include builtins/primesieve.e
+atom t0 = time(), t1 = time()+1,
+     p = primesieve_next_prime(),
+     p1 = p, p2, count = 0, nc = 1e9
+sequence orm25 = repeat(0,25)
+
+procedure showt()
+    if count=25 then
+        progress("Smallest members of first 25 Ormiston triplets:\n")
+        progress("%s\n",join_by(orm25,1,5))
+    else
+        string e = elapsed_short(time()-t0)
+        progress("%,6d Ormiston triplets before %,d (%s)\n",{count,nc,e})
+        nc *= 10
+    end if
+end procedure
+
+while p<1e10 do
+    p2 = p1
+    p1 = p
+    p = primesieve_next_prime()
+    if remainder(p-p1,18)=0
+    and remainder(p1-p2,18)=0 then
+        string s = sort(sprint(p))
+        if sort(sprint(p1))=s
+        and sort(sprint(p2))=s then
+            if p>=nc then showt() end if
+            count += 1
+            if count<=25 then
+                orm25[count] = sprintf("%d",{p2})
+                if count=25 then showt() end if
+            end if
+        end if
+    elsif time()>t1 then
+        progress("%,d\r",{p})
+        t1 = time()+1
+    end if
+end while
+showt()

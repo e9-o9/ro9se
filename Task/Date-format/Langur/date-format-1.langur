@@ -1,0 +1,2 @@
+writeln string(dt//, fmt="2006-01-02")
+writeln string(dt//, fmt="Monday, January 2, 2006")

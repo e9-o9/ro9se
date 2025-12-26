@@ -1,0 +1,8 @@
+module main
+import $native 'io' [input#hear output#sayn]
+
+funct main () : () =
+  val read_int = {(hear ())#to_int#fold {0} {it}};
+  val a = read_int ();
+  val b = read_int ();
+  sayn (a# + b)

@@ -1,0 +1,20 @@
+quicksort templates
+  partition templates
+    @ set [];
+    pivot is $(1);
+    [$(2..)... -> #]!
+    $pivot !
+    $@ !
+    when <|..$pivot> do
+      $ !
+    otherwise
+      ..|@ set $;
+  end partition
+  [$ -> #] !
+  when <|[](1..)> do
+    $ -> partition -> # !
+  when <~|[]> do
+    $ !
+end quicksort
+
+[4,5,3,8,1,2,6,7,9,8,5] -> quicksort !

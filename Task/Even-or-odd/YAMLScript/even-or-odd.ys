@@ -1,0 +1,7 @@
+!YS-v0
+
+defn main(*xs):
+  each x xs:
+    if x:even?:
+      say: "$x is even"
+      say: "$x is odd"

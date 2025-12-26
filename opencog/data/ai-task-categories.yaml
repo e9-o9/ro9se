@@ -1,0 +1,612 @@
+# AI/AGI Task Categorization
+# Maps RosettaCode tasks to AI/cognitive computing domains
+# Now includes refined subcategories for next-layer task specialization
+
+categories:
+  symbolic_reasoning:
+    description: "Logic, theorem proving, constraint satisfaction, formal reasoning"
+    subcategories:
+      logic_fundamentals:
+        description: "Boolean logic, propositional logic, truth tables"
+        tasks:
+          - "Boolean-values"
+          - "Logical-operations"
+          - "Truth-table"
+          - "Propositional-logic"
+          - "Boolean-algebra"
+      theorem_proving:
+        description: "Mathematical proofs, number theory, primality testing"
+        tasks:
+          - "AKS-test-for-primes"
+          - "Ackermann-function"
+          - "First-order-logic"
+      constraint_solving:
+        description: "Constraint satisfaction problems, puzzles"
+        tasks:
+          - "Sudoku"
+          - "Zebra-puzzle"
+          - "N-queens-problem"
+          - "Knights-tour"
+          - "Solve-a-Holy-Knights-tour"
+          - "Solve-the-no-connection-puzzle"
+      formal_computation:
+        description: "Formal computation, circuit design, adders"
+        tasks:
+          - "Four-bit-adder"
+    tasks:
+      - "AKS-test-for-primes"
+      - "Boolean-values"
+      - "Logical-operations"
+      - "Sudoku"
+      - "Zebra-puzzle"
+      - "N-queens-problem"
+      - "Knights-tour"
+      - "Solve-a-Holy-Knights-tour"
+      - "Solve-the-no-connection-puzzle"
+      - "Four-bit-adder"
+      - "Ackermann-function"
+      - "Truth-table"
+      - "Propositional-logic"
+      - "First-order-logic"
+      - "Boolean-algebra"
+      
+  pattern_recognition:
+    description: "Search algorithms, pattern matching, classification"
+    subcategories:
+      search_algorithms:
+        description: "Search and retrieval algorithms"
+        tasks:
+          - "Binary-search"
+          - "Boyer-Moore-string-search"
+      string_pattern_matching:
+        description: "String matching, edit distance, similarity"
+        tasks:
+          - "String-matching"
+          - "Pattern-matching"
+          - "Levenshtein-distance"
+          - "Longest-common-subsequence"
+          - "Edit-distance"
+          - "Regular-expressions"
+      lexical_patterns:
+        description: "Anagrams, palindromes, phonetic matching"
+        tasks:
+          - "Anagrams"
+          - "Anagrams-Deranged-anagrams"
+          - "Palindrome-detection"
+          - "Soundex"
+          - "Metaphone"
+      recognition_tasks:
+        description: "Image recognition, sequence detection"
+        tasks:
+          - "Hunt-The-Wumpus"
+          - "Image-recognition"
+          - "Sequence-recognition"
+    tasks:
+      - "Binary-search"
+      - "String-matching"
+      - "Boyer-Moore-string-search"
+      - "Pattern-matching"
+      - "Anagrams"
+      - "Anagrams-Deranged-anagrams"
+      - "Palindrome-detection"
+      - "Levenshtein-distance"
+      - "Longest-common-subsequence"
+      - "Edit-distance"
+      - "Soundex"
+      - "Metaphone"
+      - "Regular-expressions"
+      - "Hunt-The-Wumpus"
+      - "Image-recognition"
+      - "Sequence-recognition"
+      
+  knowledge_representation:
+    description: "Data structures, graphs, semantic networks, ontologies"
+    subcategories:
+      graph_structures:
+        description: "Graph algorithms and operations"
+        tasks:
+          - "Graph-colouring"
+          - "Graph-theory"
+          - "Topological-sort"
+          - "Dijkstras-algorithm"
+          - "A-star"
+      tree_structures:
+        description: "Tree data structures and operations"
+        tasks:
+          - "Tree-traversal"
+          - "AVL-tree"
+          - "K-d-tree"
+          - "Binary-tree"
+          - "Tree-from-nesting-levels"
+          - "Binary-tree-deletion"
+          - "Red-black-tree"
+          - "Suffix-tree"
+      associative_structures:
+        description: "Hash tables, dictionaries, key-value stores"
+        tasks:
+          - "Hash-tables"
+          - "Associative-arrays"
+          - "Arrays"
+      serialization:
+        description: "Data serialization and exchange formats"
+        tasks:
+          - "JSON"
+          - "XML-Input"
+          - "XML-Output"
+          - "Serialization"
+    tasks:
+      - "Graph-colouring"
+      - "Graph-theory"
+      - "Tree-traversal"
+      - "AVL-tree"
+      - "K-d-tree"
+      - "Binary-tree"
+      - "Topological-sort"
+      - "Dijkstras-algorithm"
+      - "A-star"
+      - "Hash-tables"
+      - "Associative-arrays"
+      - "Arrays"
+      - "JSON"
+      - "XML-Input"
+      - "XML-Output"
+      - "Serialization"
+      - "Tree-from-nesting-levels"
+      - "Binary-tree-deletion"
+      - "Red-black-tree"
+      - "Suffix-tree"
+      
+  machine_learning:
+    description: "Statistical methods, optimization, neural networks"
+    subcategories:
+      optimization:
+        description: "Optimization algorithms and heuristics"
+        tasks:
+          - "Genetic-algorithm"
+          - "Simulated-annealing"
+          - "Particle-swarm-optimization"
+          - "Gradient-descent"
+      statistical_learning:
+        description: "Statistical methods and regression"
+        tasks:
+          - "Monte-Carlo-methods"
+          - "Linear-regression"
+          - "K-means++-clustering"
+      statistical_measures:
+        description: "Statistical calculations and metrics"
+        tasks:
+          - "Averages-Mean-angle"
+          - "Averages-Pythagorean-means"
+          - "Standard-deviation"
+          - "Cumulative-standard-deviation"
+          - "Statistics-Basic"
+          - "Vector"
+      neural_networks:
+        description: "Neural network algorithms"
+        tasks:
+          - "Neural-network"
+          - "Perceptron"
+          - "Backpropagation"
+    tasks:
+      - "Genetic-algorithm"
+      - "Simulated-annealing"
+      - "Particle-swarm-optimization"
+      - "Monte-Carlo-methods"
+      - "Linear-regression"
+      - "K-means++-clustering"
+      - "Averages-Mean-angle"
+      - "Averages-Pythagorean-means"
+      - "Standard-deviation"
+      - "Cumulative-standard-deviation"
+      - "Statistics-Basic"
+      - "Vector"
+      - "Gradient-descent"
+      - "Neural-network"
+      - "Perceptron"
+      - "Backpropagation"
+      
+  natural_language:
+    description: "String manipulation, parsing, text analysis, NLP"
+    subcategories:
+      tokenization:
+        description: "Text tokenization and segmentation"
+        tasks:
+          - "Tokenize-a-string"
+          - "String-manipulation"
+      parsing:
+        description: "Parsing algorithms and compiler techniques"
+        tasks:
+          - "Parsing-RPN-calculator-algorithm"
+          - "Parsing-RPN-to-infix-conversion"
+          - "Parsing-Shunting-yard-algorithm"
+          - "Compiler-lexical-analyzer"
+      text_processing:
+        description: "Text processing and analysis"
+        tasks:
+          - "Text-processing-1"
+          - "Text-processing-2"
+          - "Word-frequency"
+      phonetic_matching:
+        description: "Phonetic algorithms and matching"
+        tasks:
+          - "Soundex"
+          - "Anagrams"
+      text_generation:
+        description: "Text generation and language models"
+        tasks:
+          - "Markov-chain-text-generator"
+          - "N-grams"
+      language_analysis:
+        description: "Language detection and similarity"
+        tasks:
+          - "Language-detection"
+          - "Levenshtein-distance"
+    tasks:
+      - "Tokenize-a-string"
+      - "Parsing-RPN-calculator-algorithm"
+      - "Parsing-RPN-to-infix-conversion"
+      - "Parsing-Shunting-yard-algorithm"
+      - "Compiler-lexical-analyzer"
+      - "Text-processing-1"
+      - "Text-processing-2"
+      - "String-manipulation"
+      - "Word-frequency"
+      - "Soundex"
+      - "Anagrams"
+      - "Markov-chain-text-generator"
+      - "N-grams"
+      - "Language-detection"
+      - "Levenshtein-distance"
+      
+  planning_problem_solving:
+    description: "Heuristic search, game playing, puzzle solving, planning"
+    subcategories:
+      search_strategies:
+        description: "Search algorithms for problem solving"
+        tasks:
+          - "A-star"
+          - "Breadth-first-search"
+          - "Depth-first-search"
+      game_playing:
+        description: "Game algorithms and strategies"
+        tasks:
+          - "Conways-Game-of-Life"
+          - "Tic-tac-toe"
+      puzzle_solving:
+        description: "Puzzle solving algorithms"
+        tasks:
+          - "15-puzzle-game"
+          - "15-puzzle-solver"
+          - "Towers-of-Hanoi"
+          - "Eight-queens"
+          - "Solve-a-Hopido-puzzle"
+          - "Solve-a-Numbrix-puzzle"
+      optimization_problems:
+        description: "Combinatorial optimization"
+        tasks:
+          - "Traveling-salesman-problem"
+          - "Knapsack-problem-0-1"
+          - "Knapsack-problem-Continuous"
+          - "Knapsack-problem-Unbounded"
+      path_planning:
+        description: "Path finding and navigation"
+        tasks:
+          - "Shortest-path-problem"
+          - "Maze-generation"
+          - "Maze-solving"
+          - "Water-collected-between-towers"
+    tasks:
+      - "A-star"
+      - "Breadth-first-search"
+      - "Depth-first-search"
+      - "Conways-Game-of-Life"
+      - "Tic-tac-toe"
+      - "15-puzzle-game"
+      - "15-puzzle-solver"
+      - "Towers-of-Hanoi"
+      - "Traveling-salesman-problem"
+      - "Knapsack-problem-0-1"
+      - "Knapsack-problem-Continuous"
+      - "Knapsack-problem-Unbounded"
+      - "Shortest-path-problem"
+      - "Maze-generation"
+      - "Maze-solving"
+      - "Eight-queens"
+      - "Solve-a-Hopido-puzzle"
+      - "Solve-a-Numbrix-puzzle"
+      - "Water-collected-between-towers"
+      
+  uncertainty_reasoning:
+    description: "Probabilistic methods, Bayesian reasoning, fuzzy logic"
+    subcategories:
+      probability_basics:
+        description: "Basic probability and random processes"
+        tasks:
+          - "Probability"
+          - "Probabilistic-choice"
+          - "Random-numbers"
+          - "Random-Latin-squares"
+          - "Random-sampling"
+      monte_carlo:
+        description: "Monte Carlo simulation methods"
+        tasks:
+          - "Monte-Carlo-methods"
+      statistical_tests:
+        description: "Statistical inference and testing"
+        tasks:
+          - "Statistical-inference"
+          - "Verify-distribution-uniformity-Chi-squared-test"
+          - "Verify-distribution-uniformity-Naive"
+      distributions:
+        description: "Probability distributions and transformations"
+        tasks:
+          - "Benford-s-law"
+          - "Birthday-problem"
+          - "Box-Muller-transform"
+          - "Central-limit-theorem"
+    tasks:
+      - "Probability"
+      - "Probabilistic-choice"
+      - "Random-numbers"
+      - "Monte-Carlo-methods"
+      - "Statistical-inference"
+      - "Verify-distribution-uniformity-Chi-squared-test"
+      - "Verify-distribution-uniformity-Naive"
+      - "Benford-s-law"
+      - "Birthday-problem"
+      - "Box-Muller-transform"
+      - "Central-limit-theorem"
+      - "Random-Latin-squares"
+      - "Random-sampling"
+      
+  cognitive_architecture:
+    description: "Concurrent systems, distributed computing, agent systems, emergence"
+    subcategories:
+      parallelism:
+        description: "Parallel and concurrent computing"
+        tasks:
+          - "Concurrent-computing"
+          - "Parallel-calculations"
+          - "Parallel-brute-force"
+          - "Multi-threading"
+      synchronization:
+        description: "Synchronization primitives and patterns"
+        tasks:
+          - "Active-object"
+          - "Synchronous-concurrency"
+          - "Mutex"
+          - "Checkpoint-synchronization"
+          - "Atomic-updates"
+          - "Semaphore"
+      concurrent_patterns:
+        description: "Classic concurrency problems and patterns"
+        tasks:
+          - "Dining-philosophers"
+          - "Producer-consumer"
+      message_passing:
+        description: "Message passing and process communication"
+        tasks:
+          - "Message-passing"
+          - "CSP-Communicating-Sequential-Processes"
+    tasks:
+      - "Concurrent-computing"
+      - "Parallel-calculations"
+      - "Parallel-brute-force"
+      - "Multi-threading"
+      - "Active-object"
+      - "Synchronous-concurrency"
+      - "Mutex"
+      - "Dining-philosophers"
+      - "Producer-consumer"
+      - "Checkpoint-synchronization"
+      - "Atomic-updates"
+      - "Semaphore"
+      - "Message-passing"
+      - "CSP-Communicating-Sequential-Processes"
+      
+  perception_motor:
+    description: "Image processing, signal processing, robotics, sensorimotor"
+    subcategories:
+      signal_processing:
+        description: "Signal processing and transforms"
+        tasks:
+          - "Fast-Fourier-transform"
+          - "Discrete-Fourier-transform"
+          - "Filter"
+          - "Deconvolution-1D"
+          - "Deconvolution-2D+"
+      image_processing:
+        description: "Image manipulation and processing"
+        tasks:
+          - "Image-convolution"
+          - "Image-noise"
+      bitmap_operations:
+        description: "Bitmap graphics and raster operations"
+        tasks:
+          - "Bitmap"
+          - "Bitmap-Bresenhams-line-algorithm"
+          - "Bitmap-Flood-fill"
+          - "Bitmap-Midpoint-circle-algorithm"
+          - "Bitmap-Read-a-PPM-file"
+          - "Bitmap-Write-a-PPM-file"
+      rendering:
+        description: "3D rendering and ray tracing"
+        tasks:
+          - "Draw-a-sphere"
+          - "Ray-casting-algorithm"
+      time_processing:
+        description: "Time-series and temporal data"
+        tasks:
+          - "Averages-Mean-time-of-day"
+    tasks:
+      - "Image-convolution"
+      - "Image-noise"
+      - "Deconvolution-1D"
+      - "Deconvolution-2D+"
+      - "Fast-Fourier-transform"
+      - "Discrete-Fourier-transform"
+      - "Filter"
+      - "Averages-Mean-time-of-day"
+      - "Bitmap"
+      - "Bitmap-Bresenhams-line-algorithm"
+      - "Bitmap-Flood-fill"
+      - "Bitmap-Midpoint-circle-algorithm"
+      - "Bitmap-Read-a-PPM-file"
+      - "Bitmap-Write-a-PPM-file"
+      - "Draw-a-sphere"
+      - "Ray-casting-algorithm"
+      
+  meta_learning:
+    description: "Self-improvement, code generation, reflection, introspection"
+    subcategories:
+      self_reference:
+        description: "Self-referential and quine programs"
+        tasks:
+          - "Quine"
+      code_generation:
+        description: "Dynamic code generation and compilation"
+        tasks:
+          - "Code-generation"
+          - "Template-metaprogramming"
+          - "Compile-time-calculation"
+      runtime_evaluation:
+        description: "Runtime evaluation and interpretation"
+        tasks:
+          - "Eval"
+          - "Runtime-evaluation"
+          - "Arithmetic-evaluation"
+          - "Execute-a-system-command"
+      introspection:
+        description: "Type and host introspection"
+        tasks:
+          - "Introspection"
+          - "Host-introspection"
+          - "Type-introspection"
+          - "Reflection"
+      evaluation_functions:
+        description: "Mathematical evaluation functions"
+        tasks:
+          - "Evaluate-binomial-coefficients"
+          - "Horners-rule-for-polynomial-evaluation"
+    tasks:
+      - "Quine"
+      - "Code-generation"
+      - "Eval"
+      - "Introspection"
+      - "Host-introspection"
+      - "Type-introspection"
+      - "Reflection"
+      - "Execute-a-system-command"
+      - "Runtime-evaluation"
+      - "Arithmetic-evaluation"
+      - "Evaluate-binomial-coefficients"
+      - "Horners-rule-for-polynomial-evaluation"
+      - "Template-metaprogramming"
+      - "Compile-time-calculation"
+
+evaluation_dimensions:
+  expressiveness:
+    description: "How naturally the language expresses the solution"
+    weight: 0.3
+    
+  performance:
+    description: "Runtime efficiency and resource usage"
+    weight: 0.25
+    
+  conciseness:
+    description: "Lines of code and complexity"
+    weight: 0.2
+    
+  readability:
+    description: "Code clarity and maintainability"
+    weight: 0.15
+    
+  ecosystem:
+    description: "Library support and tooling"
+    weight: 0.1
+
+# Programming paradigms for hypergraph analysis
+# Maps common programming paradigms to their characteristics
+paradigms:
+  imperative:
+    description: "Imperative programming with explicit state changes"
+    languages:
+      - "C"
+      - "Pascal"
+      - "Fortran"
+      - "BASIC"
+      - "Assembly"
+  
+  object_oriented:
+    description: "Object-oriented programming with encapsulation and inheritance"
+    languages:
+      - "Java"
+      - "C++"
+      - "C-sharp"
+      - "Python"
+      - "Ruby"
+      - "Smalltalk"
+  
+  functional:
+    description: "Functional programming with immutability and higher-order functions"
+    languages:
+      - "Haskell"
+      - "OCaml"
+      - "F-sharp"
+      - "Lisp"
+      - "Scheme"
+      - "Erlang"
+      - "Elixir"
+  
+  logic:
+    description: "Logic programming with declarative rules"
+    languages:
+      - "Prolog"
+      - "Mercury"
+      - "Datalog"
+  
+  concurrent:
+    description: "Languages designed for concurrent/parallel programming"
+    languages:
+      - "Erlang"
+      - "Go"
+      - "Elixir"
+      - "Rust"
+  
+  scripting:
+    description: "Dynamic scripting languages"
+    languages:
+      - "Python"
+      - "Perl"
+      - "Ruby"
+      - "JavaScript"
+      - "Lua"
+      - "Tcl"
+  
+  system:
+    description: "Systems programming languages with low-level control"
+    languages:
+      - "C"
+      - "C++"
+      - "Rust"
+      - "D"
+      - "Nim"
+  
+  scientific:
+    description: "Languages optimized for scientific computing"
+    languages:
+      - "Julia"
+      - "Fortran"
+      - "Matlab"
+      - "R"
+      - "Octave"
+  
+  multi_paradigm:
+    description: "Multi-paradigm languages supporting multiple styles"
+    languages:
+      - "Python"
+      - "Scala"
+      - "Julia"
+      - "Kotlin"
+      - "Swift"
+      - "Rust"

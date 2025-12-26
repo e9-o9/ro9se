@@ -1,0 +1,24 @@
+Cls , 0  ' 0 for non split display, eg 3 means we preserve the 3 top lines from scrolling/cla
+Report {
+	Factorial Task
+	Definitions
+               • The factorial of   0   (zero)   is defined as being   1   (unity).
+               • The   Factorial Function   of a positive integer,   n,   is defined as the product of the sequence:
+                                                                      n,   n-1,   n-2,   ...   1
+
+}
+Cls, row  ' now we preserve some lines (as row number return here)
+Module CheckIt {
+	m=1u   ' 1u is biginteger
+	k=width-tab
+	For i=1 to 1000
+		if pos>tab then print
+		m*=i
+		Print @(0), format$("{0::-4} :", i);
+		Report str$(m), k
+		' Report accumulate lines and stop at 3/4 of the screen (but not on printer)
+		' so we can break this using this line:
+		while inkey$<>"": wait 1:end while: keyboard " "			
+	Next i
+}
+Checkit

@@ -1,0 +1,47 @@
+Module Checkit {
+      Pen 14 ' yellow
+      \\ using form we set characters by rows
+      \\ this clear the screen
+      Form 80, 40
+      \\ magenta for background, all form for vertical scrolling
+      Cls 5, 0
+      Print "wait... half second"
+      Wait 500
+      \\ clear using background color
+      Cls
+      \\ set the background (using html number for color), and set 4th line as top
+      \\ for scrolling
+      Cls #11bb22, 3
+      Print "This is in 4th line"
+      Wait  1000
+      \\ now we center the form, using 12000 twips by 8000twips as border
+      \\ form inside maybe smaller
+      \\ font size is 16pt of current font
+      Font "Courier New"
+      Window 16, 12000, 8000;
+      Print "This is first line"
+      Wait 1000
+      Font "Arial"
+      \\ set the console form to screen 0, maximized
+      Window 16, 0
+      Cls 5   ' magenta
+      Back {
+            Cls 15 ' white border
+      }
+	Declare form1 Form
+	With form1, "Title","My Window", "opacity", 200  ' 0 to 255 opacity for window
+	Layer form1 {
+		Window 20, 12000, 6000;
+		cls #ff0077, 0
+		pen 0
+		Cursor 0, height-1
+		Print Part $(2, width), "This is layer form1"
+	}
+	' Open form1 Modal
+	Title "", 0   ' hide console
+	Method form1, "show", 1
+	Title "done", 1 ' show console and change title on taskbar
+
+	Declare form1 Nothing
+}
+checkit

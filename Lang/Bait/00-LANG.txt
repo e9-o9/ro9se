@@ -1,0 +1,11 @@
+{{
+language|Bait
+|site=https://github.com/bait-lang/bait
+|strength=strong
+|safety=safe
+|checking=static
+}}
+
+Bait is a simple programming language for building reliable software.
+
+Solutions are maintained at https://github.com/bait-lang/rosetta-bait. Please propose changes there.

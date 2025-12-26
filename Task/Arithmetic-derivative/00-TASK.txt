@@ -1,0 +1,35 @@
+The '''arithmetic derivative''' of an integer (more specifically, the
+'''Lagarias arithmetic derivative''') is a function defined for integers, based on prime
+factorization, by analogy with the product rule for the derivative of a function that is
+used in mathematical analysis. Accordingly, for natural numbers n, the arithmetic 
+derivative D(n) is defined as follows:
+
+;*<math>D(0) = D(1) = 0</math>.
+;*<math>D(p) = 1 \;\text{for any prime}\; p</math>.
+;*<math>D(mn) = D(m)n + mD(n) \;\text{for any}\; m,n \in N</math>. (Leibniz rule for derivatives).
+
+Additionally, for negative integers the arithmetic derivative may be defined as <math>-D(-n) \;\text{for}\; (n < 0)</math>.
+
+; Examples
+
+<math>D(2) = 1</math> and <math>D(3) = 1</math> (both are prime) so if <math>mn = 2 \cdot 3</math>, then <math>D(6) = D(2\cdot 3) = D(2)\cdot 3 + 2\cdot D(3) = 1\cdot 3 + 2\cdot 1 = 5</math>.
+
+<math>D(9) = D(3)\cdot 3 + 3\cdot D(3) = 1\cdot 3 + 3\cdot 1 = 6</math>
+
+<math>D(27) = D(3)\cdot 9 + 3\cdot D(9) = 1\cdot 9 + 3\cdot 6 = 27</math>
+
+<math>D(30) = D(5)\cdot 6 + 5\cdot D(6) = 1\cdot 6 + 5 \cdot 5 = 31</math>.
+
+; Task
+
+Find and show the arithmetic derivatives for -99 through 100.
+
+; Stretch task
+
+Find (the arithmetic derivative of <math>10^m</math>) then divided by 7, where m is from 1 to 20.
+
+; See also
+
+;* [[oeis:A003415|OEIS:A003415 - a(n) = n' = arithmetic derivative of n.]]
+;*[[wp:Arithmetic_derivative|Wikipedia: Arithmetic Derivative]]
+

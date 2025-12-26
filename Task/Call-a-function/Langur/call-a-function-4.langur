@@ -1,0 +1,2 @@
+a -> len
+# passes a to the len() function

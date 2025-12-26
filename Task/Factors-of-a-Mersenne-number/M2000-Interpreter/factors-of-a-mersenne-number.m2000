@@ -1,0 +1,39 @@
+// 67 need a lot of time 45 minutes (2758716msec) where 71 need 3.1 second (3131msec)
+Module Factors_of_a_Mersenne_number{
+	Dim q()
+	// 67 need a lot of time 51 minutes (3082671msec) where 71 need 3.5 second (3505msec)
+	q()= (11, 23, 29, 37, 41, 43, 47, 53, 59, 67, 71, 73, 79, 83, 97, 929)
+	profiler	
+	long long j=0x8000_0000
+	long long r, p, i
+	long d, dd
+	For k = 0 To len(q())-1
+		If @isPrime(q(k)) Then
+			r=q(k):dd =2*r:d=dd+1
+			while r<j: r=binary.shift(r,1): end while
+			i=1:p=r
+			Do	Do i*=i: i|Mod d:If p<j Else i*=2
+				p=binary.shift(p,1):If i>d Then i-=d
+				Until p=0:If i=1 Then Exit Else d+=dd:i=1:p=r
+			Always
+			Print "2^"; q(k); @(6); " - 1 = 0 (mod "; d; ")"
+		Else
+			Print q(k); " is not prime"
+		End If
+		Print ceil(timecount):profiler
+	Next
+	
+	Function isPrime(n As long)
+		If n Mod 2 = 0 Then = n=2 : Exit Function
+		If n Mod 3 = 0 Then = n=3 : Exit Function
+		Local d As long = 5
+		While d * d <= n
+			If n Mod d = 0 Then =False: exit function
+			d += 2
+			If n Mod d = 0 Then = False: exit function
+			d += 4
+		End While
+		=True
+	End Function
+}
+Factors_of_a_Mersenne_number

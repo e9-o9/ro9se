@@ -1,0 +1,4 @@
+with javascript_semantics
+for i=2 to 99736 by 2 do
+    if remainder(i*i,1000000)=269696 then ?i exit end if
+end for

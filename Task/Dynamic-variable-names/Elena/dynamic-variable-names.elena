@@ -1,0 +1,22 @@
+import system'dynamic;
+import extensions;
+
+class TestClass
+{
+    object variables;
+
+    constructor()
+    {
+        variables := new DynamicStruct()
+    }
+
+    function()
+    {
+        auto prop := new MessageName(console.write("Enter the variable name:").readLine());
+        (prop.setPropertyMessage())(variables,42);
+
+        Console.printLine(prop.toPrintable(),"=",(prop.getPropertyMessage())(variables)).readChar()
+    }
+}
+
+public program = new TestClass();

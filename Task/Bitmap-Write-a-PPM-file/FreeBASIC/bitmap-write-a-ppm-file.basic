@@ -1,0 +1,37 @@
+Dim As Integer ancho, alto
+ancho = 150: alto = 200
+Dim As Integer x, y ' width, height
+Dim As Ulong kolor
+Screenres ancho, alto, 32
+
+' Draw circles
+Screenlock
+Circle (75, 100), 50, Rgb(255, 0, 0),,,, F
+Circle (75, 100), 35, Rgb(0, 255, 0),,,, F
+Circle (75, 100), 20, Rgb(0, 0, 255),,,, F
+Screenunlock
+
+' Open PPM file to write
+Dim As Integer ff = Freefile
+Open "example.ppm" For Binary As #ff
+If Err > 0 Then Print "Error opening output file": End
+
+' Create PPM file header
+Print #ff, "P6"
+Print #ff, "# Created using FreeBASIC"
+Print #ff, ancho & " " & alto
+Print #ff, "255"
+
+' Write image data to PPM file
+For y = 0 To alto - 1
+    For x = 0 To ancho - 1
+        kolor = Point(x, y)
+        Put #ff, , Cbyte(kolor Shr 8)  ' Green
+        Put #ff, , Cbyte(kolor)        ' Blue
+        Put #ff, , Cbyte(kolor Shr 16) ' Red
+    Next
+Next
+
+Close #ff
+
+Sleep

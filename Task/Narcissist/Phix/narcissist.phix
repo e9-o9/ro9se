@@ -1,0 +1,1 @@
+printf(1,"\n\n%t\n\n",get_text(command_line()[2],GT_LF_LAST)[1]=gets(0))

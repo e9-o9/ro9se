@@ -1,0 +1,11 @@
+(function in-block? c
+  (when (let block-idx (find-idx (substr? (upper-case c)) rem-blocks))
+    (var! rem-blocks drop block-idx)))
+
+(function can-make-word word
+  (var rem-blocks ["BO" "XK" "DQ" "CP" "NA" "GT" "RE" "TG" "QD" "FS" "JW" "HU" "VI" "AN" "OB" "ER" "FS" "LY" "PC" "ZM"])
+  (.. and (map in-block? word)))
+
+(-> ["A" "bark" "Book" "TREAT" "Common" "squaD" "CoNFuSe"] ; Notice case insensitivity
+    (map #(str % " => " (can-make-word %)))
+    (join ", "))

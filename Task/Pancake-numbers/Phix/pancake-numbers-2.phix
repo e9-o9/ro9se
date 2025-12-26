@@ -1,0 +1,15 @@
+with javascript_semantics
+function pancake(integer n)
+    integer gap = 2, pg = 1, sum_gaps = gap, adj = -1
+    while sum_gaps<n do
+        adj += 1
+        {pg,gap} = {gap,gap+pg}
+        sum_gaps += gap
+    end while
+    n += adj
+    return n
+end function
+sequence t = tagset(20),
+         r = columnize({t,apply(t,pancake)}),
+         p = apply(true,sprintf,{{"p(%2d) = %2d"},r})
+printf(1,"%s\n",join_by(p,1,5))

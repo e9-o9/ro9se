@@ -1,0 +1,33 @@
+function munchausen(integer lo, maxlen)
+    string digits = sprint(lo)
+    sequence res = {}
+    integer count = 0, l = length(digits)
+    atom lim = power(10,l), lom = 0
+    while length(digits)<=maxlen do
+        count += 1
+        atom tot = 0
+        for j=1 to length(digits) do
+            integer d = digits[j]-'0'
+            if d then tot += power(d,d) end if
+        end for
+        if tot>=lom and tot<=lim and sort(sprint(tot))=digits then
+            res &= tot
+        end if
+        for j=length(digits) to 0 by -1 do
+            if j=0 then
+                digits = repeat('0',length(digits)+1)
+                lim *= 10
+                lom = (lom+1)*10-1
+                exit
+            elsif digits[j]<'9' then
+                digits[j..$] = digits[j]+1
+                exit
+            end if
+        end for
+    end while
+    return {count,res}
+end function
+atom t0 = time()
+printf(1,"Munchausen 1..4 digits (%d combinations checked): %v\n",munchausen(1,4))
+printf(1,"All Munchausen, 0..11 digits (%d combinations): %v\n",munchausen(0,11))
+?elapsed(time()-t0)

@@ -1,0 +1,11 @@
+with javascript_semantics
+function my_compare(sequence a, b)
+    integer c = -compare(length(a),length(b))  -- descending length
+    if c=0 then
+        c = compare(lower(a),lower(b))         -- ascending lexical within same length
+    end if
+    return c
+--  return compare({length(b),lower(a)},{length(a),lower(b)}) -- single-line equivalent
+end function
+?custom_sort(my_compare,{"Here", "are", "some", "sample", "strings", "to", "be", "sorted"})
+--?custom_sort(my_compare,split("Here are some sample strings to be sorted")) -- equivalent

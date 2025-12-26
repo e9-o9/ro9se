@@ -1,0 +1,20 @@
+val isPrime = fn(i) {
+	i == 2 or i > 2 and
+		not any(series(2 .. i ^/ 2, asconly=true), by=fn x:i div x)
+}
+
+val sumDigits = fn i: fold(s2n(string(i)), by=fn{+})
+
+writeln "Additive primes less than 500:"
+
+var cnt = 0
+
+for i in [2] ~ series(3..500, inc=2) {
+    if isPrime(i) and isPrime(sumDigits(i)) {
+        write "{{i:3}}  "
+        cnt += 1
+        if cnt div 10: writeln()
+    }
+}
+
+writeln "\n\n{{cnt}} additive primes found.\n"

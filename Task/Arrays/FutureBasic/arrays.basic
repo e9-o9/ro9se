@@ -1,0 +1,184 @@
+window 1, @"FutureBasic Arrays", (0,0,480,450)
+
+begin globals
+  dynamic gA1(10) as long
+  dynamic gA2(10) as Str255
+end globals
+
+void local fn CType
+  long i
+
+  text ,, fn ColorGray
+  print @"// C-type fixed-length"
+  text
+  long a1(4) = {10,5,12,8,7}
+  for i = 0 to 4
+    print a1(i),
+  next
+  print
+
+  a1(0) = 24
+  a1(2) = 18
+  a1(4) = 76
+  for i = 0 to 4
+    print a1(i),
+  next
+  print
+
+  CFStringRef a2(4) = {@"Alpha",@"Bravo",@"Tango",@"Delta",@"Echo"}
+  for i = 0 to 4
+    print a2(i),
+  next
+  print
+
+  a2(2) = @"Charlie"
+  for i = 0 to 4
+    print a2(i),
+  next
+  print : print
+end fn
+
+void local fn CTypeDynamic
+  long i
+
+  text ,, fn ColorGray
+  print @"// C-type dynamic"
+  text
+  gA1(0) = 46
+  gA1(1) = 38
+  gA1(10) = 67
+  for i = 0 to fn DynamicNextElement( dynamic(gA1) ) - 1
+  print gA1(i),
+next
+print
+
+gA1(5) = 19
+gA1(10) = 22
+for i = 0 to fn DynamicNextElement( dynamic(gA1) ) - 1
+print gA1(i),
+next
+print
+
+gA2(0) = "Kilo"
+gA2(1) = "Lima"
+gA2(5) = "Mike"
+for i = 0 to fn DynamicNextElement( dynamic(gA2) ) - 1
+print gA2(i),
+next
+print
+
+gA2(1) = "November"
+gA2(6) = "Oscar"
+for i = 0 to fn DynamicNextElement( dynamic(gA2) ) - 1
+print gA2(i),
+next
+print : print
+end fn
+
+void local fn CoreFoundationImmutable
+  long i
+
+  text ,, fn ColorGray
+  print @"// CoreFoundation (CF) immutable"
+  text
+  CFArrayRef a5 = @[@10,@5,@12,@8,@7]
+  for i = 0 to 4
+    print a5[i],
+  next
+  print
+
+  CFArrayRef a6 = @[@"Alpha",@"Bravo",@"Charlie",@"Delta",@"Echo"]
+  for i = 0 to 4
+    print a6[i],
+  next
+  print : print
+end fn
+
+void local fn CoreFoundationMutableFixedLength
+  long i
+
+  text ,, fn ColorGray
+  print @"// CoreFoundation (CF) mutable, fixed-length"
+  text
+  CFMutableArrayRef a1 = fn MutableArrayWithCapacity(3)
+  a1[0] = @79 : a1[1] = @43 : a1[2] = @101
+  for i = 0 to len(a1) - 1
+    print a1[i],
+  next
+  print
+
+  a1[2] = @15
+  for i = 0 to len(a1) - 1
+    print a1[i],
+  next
+  print
+
+  CFMutableArrayRef a2 = fn MutableArrayWithCapacity(4)
+  a2[0] = @"Whisky" : a2[1] = @"Oscar" : a2[2] = @"Yankee" : a2[3] = @"Sierra"
+  for i = 0 to len(a2) - 1
+    print a2[i],
+  next
+  print
+
+  a2[1] = @"Xray"
+  a2[3] = @"Zulu"
+  for i = 0 to len(a2) - 1
+    print a2[i],
+  next
+  print : print
+end fn
+
+void local fn CoreFoundationMutableDynamic
+  long i
+
+  text ,, fn ColorGray
+  print @"// CoreFoundation (CF) mutable, dynamic"
+  text
+  CFMutableArrayRef a1 = fn MutableArrayWithCapacity(0)
+  MutableArrayAddObject( a1, @"Juliet" )
+  MutableArrayAddObject( a1, @"Golf" )
+  MutableArrayAddObject( a1, @"India" )
+  for i = 0 to len(a1) - 1
+    print a1[i],
+  next
+  print
+
+  a1[0] = @"Foxtrot"
+  a1[2] = @"Hotel"
+  for i = 0 to len(a1) - 1
+    print a1[i],
+  next
+
+  print : print
+end fn
+
+void local fn FB_MDA
+  long i
+
+  text ,, fn ColorGray
+  print @"// FB MDA - mutable, dynamic, multi-dimensional"
+  text
+
+  mda() = {@"Alpha",@"Romeo",@"Mike"}
+  for i = 0 to mda_count - 1
+    print mda(i),
+  next
+
+  print
+
+  mda_swap(0),(2)
+  mda(1) = @"Delta"
+
+  for i = 0 to mda_count - 1
+    print mda(i),
+  next
+end fn
+
+fn CType
+fn CTypeDynamic
+fn CoreFoundationImmutable
+fn CoreFoundationMutableFixedLength
+fn CoreFoundationMutableDynamic
+fn FB_MDA
+
+HandleEvents

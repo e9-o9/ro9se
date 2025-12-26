@@ -1,0 +1,29 @@
+(a) m n
+M ZERO
+(=) m 0
+(add1) n
+
+(a) m n
+N ZERO
+(=) n 0
+(a) (sub1) m 1
+
+(a) m n
+DEFAULT
+#true
+(a) (sub1) m (a) m (sub1) n
+
+(add1) n
+=========
+#true
+(003) "+" n 1
+
+(sub1) n
+=========
+#true
+(003) "-" n 1
+
+(=) n1 n2
+=========
+#true
+(003) "=" n1 n2

@@ -1,0 +1,51 @@
+string deBruijn = ""
+for n=0 to 99 do
+    string a = sprintf("%02d",n)
+    integer a1 = a[1],
+            a2 = a[2]
+    if a2>=a1 then
+        deBruijn &= iff(a1=a2?a1:a)
+        for m=n+1 to 99 do
+            string ms = sprintf("%02d",m)
+            if ms[2]>a1 then
+                deBruijn &= a&ms
+            end if
+        end for
+   end if
+end for
+deBruijn &= "000"
+printf(1,"de Bruijn sequence length: %d\n\n",length(deBruijn))
+printf(1,"First 130 characters:\n%s\n\n",deBruijn[1..130])
+printf(1,"Last 130 characters:\n%s\n\n",deBruijn[-130..-1])
+
+function check(string text)
+    sequence res = {}
+    sequence found = repeat(0,10000)
+    integer k
+    for i=1 to length(text)-3 do
+        k = to_integer(text[i..i+3],-1)+1
+        if k!=0 then found[k] += 1 end if
+    end for
+    for i=1 to 10000 do
+        k = found[i]
+        if k!=1 then
+            string e = sprintf("Pin number %04d ",i-1)
+            e &= iff(k=0?"missing":sprintf("occurs %d times",k))
+            res = append(res,e)
+        end if
+    end for
+    k = length(res)
+    if k=0 then
+        res = "No errors found"
+    else
+        string s = iff(k=1?"":"s")
+        res = sprintf("%d error%s found:\n ",{k,s})&join(res,"\n ")
+    end if
+    return res
+end function
+
+printf(1,"Missing 4 digit PINs in this sequence: %s\n", check(deBruijn))
+printf(1,"Missing 4 digit PINs in the reversed sequence: %s\n",check(reverse(deBruijn)))
+printf(1,"4444th digit in the sequence: %c (setting it to .)\n", deBruijn[4444])
+deBruijn[4444] = '.'
+printf(1,"Re-running checks: %s\n",check(deBruijn))

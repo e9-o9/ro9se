@@ -1,0 +1,2 @@
+PrintBits ← &p/$"__"⇌⋯
+≡PrintBits 5_50_9000

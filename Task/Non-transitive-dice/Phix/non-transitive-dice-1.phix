@@ -1,0 +1,217 @@
+with javascript_semantics
+integer mx = 4, -- max number of a die side (later set to 6)
+        mn = 1  -- min number of a die side (later set to 0)
+
+function possible_dice(integer sides)
+    --
+    -- construct all non-descending permutes of mn..mx,
+    -- ie/eg {1,1,1,1}..{4,4,4,4} with (say), amongst
+    --       others, {1,1,2,4} but not {1,1,4,2}.
+    --
+    sequence die = repeat(mn,sides),    -- (main work area)
+             res = {deep_copy(die)}
+    while true do
+        -- find rightmost incrementable side
+        --  ie/eg {1,2,4,4} -> set rdx to 2 (if 1-based indexing)
+        integer rdx = rfind(true,sq_lt(die,mx))
+        if rdx=0 then exit end if
+        -- set that and all later to that incremented
+        --  ie/eg {1,2,4,4} -> {1,3,3,3}
+        die[rdx..$] = die[rdx]+1
+        res = append(res,deep_copy(die))
+    end while
+    printf(1,"There are %d possible %d..%d %d-sided dice\n",{length(res),mn,mx,sides})
+    return res
+end function
+
+function Dnn(sequence die)
+    -- reconstruct the python die numbering (string)
+    -- essentially just treat it as a base-N number.
+    integer l = length(die),    -- (sides)
+            N = mx-mn+1,        -- (base)
+            n = 0               -- (result)
+    for k=1 to l do
+        n += (die[k]-mn)*power(N,l-k)
+    end for
+    return sprintf("D%d",n+1)
+end function
+
+function cmpd(sequence die1, die2)
+    -- compares two die returning -1, 0, or +1 for <, =, >
+    integer res = 0
+    for i=1 to length(die1) do
+        res += sum(sq_cmp(die1[i],die2))
+    end for
+    return sign(res)
+end function
+
+function low_rotation(sequence set)
+    integer k = find(min(set),set)
+    return set[k..$]&set[1..k-1]
+end function
+
+integer rotations
+function find_non_trans(sequence dice, integer n=3)
+    atom t1 = time()+1
+    integer l = length(dice), sk, sk1, c
+    sequence set = repeat(1,n), -- (indexes to dice)
+             cache = repeat(repeat(-2,l),l),
+             res = {}
+    while true do
+        bool valid = true
+        for k=1 to n-1 do
+            sk = set[k]
+            sk1 = set[k+1]
+            c = cache[sk][sk1]
+            if c=-2 then
+                c = cmpd(dice[sk],dice[sk1])
+                cache[sk][sk1] = c
+            end if
+            if c!=-1 then
+                valid = false
+                -- force k+1 to be incremented next:
+                set[k+2..$] = l
+                exit
+            end if
+        end for
+        if valid then
+            sk = set[1]
+            sk1 = set[$]
+            c = cache[sk][sk1]
+            if c=-2 then
+                c = cmpd(dice[sk],dice[sk1])
+                cache[sk][sk1] = c
+            end if
+            if c=+1 then
+                res = append(res,low_rotation(set))
+            end if
+        end if
+        -- find rightmost incrementable die index
+        --  ie/eg if l is 35 and set is {1,2,35,35}
+        --     -> set rdx to 2 (if 1-based indexing)
+        integer rdx = rfind(true,sq_lt(set,l))
+        if rdx=0 then exit end if
+        -- increment that and reset all later
+        --  ie/eg {1,2,35,35} -> {1,3,1,1}
+        set[rdx] += 1
+        set[rdx+1..$] = 1
+        if time()>t1 and platform()!=JS then
+            progress("working... (%d/%d)\r",{set[1],l})
+            t1 = time()+1
+        end if
+    end while
+    if platform()!=JS then
+        progress("")
+    end if
+    rotations = length(res)
+    res = unique(res)
+    rotations -= length(res)
+    return res
+end function
+
+function verbose_cmp(sequence die1, die2)
+    -- compares two die returning their relationship of their names as a string
+    integer c = cmpd(die1,die2)
+    string op = {"<","=",">"}[c+2],
+           n1 = Dnn(die1),
+           n2 = Dnn(die2)
+    return sprintf("%s %s %s",{n1,op,n2})
+end function
+
+function verbose_dice_cmp(sequence dice, set)
+    sequence c = {}, d1, d2
+    for j=1 to length(set)-1 do
+        d1 = dice[set[j]]
+        d2 = dice[set[j+1]]
+        c = append(c,verbose_cmp(d1,d2))
+    end for
+    d1 = dice[set[1]]
+    d2 = dice[set[$]]
+    c = append(c,verbose_cmp(d1,d2))
+    return join(c,", ")
+end function
+
+procedure show_dice(sequence dice, non_trans, integer N)
+    integer l = length(non_trans),
+            omissions = 0,
+            last = 0
+    if N then
+        printf(1,"\n  Non_transitive length-%d combinations found: %d\n",{N,l+rotations})
+    end if
+    for i=1 to l do
+        object ni = non_trans[i]
+        if sequence(ni) then
+            if i<5 then
+                printf(1,"\n")
+                for j=1 to length(ni) do
+                    sequence d = dice[ni[j]]
+                    printf(1,"    %s:%v\n",{Dnn(d),d})
+                end for
+                last = i
+            else
+                omissions += 1
+            end if
+        end if
+    end for
+    if omissions then
+        printf(1,"    (%d omitted)\n",omissions)
+    end if
+    if rotations then
+        printf(1,"    (%d rotations omitted)\n",rotations)
+    end if
+    if last then
+        printf(1,"\n")
+        if mx<=6 and mn=1 then
+            printf(1,"  More verbose comparison of last result:\n")
+        end if
+        printf(1,"   %s\n",{verbose_dice_cmp(dice,non_trans[last])})
+        printf(1,"\n  ====\n")
+    end if
+    printf(1,"\n")
+end procedure
+
+atom t0 = time()
+sequence dice = possible_dice(4)
+for N=3 to 4 do
+    show_dice(dice,find_non_trans(dice,N),N)
+end for
+
+-- From the numberphile video (Efron's dice):
+mx = 6
+mn = 0
+dice = possible_dice(6)
+--show_dice(dice,find_non_trans(dice,4),4)
+-- ok, dunno about you but I'm not waiting for power(924,4) permutes...
+--      limit to the ones discussed, plus another 4 random ones
+--      (hopefully it'll just pick out the right ones...)
+printf(1,"\nEfron's dice\n")
+dice = {{0,0,4,4,4,4},
+        {1,1,1,1,1,1},  -- (rand)
+        {1,1,1,5,5,5},
+        {1,2,3,4,5,6},  -- (rand)
+        {2,2,2,2,6,6},
+        {5,5,5,6,6,6},  -- (rand)
+        {3,3,3,3,3,3},
+        {6,6,6,6,6,6}}  -- (rand)
+
+show_dice(dice,find_non_trans(dice,4),0)
+
+-- and from wp:
+mx = 9
+mn = 1
+dice = possible_dice(6)
+printf(1,"\nFrom wp\n")
+dice = {{1,1,6,6,8,8},
+        {2,2,4,4,9,9},
+        {3,3,5,5,7,7}}
+
+show_dice(dice,find_non_trans(dice,3),0)
+
+-- Miwin's dice
+printf(1,"Miwin's dice\n")
+dice = {{1,2,5,6,7,9},
+        {1,3,4,5,8,9},
+        {2,3,4,6,7,8}}
+
+show_dice(dice,find_non_trans(dice,3),0)
+printf(1,"%s\n\n",elapsed(time()-t0))

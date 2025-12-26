@@ -1,0 +1,179 @@
+#!/usr/bin/env python3
+"""
+OpenCog Atom Type Expression Generator
+
+Generates and displays formalized expressions for cognitive domain and language paradigm atoms.
+"""
+
+import sys
+import os
+import json
+from pathlib import Path
+
+# Add parent directory to path
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
+from lib.atom_type_builder import AtomTypeBuilder
+
+
+def main():
+    """Main entry point"""
+    # Get repository root
+    script_dir = Path(__file__).parent
+    root_dir = script_dir.parent.parent
+    
+    print("Building atom type system from RosettaCog data...")
+    print()
+    
+    # Build the atom type system
+    builder = AtomTypeBuilder(str(root_dir))
+    atom_system = builder.build()
+    
+    # Print summary
+    atom_system.print_summary()
+    
+    # Export to JSON
+    output_file = root_dir / 'opencog' / 'data' / 'atom-type-expressions.json'
+    atom_system.export_to_json(str(output_file))
+    print()
+    print(f"Exported complete atom type system to: {output_file}")
+    print()
+    
+    # Generate insights report
+    print("=" * 80)
+    print("DETAILED COMPARISON INSIGHTS")
+    print("=" * 80)
+    
+    insights = atom_system.generate_comparison_insights()
+    
+    print("\n1. STRUCTURAL COMPARISON")
+    print("-" * 80)
+    struct = insights['structural_comparison']
+    print(f"Number of cognitive domains: {struct['cognitive_domain_count']}")
+    print(f"Number of language paradigms: {struct['language_paradigm_count']}")
+    print(f"Domain-to-paradigm ratio: {struct['ratio']:.2f}")
+    print(f"Average subcategories per domain: {struct['avg_subcategories_per_domain']:.1f}")
+    print(f"Average languages per paradigm: {struct['avg_languages_per_paradigm']:.1f}")
+    print(f"\nKey insight: {struct['structural_similarity']}")
+    
+    print("\n2. COMPLEXITY ANALYSIS")
+    print("-" * 80)
+    complexity = insights['complexity_analysis']
+    print("Domain complexities (C(d) = |Ω_d| × |Σ_d| × log(|Ψ_d|)):")
+    for domain, c_value in sorted(
+        complexity['domain_complexities'].items(), 
+        key=lambda x: x[1], 
+        reverse=True
+    ):
+        print(f"  {domain}: {c_value:.1f}")
+    
+    print("\nParadigm versatilities (V(p) = |Λ_p| × Σ(Ξ_p) / |Features|):")
+    for paradigm, v_value in sorted(
+        complexity['paradigm_versatilities'].items(),
+        key=lambda x: x[1],
+        reverse=True
+    ):
+        print(f"  {paradigm}: {v_value:.2f}")
+    
+    print("\n3. COVERAGE ANALYSIS")
+    print("-" * 80)
+    coverage = insights['coverage_analysis']
+    print(f"Total tasks across all cognitive domains: {coverage['total_cognitive_tasks']}")
+    print(f"Total languages across all paradigms: {coverage['total_paradigm_languages']}")
+    
+    print("\nTasks per domain:")
+    for domain, count in sorted(
+        coverage['tasks_per_domain'].items(),
+        key=lambda x: x[1],
+        reverse=True
+    ):
+        print(f"  {domain}: {count}")
+    
+    print("\nLanguages per paradigm:")
+    for paradigm, count in sorted(
+        coverage['languages_per_paradigm'].items(),
+        key=lambda x: x[1],
+        reverse=True
+    ):
+        print(f"  {paradigm}: {count}")
+    
+    print("\n4. AFFINITY PATTERNS")
+    print("-" * 80)
+    affinities = insights['affinity_patterns']
+    for paradigm, affinity_data in sorted(affinities.items()):
+        print(f"\n{paradigm}:")
+        print("  Strongest domain affinities:")
+        for domain, score in affinity_data['strongest_domains']:
+            print(f"    {domain}: {score:.2f}")
+        print("  Weakest domain affinities:")
+        for domain, score in affinity_data['weakest_domains']:
+            print(f"    {domain}: {score:.2f}")
+    
+    print("\n" + "=" * 80)
+    print("KEY INSIGHTS FROM COMPARISON")
+    print("=" * 80)
+    
+    print("""
+1. STRUCTURAL SYMMETRY
+   Both atom categories use a 4-tuple representation (⟨·,·,·,·⟩) but with
+   domain-specific semantics. This reveals a deep structural symmetry:
+   - Cognitive domains organize around tasks (Ω), structure (Σ), processes (Ψ), metrics (Φ)
+   - Language paradigms organize around languages (Λ), features (Π), models (Θ), applicability (Ξ)
+
+2. ASYMMETRIC GRANULARITY
+   The 10:9 ratio reveals cognitive domains are slightly more granular than
+   language paradigms. The average of 4.5 subcategories per domain creates
+   45 total subcategories, providing fine-grained specialization.
+
+3. PARADIGM VERSATILITY HIERARCHY
+   Multi-paradigm languages show highest versatility, followed by scripting
+   and object-oriented paradigms. This suggests flexibility correlates with
+   versatility across cognitive domains.
+
+4. DOMAIN COMPLEXITY HIERARCHY
+   Natural language processing and planning/problem-solving show highest
+   complexity scores, indicating they involve more tasks, subcategories,
+   and cognitive processes.
+
+5. AFFINITY PATTERNS
+   Clear paradigm-domain affinity patterns emerge:
+   - Logic paradigm → Symbolic reasoning (1.0 affinity)
+   - Concurrent paradigm → Cognitive architecture (1.0 affinity)
+   - Functional paradigm → Symbolic reasoning, NLP, Meta-learning (0.9 affinity)
+   - Scientific paradigm → Machine learning, Uncertainty reasoning (0.9 affinity)
+   
+   This suggests paradigms have "natural domains" where they excel.
+
+6. COMPOSITIONAL POTENTIAL
+   The expression framework enables compositional reasoning:
+   - Paradigm combinations: LP(p₁) ⊗ LP(p₂) → multi-paradigm capabilities
+   - Domain integrations: CD(d₁) ⊕ CD(d₂) → hybrid cognitive architectures
+   - Cross-product analysis: LP(p) × CD(d) → language-domain fitness
+
+7. OPTIMIZATION OPPORTUNITIES
+   The formalism reveals optimization strategies:
+   - For maximum coverage: Use multi-paradigm languages
+   - For specific domains: Match paradigm to highest affinity
+   - For complex tasks: Combine complementary paradigms
+   - For performance: Align paradigm features with domain processes
+""")
+    
+    print("\n" + "=" * 80)
+    print("ALGEBRAIC PROPERTIES")
+    print("=" * 80)
+    print("""
+The atom type expressions support algebraic operations:
+
+1. INTERSECTION: CD(d₁) ∩ CD(d₂) = tasks common to both domains
+2. UNION: CD(d₁) ∪ CD(d₂) = combined task universe
+3. COMPOSITION: LP(p) ∘ CD(d) = paradigm applied to domain
+4. AFFINITY: A(p,d) = Ξₚ(d) = applicability score
+5. COVERAGE: |Λₚ ∩ L(d)| = languages in paradigm implementing domain
+
+These operations enable quantitative reasoning about language selection,
+paradigm composition, and domain integration.
+""")
+
+
+if __name__ == '__main__':
+    main()

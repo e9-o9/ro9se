@@ -1,0 +1,25 @@
+Module Checkit {
+	For i=1 to 10
+		Print i;
+		If i=10 Then Continue
+		Print ",";
+	Next i
+	Print
+	i=1
+	{	Print i;
+		If i=10 Then Continue
+		loop  ' this mark block for loop		
+		Print ",";
+		i++
+	}
+	Print
+05	REM like Basic Old type
+10	LET i=0
+20	i=i+1
+30	PRINT i;
+40	IF i=10 THEN 70
+50	PRINT ",";
+60	GOTO 20
+70	PRINT
+}
+Checkit

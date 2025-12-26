@@ -1,0 +1,7 @@
+(var c 100   ;number of children in each generation
+     p 0.05) ;mutation probability
+
+(var target "METHINKS IT IS LIKE A WEASEL"
+     tsize (len target))
+
+(var alphabet (to-vec " ABCDEFGHIJLKLMNOPQRSTUVWXYZ"))

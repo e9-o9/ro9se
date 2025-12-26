@@ -1,0 +1,108 @@
+#!/usr/bin/env python3
+"""
+OpenCog Category Evaluator
+
+Evaluates a specific AI category across all languages.
+"""
+
+import sys
+import json
+from pathlib import Path
+
+# Add lib directory to path
+sys.path.insert(0, str(Path(__file__).parent.parent / "lib"))
+
+from opencog_analyzer import OpenCogAnalyzer
+
+
+def main():
+    if len(sys.argv) < 2:
+        print("Usage: opencog-eval-category <category-name>")
+        print()
+        print("Available categories:")
+        print("  - symbolic_reasoning")
+        print("  - pattern_recognition")
+        print("  - knowledge_representation")
+        print("  - machine_learning")
+        print("  - natural_language")
+        print("  - planning_problem_solving")
+        print("  - uncertainty_reasoning")
+        print("  - cognitive_architecture")
+        print("  - perception_motor")
+        print("  - meta_learning")
+        sys.exit(1)
+    
+    category = sys.argv[1]
+    
+    # Get repository root
+    script_dir = Path(__file__).parent.parent.parent
+    analyzer = OpenCogAnalyzer(str(script_dir))
+    
+    # Check if category exists
+    categories = analyzer.categories.get('categories', {})
+    if category not in categories:
+        print(f"Error: Category '{category}' not found")
+        print()
+        print("Available categories:")
+        for cat_name in sorted(categories.keys()):
+            print(f"  - {cat_name}")
+        sys.exit(1)
+    
+    category_info = categories[category]
+    
+    print("=" * 80)
+    print(f"OpenCog Category Evaluation: {category}")
+    print("=" * 80)
+    print()
+    print(f"Description: {category_info.get('description', 'N/A')}")
+    print()
+    
+    # Analyze all languages for this category
+    languages = analyzer.get_all_languages()
+    lang_coverage = []
+    
+    for lang in languages:
+        analysis = analyzer.analyze_language(lang)
+        coverage = analysis['coverage_by_category'].get(category, 0)
+        
+        if coverage > 0:
+            lang_coverage.append({
+                'language': lang,
+                'task_count': coverage,
+                'tasks': analysis['category_breakdown'].get(category, [])
+            })
+    
+    # Sort by coverage
+    lang_coverage.sort(key=lambda x: x['task_count'], reverse=True)
+    
+    print(f"Languages implementing {category} tasks: {len(lang_coverage)}")
+    print()
+    print("Top Languages for this Category:")
+    print("-" * 80)
+    print(f"{'Rank':<6} {'Language':<30} {'Tasks Implemented':<20}")
+    print("-" * 80)
+    
+    for idx, data in enumerate(lang_coverage[:20], 1):
+        print(f"{idx:<6} {data['language']:<30} {data['task_count']:<20}")
+    
+    if not lang_coverage:
+        print("  No languages found implementing tasks in this category")
+    
+    print()
+    print("=" * 80)
+    
+    # Show task patterns
+    if 'tasks' in category_info and category_info['tasks']:
+        print()
+        print("Task Patterns in this Category:")
+        print("-" * 80)
+        for task_pattern in category_info['tasks'][:10]:
+            print(f"  - {task_pattern}")
+        if len(category_info['tasks']) > 10:
+            print(f"  ... and {len(category_info['tasks']) - 10} more")
+    
+    print()
+
+
+if __name__ == '__main__':
+    main()

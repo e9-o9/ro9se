@@ -1,0 +1,5 @@
+val limit = 70
+
+for i of limit {
+    writeln "10x{{i}} == 8x{{i:8x}}"
+}

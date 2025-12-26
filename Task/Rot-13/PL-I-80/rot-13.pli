@@ -1,0 +1,29 @@
+rot13_test: procedure options(main);
+
+    dcl (plain, encoded) char(127) varying;
+    plain = 'The quick brown fox jumps over the lazy dog.';
+    put skip list ('Plain text:', plain);
+    encoded = rot13(plain);
+    put skip list ('Encoded   :', encoded);
+    put skip list ('Restored  :', rot13(encoded));
+
+    stop;
+
+rot13:
+    procedure (s) returns (char(127) varying);
+      dcl
+        s char(127) varying,
+        ch char(1),
+        i fixed bin(15);
+      do i = 1 to length(s);
+        ch = substr(s,i,1);
+        if (ch >= 'a' & ch <= 'm') | (ch >= 'A' & ch <= 'M')
+           then ch = ascii(rank(ch) + 13);
+        else if (ch >= 'n' & ch <= 'z') | (ch >= 'N' & ch <= 'Z')
+           then ch = ascii(rank(ch) - 13);
+        substr(s,i,1) = ch;
+      end;
+      return (s);
+    end rot13;
+
+end rot13_test;

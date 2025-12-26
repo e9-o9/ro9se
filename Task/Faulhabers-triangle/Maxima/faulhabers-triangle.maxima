@@ -1,0 +1,9 @@
+faulhaber_fraction(n, k) :=
+	    if n = 0 and k = 1 then 1
+	    else if k >= 2 and k <= n + 1 then (n/k) * faulhaber_fraction(n-1, k-1)
+	    else if k = 1 then 1 - sum(faulhaber_fraction(n, i), i, 2, n+1)
+	    else 0$
+
+faulhaber_row(n):=makelist(faulhaber_fraction(n,k),k,1,n+1)$
+/* Example */
+triangle_faulhaber_first_ten_rows:block(makelist(faulhaber_row(i),i,0,9),table_form(%%));

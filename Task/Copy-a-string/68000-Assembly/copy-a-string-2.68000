@@ -1,0 +1,13 @@
+StringRam equ $100000
+
+myString: DC.B "HELLO WORLD",0
+EVEN
+
+LEA myString,A3
+LEA StringRam,A4
+
+CopyString:
+MOVE.B (A3)+,(A4)+  ;Copy one byte.
+BNE CopyString      ;Not zero, do more bytes.
+
+;program ends here.

@@ -1,0 +1,2 @@
+replace("abcdef", by=re/abc/, with="Y")
+# result: "Ydef"

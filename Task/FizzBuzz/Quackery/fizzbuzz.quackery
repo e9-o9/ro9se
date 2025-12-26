@@ -1,0 +1,8 @@
+  100 times
+    [ i^ 1+ true
+      over 3 mod not
+        if [ say "fizz" drop false ]
+      over 5 mod not
+        if [ say "buzz" drop false ]
+      iff echo else drop
+      sp ]

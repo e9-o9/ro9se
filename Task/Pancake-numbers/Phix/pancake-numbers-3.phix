@@ -1,0 +1,36 @@
+with javascript_semantics
+function visitor(sequence stack, integer /*unused*/, sequence stacks)
+    for pos=2 to length(stack) do
+--  for pos=0 to length(stack)-2 do
+        sequence newstack = reverse(stack[1..pos])&stack[pos+1..$]
+--      sequence newstack = stack[1..pos]&reverse(stack[pos+1..$])
+        if getd_index(newstack,stacks[1])=NULL then
+            setd(newstack,0,stacks[$]) -- (next round)
+            setd(newstack,0,stacks[1]) -- (the master)
+        end if
+    end for
+    return 1
+end function
+
+function pancake(integer len)
+    sequence goalstack = tagset(len),
+             stacks = {new_dict({{goalstack,0}})}
+    while true do
+        stacks &= new_dict()
+        -- add any flips of stacks[$-1]
+        --   not already in stacks[1]
+        --               to stacks[$]
+        traverse_dict(visitor,stacks,stacks[$-1])
+        if dict_size(stacks[$])=0 then exit end if
+    end while
+    sequence eg = getd_partial_key(0,stacks[$-1],true)
+    integer sz = dict_size(stacks[$-1])
+    papply(stacks,destroy_dict)
+    return {length(stacks)-2,eg,sz}
+end function
+
+atom t0 = time()
+for n=1 to 8 do -- (for <2s)
+    {integer pn, sequence eg, integer sz} = pancake(n)
+    printf(1,"p(%d) = %d, example: %v (of %,d, %s)\n",{n,pn,eg,sz,elapsed(time()-t0)})
+end for

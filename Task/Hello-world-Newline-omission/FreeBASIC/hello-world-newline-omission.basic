@@ -1,0 +1,4 @@
+' FB 1.10.1 Win64
+
+Print "Goodbye, World!";  ' the trailing semi-colon suppresses the new line
+Sleep

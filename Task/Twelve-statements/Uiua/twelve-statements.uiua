@@ -1,0 +1,26 @@
+Even ← =1◿2⇡⧻          # nb indexes are zero-based
+S₁ ← =12⧻              # Total is always twelve (don't test)
+S₂ ← =3⧻⊚↘6            # Three of last six are true
+S₃ ← =2⧻⊚⊏⊚Even.       # Exactly two even rules are true
+S₄ ← ⨬(⋅1|/↧)⊢.⊏4_5_6  # If 5 is true so must 6 and 7 be.
+S₅ ← /↧¬⊏[1 2 3]       # 2, 3, 4 are all false
+S₆ ← =4⧻⊚⊏⊚¬Even.      # Four odd rules are true
+S₇ ← =1/+⊏1_2          # 2 xor 3
+S₈ ← ⨬(⋅1|/↧)⊢.⇌⊏4_5_6 # If 7 is true so are 6 and 5
+S₉ ← =3⧻⊚↙6            # Three of first six are true
+S₁₀ ← /↧⊏10_11         # 11 and 12 are both true
+S₁₁ ← =1/+⊏6_7_8       # Exactly one of 7, 8, 9 is true
+S₁₂ ← =4/+↘¯1          # Exactly four of above are true
+
+⋯+1×2⇡2048 # Generate bits to represent all states of rules 2-12
+≡(
+  # Test each rule against the data and concatenate
+  ⟜[⊃(S₁|S₂|S₃|S₄|S₅|S₆|S₇|S₈|S₉|S₁₀|S₁₁|S₁₂)]
+  ⊟∩□:⊙(⊚⌵-). # Append hit-count
+)
+
+°⊟↙2⊕□≡(◇⧻⊢). # Partition by fit, keep only hits and near-misses
+&p$"Succeeds when the following rules are true:\n_\n"+1◇⊚⊢↘1◇⊢
+⊏⍏≡⊢.°□ # Sort misses
+&p"Near Misses:"
+≡(&p$"Fails at _\t _"⊃(+1◇⊢⊢|+1⊚°□⊢↘1))

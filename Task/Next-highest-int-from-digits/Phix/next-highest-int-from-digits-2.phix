@@ -1,0 +1,26 @@
+function nigh(string n)
+    integer hi = n[$]
+    for i=length(n)-1 to 1 by -1 do
+        integer ni = n[i]
+        if ni<hi then
+            string sr = sort(n[i..$])
+            integer k = rfind(ni,sr)+1
+            n[i] = sr[k]
+            sr[k..k] = ""
+            n[i+1..$] = sr
+            return n
+        end if
+        hi = max(hi,ni)
+    end for
+    return "0"
+end function
+
+constant tests = {"0","9","12","21","12453",
+                  "738440","45072010","95322020",
+                  "9589776899767587796600"}
+atom t0 = time()
+for i=1 to length(tests) do
+    string t = tests[i]
+    printf(1,"%22s => %s\n",{t,nigh(t)})
+end for
+?elapsed(time()-t0)

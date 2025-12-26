@@ -1,0 +1,33 @@
+Module CheckIt {
+    Def VarType(n)=Type$(n)
+    foo=lambda  (acc) -> {
+          =lambda acc -> {
+                if empty then =acc : exit
+                read x
+                acc+=x
+                =acc
+          }
+    }
+    Double a=1
+    x = foo(a)
+    call void x(5)  ' 	Without Void a non zero value count as Error.
+    call  foo(3)
+    print VarType(x())="Double", x(2.3)=8.3 ' Double literal
+    Single m=1
+    z=foo(m)
+    long L=5
+    ? VarType(z(L))="Single", z(2.3)=8.3~ ' Single literal
+    Currency c=1
+    zc=foo(c)
+    ? VarType(zc(5))="Currency", zc(2.3)=8.3#  ' Currency literal
+    Decimal d=1
+    zd=foo(d)
+    ? VarType(zd(5))="Decimal", zd(2.3)=8.3@  ' Decimal literal
+    Date dt=1
+    zdt=foo(dt)
+    ? VarType(zdt(5))="Date", zdt(2.3)=8.3ud  ' Date literal
+    Long Long LL=1
+    zdt=foo(LL)
+    ? VarType(zdt(5))="Long Long", zdt(2.3)=8&& ' Long Long literal
+}
+CheckIt

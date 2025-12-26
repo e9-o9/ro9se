@@ -1,0 +1,7 @@
+# Run Length Encoding and Decoding
+
+Rle ← setinv(
+  /◇⊂⍚⊂°⋕°▽
+| ▽⊃⊜⋕(♭⊜∘¬)⊸∈+@0⇡10)
+"WWWWWWWWWWWWBWWWWWWWWWWWWBBBWWWWWWWWWWWWWWWWWWWWWWWWBWWWWWWWWWWWWWW"
+&p⨬("oops"|"good")≍&p.°Rle&p.⊸Rle&p.

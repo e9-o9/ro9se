@@ -1,0 +1,27 @@
+{{language|ALGOL W
+|parampass=both
+|strength=strong
+|safety=safe
+|express=explicit
+|compat=nominative
+|checking=both
+|tags=algolw
+|LCT=yes}}
+Algol W was designed as a successor to [[wp:Algol 60|Algol 60]], closely based on A
+Contribution to the Development of ALGOL by [[wp:Niklaus Wirth|Niklaus Wirth]] 
+and [[wp:C.A.R. Hoare|C. A. R. Hoare]]. It includes dynamically
+allocated records, string handling, complex numbers and a standard I/O
+system. A description of the Algol W Language as at 1972 can be found at [https://bitsavers.org/pdf/stanford/cs_techReports/STAN-CS-71-230_Algol_W_Reference_Manual_Feb72.pdf Algol W Reference Manual 1972 on bitsavers.org] 
+page. [http://everything2.com/title/Algol%2520W Dabcanboulet's Algol W @ Everything2] 
+page contains an excellent
+history and tutorial.
+
+==To do==
+[[Tasks not implemented in ALGOL W]]
+
+==See also==
+*[[wp:ALGOL_W|Algol W on Wikipedia]]
+*[[ALGOL 60]]
+*[[ALGOL 68]]
+{{language programming paradigm|Imperative}}
+{{stub}}

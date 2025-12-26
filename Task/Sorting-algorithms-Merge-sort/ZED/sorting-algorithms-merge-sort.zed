@@ -1,0 +1,101 @@
+(append) list1 list2
+=========
+#true
+(003) "append" list1 list2
+
+(cons) item list
+=========
+#true
+(003) "cons" item list
+
+(map) function list
+=========
+#true
+(003) "map" function list
+
+(merge) comparator list1 list2
+BRING IN COLLECT ARGUMENT
+#true
+(merge01) comparator list1 list2 nil
+
+(merge01) comparator list1 list2 collect
+LIST2 EXHAUSTED
+(null?) list2
+(append) (reverse) collect list1
+
+(merge01) comparator list1 list2 collect
+LIST1 EXHAUSTED
+(null?) list1
+(append) (reverse) collect list2
+
+(merge01) comparator list1 list2 collect
+COMPARATOR CHOOSES LIST2
+(003) comparator (1) list2 (1) list1
+(merge01) comparator
+  list1
+  (!) list2
+  (cons) (1) list2 collect
+
+(merge01) comparator list1 list2 collect
+NOW TAKE FROM LIST1 (PRIORITY STABILITY)
+#true
+(merge01) comparator
+  (!) list1
+  list2
+  (cons) (1) list1 collect
+
+(null?) value
+=========
+#true
+(002) "null?" value
+
+(reverse) list
+=========
+#true
+(002) "reverse" list
+
+(sort) comparator jumble
+PREPARE JUMBLE AND PERFORM MERGE PASSES
+#true
+(sort03) comparator (sort02) comparator (sort01) jumble
+
+(sort01) jumble
+PREPARE JUMBLE
+#true
+(map) "list" jumble
+
+(sort02) comparator jumble
+EMPTY JUMBLE
+(null?) jumble
+nil
+
+(sort02) comparator jumble
+ONE LIST JUMBLE
+(null?) (!) jumble
+jumble
+
+(sort02) comparator jumble
+PERFORM MERGE PASS
+#true
+(cons) (merge) comparator (1) jumble (1) (!) jumble
+  (sort02) comparator (!) (!) jumble
+
+(sort03) comparator jumble
+EMPTY JUMBLE
+(null?) jumble
+nil
+
+(sort03) comparator jumble
+ONE LIST JUMBLE
+(null?) (!) jumble
+(1) jumble
+
+(sort03) comparator jumble
+PERFORM MERGE PASS AND RESTART
+#true
+(sort03) comparator (sort02) comparator jumble
+
+(main)
+ENTRY POINT
+#true
+(002) "display" (sort) ">" (010) "list" 4 3 5 6 8 7 1 2 9

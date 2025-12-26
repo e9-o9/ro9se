@@ -1,0 +1,28 @@
+function play(integer prisoners, iterations, bool optimal)
+    sequence drawers = shuffle(tagset(prisoners))
+    integer pardoned = 0
+    bool found = false
+    for i=1 to iterations do
+        drawers = shuffle(drawers)
+        for prisoner=1 to prisoners do
+            found = false
+            integer drawer = iff(optimal?prisoner:rand(prisoners))
+            for j=1 to prisoners/2 do
+                drawer = drawers[drawer]
+                if drawer==prisoner then found = true exit end if
+                if not optimal then drawer = rand(prisoners) end if
+            end for
+            if not found then exit end if
+        end for
+        pardoned += found
+    end for
+    return 100*pardoned/iterations
+end function
+
+constant iterations = 100_000
+printf(1,"Simulation count: %d\n",iterations)
+for prisoners in {10,100} do
+    atom random = play(prisoners,iterations,false),
+         optimal = play(prisoners,iterations,true)
+    printf(1,"Prisoners:%d, random:%g, optimal:%g\n",{prisoners,random,optimal})
+end for

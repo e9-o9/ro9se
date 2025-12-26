@@ -1,0 +1,13 @@
+|10 @Console/vector $2 &read $5 &type $1 &write $1 &error $1
+
+|0100
+	&loop ;SPAM <print-str> !&loop
+
+@<print-str> ( str* -- )
+	&while
+		LDAk .Console/write DEO
+		INC2 LDAk ?&while
+	POP2 JMP2r
+
+@SPAM
+	"SPAM 0a $1

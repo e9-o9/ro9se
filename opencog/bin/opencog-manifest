@@ -1,0 +1,99 @@
+#!/usr/bin/env python3
+"""
+OpenCog Manifest Generator
+
+Generates the FrankenCog Integration Manifest showing the optimal
+language selection for each AI function.
+"""
+
+import sys
+import json
+from pathlib import Path
+
+# Add lib directory to path
+sys.path.insert(0, str(Path(__file__).parent.parent / "lib"))
+
+from opencog_analyzer import OpenCogAnalyzer
+
+
+def main():
+    # Get repository root
+    script_dir = Path(__file__).parent.parent.parent
+    analyzer = OpenCogAnalyzer(str(script_dir))
+    
+    print("=" * 80)
+    print("FrankenCog Patchwork Inference Fabric")
+    print("Integration Manifest Generator")
+    print("=" * 80)
+    print()
+    print("Generating optimal language selection for each AI function...")
+    print()
+    
+    manifest = analyzer.generate_frankencog_manifest()
+    
+    print("FrankenCog Integration Manifest")
+    print("=" * 80)
+    print()
+    print(manifest['description'])
+    print()
+    
+    for category, info in sorted(manifest['categories'].items()):
+        print(f"\n{'=' * 80}")
+        print(f"Category: {category.replace('_', ' ').title()}")
+        print(f"{'=' * 80}")
+        print(f"Description: {info['description']}")
+        print(f"Best Language: {info['best_language'] or 'None'}")
+        print(f"Total Implementations: {info['total_implementations']}")
+        print()
+        
+        if info['recommended_languages']:
+            print("Recommended Languages (Top 5):")
+            print("-" * 80)
+            print(f"{'Rank':<6} {'Language':<30} {'Tasks':<10}")
+            print("-" * 80)
+            
+            for idx, lang_data in enumerate(info['recommended_languages'], 1):
+                print(f"{idx:<6} {lang_data['language']:<30} {lang_data['task_count']:<10}")
+    
+    print()
+    print("=" * 80)
+    
+    # Save manifest
+    output_dir = script_dir / "opencog" / "output"
+    output_dir.mkdir(exist_ok=True)
+    
+    manifest_file = output_dir / "frankencog-manifest.json"
+    with open(manifest_file, 'w') as f:
+        json.dump(manifest, f, indent=2)
+    
+    print()
+    print(f"Manifest saved to: {manifest_file}")
+    print()
+    
+    # Generate summary
+    print("=" * 80)
+    print("Transcendent Expression Summary")
+    print("=" * 80)
+    print()
+    print("The FrankenCog patchwork represents the optimal synthesis of")
+    print("all programming languages, with each AI function implemented")
+    print("in the language best suited to express that specific capability.")
+    print()
+    
+    best_langs = {}
+    for category, info in manifest['categories'].items():
+        if info['best_language']:
+            lang = info['best_language']
+            best_langs[lang] = best_langs.get(lang, 0) + 1
+    
+    if best_langs:
+        print("Languages in the Optimal Patchwork:")
+        print("-" * 80)
+        for lang, count in sorted(best_langs.items(), key=lambda x: x[1], reverse=True):
+            print(f"  {lang}: {count} categories")
+    
+    print()
+
+
+if __name__ == '__main__':
+    main()

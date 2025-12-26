@@ -1,0 +1,14 @@
+/* Inspired by code from Python */
+Queens(N):=block([K,C,P,V,L:[]],
+    C: makelist(K,K,1,N),
+    P: permutations(C),
+    for V in P do (
+        if is(N=length(unique(makelist(V[K]+K, K, C)))) then (
+            if is(N=length(unique(makelist(V[K]-K, K, C)))) then (
+                L: endcons(V, L)
+            )
+        )
+    ), L
+)$
+
+Queens(8);length(%);

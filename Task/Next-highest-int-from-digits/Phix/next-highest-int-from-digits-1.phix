@@ -1,0 +1,19 @@
+function nigh(string n)
+    sequence p = repeat("",factorial(length(n)))
+    for i=1 to length(p) do
+        p[i] = permute(i,n)
+    end for
+    p = sort(p)
+    integer k = rfind(n,p)
+    return iff(k=length(p)?"0",p[k+1])
+end function
+
+constant tests = {"0","9","12","21","12453",
+                  "738440","45072010","95322020"}
+--   (crashes on) "9589776899767587796600"}
+atom t0 = time()
+for i=1 to length(tests) do
+    string t = tests[i]
+    printf(1,"%22s => %s\n",{t,nigh(t)})
+end for
+?elapsed(time()-t0)

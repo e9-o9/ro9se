@@ -1,0 +1,14 @@
+(A+B)
+READ AND ADD
+#true
+(+) (read) (read)
+
+(+) one two
+=========
+#true
+(003) "+" one two
+
+(read)
+=========
+#true
+(001) "read"

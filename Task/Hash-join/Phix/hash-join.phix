@@ -1,0 +1,28 @@
+with javascript_semantics
+constant A = {{27,"Jonah"},
+              {18,"Alan"},
+              {28,"Glory"},
+              {18,"Popeye"},
+              {28,"Alan"}},
+         B = {{"Jonah","Whales"},
+              {"Jonah","Spiders"},
+              {"Alan", "Ghosts"},
+              {"Alan", "Zombies"},
+              {"Glory","Buffy"}},
+        jA = 2,
+        jB = 1,
+        MB = new_dict()
+sequence C = {}
+for b in B do
+    object key = b[jB],
+          data = getdd(key,{},MB)
+    data = append(deep_copy(data),b)
+    putd(key,data,MB)
+end for
+for a in A do
+    for d in getdd(a[jA],{},MB) do
+        C = append(C,{a,d})
+    end for
+end for
+destroy_dict(MB)
+pp(C,{pp_Nest,1})

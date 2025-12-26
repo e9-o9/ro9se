@@ -1,0 +1,43 @@
+with javascript_semantics
+function isPartSum(sequence f, integer l, t)
+    if t=0 then return true end if
+    if l=0 then return false end if
+    integer last = f[l]
+    return (t>=last and isPartSum(f, l-1, t-last))
+        or isPartSum(f, l-1, t)
+end function
+
+function isZumkeller(integer n)
+    sequence f = factors(n,1)
+    integer t = sum(f)
+    -- an odd sum cannot be split into two equal sums
+    if odd(t) then return false end if
+    -- if n is odd use 'abundant odd number' optimization
+    if odd(n) then
+        integer abundance := t - 2*n
+        return abundance>0 and even(abundance)
+    end if
+    -- if n and t both even check for any partition of t/2
+    return isPartSum(f, length(f), t/2)
+end function
+
+sequence tests = {{220,1,0,20,"%3d %n"},
+                  {40,2,0,10,"%5d %n"},
+                  {40,2,5,8,"%7d %n"}}
+integer lim, step, rem, cr; string fmt
+for t=1 to length(tests) do
+    {lim, step, rem, cr, fmt} = tests[t]
+    string o = iff(step=1?"":"odd "),
+           w = iff(rem=0?"":"which don't end in 5 ")
+    printf(1,"The first %d %sZumkeller numbers %sare:\n",{lim,o,w})
+    integer i = step+1, count = 0
+    while count<lim do
+        if (rem=0 or remainder(i,10)!=rem)
+        and isZumkeller(i) then
+            count += 1
+            printf(1,fmt,{i,remainder(count,cr)=0})
+        end if
+        i += step
+    end while
+    printf(1,"\n")
+end for

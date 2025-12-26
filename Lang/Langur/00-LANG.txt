@@ -1,0 +1,14 @@
+{{stub}}
+{{language|langur
+|hopl=no
+}}
+
+Langur is an open-source programming language that natively uses decimal floating point, and deals with extremely large and small numbers. Its principles of design are accuracy in calculation and a concise, expressive syntax. The name langur begins with a lowercase letter when it does not start a sentence.
+
+Langur code can be run from executable files, or you can use the REPL. The recommended file name extension is .langur.
+
+Langur uses a hash mark for single line comments. Therefore, script files may begin with a shebang to tell a Linux shell where to find the interpreter.
+
+Source code is in UTF-8, with no BOM, using Linux line returns (line feed) only.
+
+website: https://langurlang.org/

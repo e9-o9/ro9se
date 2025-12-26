@@ -1,0 +1,19 @@
+%\n { 0a }
+%newline { [ LIT2 \n -Console/write ] DEO }
+
+|18 @Console/write
+
+|100
+
+[ LIT "a ] print/byte newline
+#61 .Console/write DEO newline
+
+BRK
+
+@print/byte ( byte -- )
+	DUP #04 SFT /nibble
+	( >> )
+		
+@print/nibble ( byte -- )
+	#0f AND DUP #09 GTH #27 MUL ADD [ LIT "0 ] ADD .Console/write DEO
+	JMP2r

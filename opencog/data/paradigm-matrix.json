@@ -1,0 +1,1931 @@
+{
+  "cognitive_architecture/concurrent_patterns": {
+    "paradigm_rankings": [
+      {
+        "paradigm": "object_oriented",
+        "total_tasks": 6,
+        "num_languages": 6,
+        "top_language": {
+          "language": "C++",
+          "task_count": 1
+        }
+      },
+      {
+        "paradigm": "system",
+        "total_tasks": 5,
+        "num_languages": 5,
+        "top_language": {
+          "language": "C",
+          "task_count": 1
+        }
+      },
+      {
+        "paradigm": "functional",
+        "total_tasks": 4,
+        "num_languages": 4,
+        "top_language": {
+          "language": "Elixir",
+          "task_count": 1
+        }
+      },
+      {
+        "paradigm": "concurrent",
+        "total_tasks": 4,
+        "num_languages": 4,
+        "top_language": {
+          "language": "Elixir",
+          "task_count": 1
+        }
+      },
+      {
+        "paradigm": "multi_paradigm",
+        "total_tasks": 4,
+        "num_languages": 4,
+        "top_language": {
+          "language": "Julia",
+          "task_count": 1
+        }
+      }
+    ]
+  },
+  "cognitive_architecture/message_passing": {
+    "paradigm_rankings": []
+  },
+  "cognitive_architecture/parallelism": {
+    "paradigm_rankings": [
+      {
+        "paradigm": "multi_paradigm",
+        "total_tasks": 18,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Julia",
+          "task_count": 3
+        }
+      },
+      {
+        "paradigm": "system",
+        "total_tasks": 15,
+        "num_languages": 5,
+        "top_language": {
+          "language": "C",
+          "task_count": 3
+        }
+      },
+      {
+        "paradigm": "object_oriented",
+        "total_tasks": 13,
+        "num_languages": 5,
+        "top_language": {
+          "language": "C++",
+          "task_count": 3
+        }
+      },
+      {
+        "paradigm": "functional",
+        "total_tasks": 13,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Erlang",
+          "task_count": 3
+        }
+      },
+      {
+        "paradigm": "scripting",
+        "total_tasks": 12,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Perl",
+          "task_count": 3
+        }
+      }
+    ]
+  },
+  "cognitive_architecture/synchronization": {
+    "paradigm_rankings": [
+      {
+        "paradigm": "multi_paradigm",
+        "total_tasks": 32,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Julia",
+          "task_count": 6
+        }
+      },
+      {
+        "paradigm": "object_oriented",
+        "total_tasks": 30,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Java",
+          "task_count": 6
+        }
+      },
+      {
+        "paradigm": "scripting",
+        "total_tasks": 29,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Perl",
+          "task_count": 6
+        }
+      },
+      {
+        "paradigm": "system",
+        "total_tasks": 28,
+        "num_languages": 5,
+        "top_language": {
+          "language": "C",
+          "task_count": 6
+        }
+      },
+      {
+        "paradigm": "functional",
+        "total_tasks": 19,
+        "num_languages": 5,
+        "top_language": {
+          "language": "Haskell",
+          "task_count": 6
+        }
+      }
+    ]
+  },
+  "knowledge_representation/associative_structures": {
+    "paradigm_rankings": [
+      {
+        "paradigm": "object_oriented",
+        "total_tasks": 24,
+        "num_languages": 6,
+        "top_language": {
+          "language": "C++",
+          "task_count": 4
+        }
+      },
+      {
+        "paradigm": "functional",
+        "total_tasks": 23,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Elixir",
+          "task_count": 4
+        }
+      },
+      {
+        "paradigm": "scripting",
+        "total_tasks": 23,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Lua",
+          "task_count": 4
+        }
+      },
+      {
+        "paradigm": "multi_paradigm",
+        "total_tasks": 21,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Kotlin",
+          "task_count": 4
+        }
+      },
+      {
+        "paradigm": "system",
+        "total_tasks": 19,
+        "num_languages": 5,
+        "top_language": {
+          "language": "C",
+          "task_count": 4
+        }
+      }
+    ]
+  },
+  "knowledge_representation/graph_structures": {
+    "paradigm_rankings": [
+      {
+        "paradigm": "object_oriented",
+        "total_tasks": 14,
+        "num_languages": 5,
+        "top_language": {
+          "language": "C++",
+          "task_count": 3
+        }
+      },
+      {
+        "paradigm": "scripting",
+        "total_tasks": 14,
+        "num_languages": 6,
+        "top_language": {
+          "language": "JavaScript",
+          "task_count": 3
+        }
+      },
+      {
+        "paradigm": "multi_paradigm",
+        "total_tasks": 14,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Julia",
+          "task_count": 3
+        }
+      },
+      {
+        "paradigm": "system",
+        "total_tasks": 13,
+        "num_languages": 5,
+        "top_language": {
+          "language": "C++",
+          "task_count": 3
+        }
+      },
+      {
+        "paradigm": "functional",
+        "total_tasks": 10,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Haskell",
+          "task_count": 3
+        }
+      }
+    ]
+  },
+  "knowledge_representation/serialization": {
+    "paradigm_rankings": [
+      {
+        "paradigm": "scripting",
+        "total_tasks": 27,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Perl",
+          "task_count": 5
+        }
+      },
+      {
+        "paradigm": "object_oriented",
+        "total_tasks": 26,
+        "num_languages": 6,
+        "top_language": {
+          "language": "C++",
+          "task_count": 5
+        }
+      },
+      {
+        "paradigm": "multi_paradigm",
+        "total_tasks": 25,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Julia",
+          "task_count": 5
+        }
+      },
+      {
+        "paradigm": "system",
+        "total_tasks": 23,
+        "num_languages": 5,
+        "top_language": {
+          "language": "C++",
+          "task_count": 5
+        }
+      },
+      {
+        "paradigm": "functional",
+        "total_tasks": 18,
+        "num_languages": 5,
+        "top_language": {
+          "language": "Haskell",
+          "task_count": 5
+        }
+      }
+    ]
+  },
+  "knowledge_representation/tree_structures": {
+    "paradigm_rankings": [
+      {
+        "paradigm": "multi_paradigm",
+        "total_tasks": 21,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Julia",
+          "task_count": 5
+        }
+      },
+      {
+        "paradigm": "object_oriented",
+        "total_tasks": 19,
+        "num_languages": 6,
+        "top_language": {
+          "language": "C++",
+          "task_count": 5
+        }
+      },
+      {
+        "paradigm": "system",
+        "total_tasks": 18,
+        "num_languages": 5,
+        "top_language": {
+          "language": "C++",
+          "task_count": 5
+        }
+      },
+      {
+        "paradigm": "scripting",
+        "total_tasks": 17,
+        "num_languages": 6,
+        "top_language": {
+          "language": "JavaScript",
+          "task_count": 4
+        }
+      },
+      {
+        "paradigm": "functional",
+        "total_tasks": 11,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Haskell",
+          "task_count": 4
+        }
+      }
+    ]
+  },
+  "machine_learning/neural_networks": {
+    "paradigm_rankings": []
+  },
+  "machine_learning/optimization": {
+    "paradigm_rankings": []
+  },
+  "machine_learning/statistical_learning": {
+    "paradigm_rankings": [
+      {
+        "paradigm": "scripting",
+        "total_tasks": 10,
+        "num_languages": 6,
+        "top_language": {
+          "language": "JavaScript",
+          "task_count": 2
+        }
+      },
+      {
+        "paradigm": "multi_paradigm",
+        "total_tasks": 10,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Julia",
+          "task_count": 2
+        }
+      },
+      {
+        "paradigm": "system",
+        "total_tasks": 9,
+        "num_languages": 5,
+        "top_language": {
+          "language": "C",
+          "task_count": 2
+        }
+      },
+      {
+        "paradigm": "object_oriented",
+        "total_tasks": 7,
+        "num_languages": 5,
+        "top_language": {
+          "language": "Java",
+          "task_count": 2
+        }
+      },
+      {
+        "paradigm": "functional",
+        "total_tasks": 7,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Haskell",
+          "task_count": 2
+        }
+      }
+    ]
+  },
+  "machine_learning/statistical_measures": {
+    "paradigm_rankings": [
+      {
+        "paradigm": "multi_paradigm",
+        "total_tasks": 35,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Julia",
+          "task_count": 6
+        }
+      },
+      {
+        "paradigm": "scripting",
+        "total_tasks": 34,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Lua",
+          "task_count": 6
+        }
+      },
+      {
+        "paradigm": "object_oriented",
+        "total_tasks": 32,
+        "num_languages": 6,
+        "top_language": {
+          "language": "C++",
+          "task_count": 6
+        }
+      },
+      {
+        "paradigm": "system",
+        "total_tasks": 30,
+        "num_languages": 5,
+        "top_language": {
+          "language": "C",
+          "task_count": 6
+        }
+      },
+      {
+        "paradigm": "functional",
+        "total_tasks": 28,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Haskell",
+          "task_count": 6
+        }
+      }
+    ]
+  },
+  "meta_learning/code_generation": {
+    "paradigm_rankings": [
+      {
+        "paradigm": "multi_paradigm",
+        "total_tasks": 16,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Julia",
+          "task_count": 3
+        }
+      },
+      {
+        "paradigm": "scripting",
+        "total_tasks": 15,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Lua",
+          "task_count": 3
+        }
+      },
+      {
+        "paradigm": "system",
+        "total_tasks": 14,
+        "num_languages": 5,
+        "top_language": {
+          "language": "C",
+          "task_count": 3
+        }
+      },
+      {
+        "paradigm": "object_oriented",
+        "total_tasks": 12,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Python",
+          "task_count": 3
+        }
+      },
+      {
+        "paradigm": "imperative",
+        "total_tasks": 8,
+        "num_languages": 4,
+        "top_language": {
+          "language": "C",
+          "task_count": 3
+        }
+      }
+    ]
+  },
+  "meta_learning/evaluation_functions": {
+    "paradigm_rankings": [
+      {
+        "paradigm": "object_oriented",
+        "total_tasks": 12,
+        "num_languages": 6,
+        "top_language": {
+          "language": "C++",
+          "task_count": 2
+        }
+      },
+      {
+        "paradigm": "functional",
+        "total_tasks": 12,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Elixir",
+          "task_count": 2
+        }
+      },
+      {
+        "paradigm": "scripting",
+        "total_tasks": 12,
+        "num_languages": 6,
+        "top_language": {
+          "language": "JavaScript",
+          "task_count": 2
+        }
+      },
+      {
+        "paradigm": "multi_paradigm",
+        "total_tasks": 12,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Julia",
+          "task_count": 2
+        }
+      },
+      {
+        "paradigm": "system",
+        "total_tasks": 10,
+        "num_languages": 5,
+        "top_language": {
+          "language": "C",
+          "task_count": 2
+        }
+      }
+    ]
+  },
+  "meta_learning/introspection": {
+    "paradigm_rankings": [
+      {
+        "paradigm": "scripting",
+        "total_tasks": 29,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Lua",
+          "task_count": 5
+        }
+      },
+      {
+        "paradigm": "object_oriented",
+        "total_tasks": 25,
+        "num_languages": 6,
+        "top_language": {
+          "language": "C-sharp",
+          "task_count": 5
+        }
+      },
+      {
+        "paradigm": "multi_paradigm",
+        "total_tasks": 21,
+        "num_languages": 5,
+        "top_language": {
+          "language": "Julia",
+          "task_count": 5
+        }
+      },
+      {
+        "paradigm": "system",
+        "total_tasks": 15,
+        "num_languages": 5,
+        "top_language": {
+          "language": "Nim",
+          "task_count": 5
+        }
+      },
+      {
+        "paradigm": "scientific",
+        "total_tasks": 10,
+        "num_languages": 4,
+        "top_language": {
+          "language": "Julia",
+          "task_count": 5
+        }
+      }
+    ]
+  },
+  "meta_learning/runtime_evaluation": {
+    "paradigm_rankings": [
+      {
+        "paradigm": "scripting",
+        "total_tasks": 42,
+        "num_languages": 6,
+        "top_language": {
+          "language": "JavaScript",
+          "task_count": 7
+        }
+      },
+      {
+        "paradigm": "object_oriented",
+        "total_tasks": 35,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Java",
+          "task_count": 7
+        }
+      },
+      {
+        "paradigm": "multi_paradigm",
+        "total_tasks": 34,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Julia",
+          "task_count": 7
+        }
+      },
+      {
+        "paradigm": "functional",
+        "total_tasks": 33,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Scheme",
+          "task_count": 7
+        }
+      },
+      {
+        "paradigm": "system",
+        "total_tasks": 26,
+        "num_languages": 5,
+        "top_language": {
+          "language": "Nim",
+          "task_count": 7
+        }
+      }
+    ]
+  },
+  "meta_learning/self_reference": {
+    "paradigm_rankings": [
+      {
+        "paradigm": "functional",
+        "total_tasks": 7,
+        "num_languages": 7,
+        "top_language": {
+          "language": "Elixir",
+          "task_count": 1
+        }
+      },
+      {
+        "paradigm": "object_oriented",
+        "total_tasks": 6,
+        "num_languages": 6,
+        "top_language": {
+          "language": "C++",
+          "task_count": 1
+        }
+      },
+      {
+        "paradigm": "scripting",
+        "total_tasks": 6,
+        "num_languages": 6,
+        "top_language": {
+          "language": "JavaScript",
+          "task_count": 1
+        }
+      },
+      {
+        "paradigm": "multi_paradigm",
+        "total_tasks": 6,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Julia",
+          "task_count": 1
+        }
+      },
+      {
+        "paradigm": "system",
+        "total_tasks": 5,
+        "num_languages": 5,
+        "top_language": {
+          "language": "C",
+          "task_count": 1
+        }
+      }
+    ]
+  },
+  "natural_language/language_analysis": {
+    "paradigm_rankings": [
+      {
+        "paradigm": "object_oriented",
+        "total_tasks": 11,
+        "num_languages": 6,
+        "top_language": {
+          "language": "C++",
+          "task_count": 2
+        }
+      },
+      {
+        "paradigm": "multi_paradigm",
+        "total_tasks": 11,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Julia",
+          "task_count": 2
+        }
+      },
+      {
+        "paradigm": "system",
+        "total_tasks": 10,
+        "num_languages": 5,
+        "top_language": {
+          "language": "C",
+          "task_count": 2
+        }
+      },
+      {
+        "paradigm": "scripting",
+        "total_tasks": 10,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Perl",
+          "task_count": 2
+        }
+      },
+      {
+        "paradigm": "functional",
+        "total_tasks": 7,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Haskell",
+          "task_count": 2
+        }
+      }
+    ]
+  },
+  "natural_language/parsing": {
+    "paradigm_rankings": [
+      {
+        "paradigm": "scripting",
+        "total_tasks": 27,
+        "num_languages": 6,
+        "top_language": {
+          "language": "JavaScript",
+          "task_count": 5
+        }
+      },
+      {
+        "paradigm": "multi_paradigm",
+        "total_tasks": 26,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Julia",
+          "task_count": 5
+        }
+      },
+      {
+        "paradigm": "object_oriented",
+        "total_tasks": 24,
+        "num_languages": 5,
+        "top_language": {
+          "language": "C++",
+          "task_count": 5
+        }
+      },
+      {
+        "paradigm": "system",
+        "total_tasks": 23,
+        "num_languages": 5,
+        "top_language": {
+          "language": "C",
+          "task_count": 5
+        }
+      },
+      {
+        "paradigm": "functional",
+        "total_tasks": 20,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Haskell",
+          "task_count": 5
+        }
+      }
+    ]
+  },
+  "natural_language/phonetic_matching": {
+    "paradigm_rankings": [
+      {
+        "paradigm": "functional",
+        "total_tasks": 18,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Elixir",
+          "task_count": 3
+        }
+      },
+      {
+        "paradigm": "scripting",
+        "total_tasks": 18,
+        "num_languages": 6,
+        "top_language": {
+          "language": "JavaScript",
+          "task_count": 3
+        }
+      },
+      {
+        "paradigm": "object_oriented",
+        "total_tasks": 17,
+        "num_languages": 6,
+        "top_language": {
+          "language": "C++",
+          "task_count": 3
+        }
+      },
+      {
+        "paradigm": "multi_paradigm",
+        "total_tasks": 16,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Julia",
+          "task_count": 3
+        }
+      },
+      {
+        "paradigm": "system",
+        "total_tasks": 15,
+        "num_languages": 5,
+        "top_language": {
+          "language": "C",
+          "task_count": 3
+        }
+      }
+    ]
+  },
+  "natural_language/text_generation": {
+    "paradigm_rankings": []
+  },
+  "natural_language/text_processing": {
+    "paradigm_rankings": [
+      {
+        "paradigm": "scripting",
+        "total_tasks": 17,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Lua",
+          "task_count": 3
+        }
+      },
+      {
+        "paradigm": "object_oriented",
+        "total_tasks": 15,
+        "num_languages": 6,
+        "top_language": {
+          "language": "C++",
+          "task_count": 3
+        }
+      },
+      {
+        "paradigm": "multi_paradigm",
+        "total_tasks": 15,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Julia",
+          "task_count": 3
+        }
+      },
+      {
+        "paradigm": "system",
+        "total_tasks": 13,
+        "num_languages": 5,
+        "top_language": {
+          "language": "C",
+          "task_count": 3
+        }
+      },
+      {
+        "paradigm": "functional",
+        "total_tasks": 11,
+        "num_languages": 5,
+        "top_language": {
+          "language": "Haskell",
+          "task_count": 3
+        }
+      }
+    ]
+  },
+  "natural_language/tokenization": {
+    "paradigm_rankings": [
+      {
+        "paradigm": "scripting",
+        "total_tasks": 12,
+        "num_languages": 6,
+        "top_language": {
+          "language": "JavaScript",
+          "task_count": 2
+        }
+      },
+      {
+        "paradigm": "multi_paradigm",
+        "total_tasks": 12,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Julia",
+          "task_count": 2
+        }
+      },
+      {
+        "paradigm": "object_oriented",
+        "total_tasks": 11,
+        "num_languages": 6,
+        "top_language": {
+          "language": "C++",
+          "task_count": 2
+        }
+      },
+      {
+        "paradigm": "system",
+        "total_tasks": 10,
+        "num_languages": 5,
+        "top_language": {
+          "language": "C",
+          "task_count": 2
+        }
+      },
+      {
+        "paradigm": "functional",
+        "total_tasks": 9,
+        "num_languages": 6,
+        "top_language": {
+          "language": "F-Sharp",
+          "task_count": 2
+        }
+      }
+    ]
+  },
+  "pattern_recognition/lexical_patterns": {
+    "paradigm_rankings": [
+      {
+        "paradigm": "functional",
+        "total_tasks": 24,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Elixir",
+          "task_count": 4
+        }
+      },
+      {
+        "paradigm": "scripting",
+        "total_tasks": 24,
+        "num_languages": 6,
+        "top_language": {
+          "language": "JavaScript",
+          "task_count": 4
+        }
+      },
+      {
+        "paradigm": "object_oriented",
+        "total_tasks": 23,
+        "num_languages": 6,
+        "top_language": {
+          "language": "C++",
+          "task_count": 4
+        }
+      },
+      {
+        "paradigm": "multi_paradigm",
+        "total_tasks": 22,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Julia",
+          "task_count": 4
+        }
+      },
+      {
+        "paradigm": "system",
+        "total_tasks": 20,
+        "num_languages": 5,
+        "top_language": {
+          "language": "C",
+          "task_count": 4
+        }
+      }
+    ]
+  },
+  "pattern_recognition/recognition_tasks": {
+    "paradigm_rankings": [
+      {
+        "paradigm": "imperative",
+        "total_tasks": 3,
+        "num_languages": 3,
+        "top_language": {
+          "language": "BASIC",
+          "task_count": 1
+        }
+      },
+      {
+        "paradigm": "system",
+        "total_tasks": 3,
+        "num_languages": 3,
+        "top_language": {
+          "language": "C",
+          "task_count": 1
+        }
+      },
+      {
+        "paradigm": "multi_paradigm",
+        "total_tasks": 3,
+        "num_languages": 3,
+        "top_language": {
+          "language": "Julia",
+          "task_count": 1
+        }
+      },
+      {
+        "paradigm": "object_oriented",
+        "total_tasks": 2,
+        "num_languages": 2,
+        "top_language": {
+          "language": "C++",
+          "task_count": 1
+        }
+      },
+      {
+        "paradigm": "scientific",
+        "total_tasks": 2,
+        "num_languages": 2,
+        "top_language": {
+          "language": "Fortran",
+          "task_count": 1
+        }
+      }
+    ]
+  },
+  "pattern_recognition/search_algorithms": {
+    "paradigm_rankings": [
+      {
+        "paradigm": "multi_paradigm",
+        "total_tasks": 12,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Julia",
+          "task_count": 2
+        }
+      },
+      {
+        "paradigm": "object_oriented",
+        "total_tasks": 9,
+        "num_languages": 5,
+        "top_language": {
+          "language": "C++",
+          "task_count": 2
+        }
+      },
+      {
+        "paradigm": "scripting",
+        "total_tasks": 9,
+        "num_languages": 6,
+        "top_language": {
+          "language": "JavaScript",
+          "task_count": 2
+        }
+      },
+      {
+        "paradigm": "system",
+        "total_tasks": 8,
+        "num_languages": 5,
+        "top_language": {
+          "language": "C++",
+          "task_count": 2
+        }
+      },
+      {
+        "paradigm": "scientific",
+        "total_tasks": 7,
+        "num_languages": 5,
+        "top_language": {
+          "language": "Fortran",
+          "task_count": 2
+        }
+      }
+    ]
+  },
+  "pattern_recognition/string_pattern_matching": {
+    "paradigm_rankings": [
+      {
+        "paradigm": "multi_paradigm",
+        "total_tasks": 29,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Julia",
+          "task_count": 5
+        }
+      },
+      {
+        "paradigm": "object_oriented",
+        "total_tasks": 28,
+        "num_languages": 6,
+        "top_language": {
+          "language": "C++",
+          "task_count": 5
+        }
+      },
+      {
+        "paradigm": "scripting",
+        "total_tasks": 28,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Perl",
+          "task_count": 5
+        }
+      },
+      {
+        "paradigm": "system",
+        "total_tasks": 25,
+        "num_languages": 5,
+        "top_language": {
+          "language": "C",
+          "task_count": 5
+        }
+      },
+      {
+        "paradigm": "functional",
+        "total_tasks": 23,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Haskell",
+          "task_count": 5
+        }
+      }
+    ]
+  },
+  "perception_motor/bitmap_operations": {
+    "paradigm_rankings": [
+      {
+        "paradigm": "scripting",
+        "total_tasks": 50,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Lua",
+          "task_count": 10
+        }
+      },
+      {
+        "paradigm": "multi_paradigm",
+        "total_tasks": 42,
+        "num_languages": 5,
+        "top_language": {
+          "language": "Julia",
+          "task_count": 10
+        }
+      },
+      {
+        "paradigm": "object_oriented",
+        "total_tasks": 39,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Ruby",
+          "task_count": 10
+        }
+      },
+      {
+        "paradigm": "system",
+        "total_tasks": 38,
+        "num_languages": 5,
+        "top_language": {
+          "language": "C",
+          "task_count": 11
+        }
+      },
+      {
+        "paradigm": "scientific",
+        "total_tasks": 29,
+        "num_languages": 5,
+        "top_language": {
+          "language": "Julia",
+          "task_count": 10
+        }
+      }
+    ]
+  },
+  "perception_motor/image_processing": {
+    "paradigm_rankings": [
+      {
+        "paradigm": "scripting",
+        "total_tasks": 10,
+        "num_languages": 5,
+        "top_language": {
+          "language": "JavaScript",
+          "task_count": 2
+        }
+      },
+      {
+        "paradigm": "object_oriented",
+        "total_tasks": 8,
+        "num_languages": 5,
+        "top_language": {
+          "language": "Java",
+          "task_count": 2
+        }
+      },
+      {
+        "paradigm": "system",
+        "total_tasks": 7,
+        "num_languages": 4,
+        "top_language": {
+          "language": "C",
+          "task_count": 2
+        }
+      },
+      {
+        "paradigm": "multi_paradigm",
+        "total_tasks": 7,
+        "num_languages": 4,
+        "top_language": {
+          "language": "Julia",
+          "task_count": 2
+        }
+      },
+      {
+        "paradigm": "functional",
+        "total_tasks": 4,
+        "num_languages": 3,
+        "top_language": {
+          "language": "OCaml",
+          "task_count": 2
+        }
+      }
+    ]
+  },
+  "perception_motor/rendering": {
+    "paradigm_rankings": [
+      {
+        "paradigm": "object_oriented",
+        "total_tasks": 11,
+        "num_languages": 6,
+        "top_language": {
+          "language": "C++",
+          "task_count": 2
+        }
+      },
+      {
+        "paradigm": "scripting",
+        "total_tasks": 11,
+        "num_languages": 6,
+        "top_language": {
+          "language": "JavaScript",
+          "task_count": 2
+        }
+      },
+      {
+        "paradigm": "multi_paradigm",
+        "total_tasks": 11,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Julia",
+          "task_count": 2
+        }
+      },
+      {
+        "paradigm": "system",
+        "total_tasks": 10,
+        "num_languages": 5,
+        "top_language": {
+          "language": "C",
+          "task_count": 2
+        }
+      },
+      {
+        "paradigm": "scientific",
+        "total_tasks": 5,
+        "num_languages": 4,
+        "top_language": {
+          "language": "Julia",
+          "task_count": 2
+        }
+      }
+    ]
+  },
+  "perception_motor/signal_processing": {
+    "paradigm_rankings": [
+      {
+        "paradigm": "multi_paradigm",
+        "total_tasks": 30,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Julia",
+          "task_count": 6
+        }
+      },
+      {
+        "paradigm": "system",
+        "total_tasks": 29,
+        "num_languages": 5,
+        "top_language": {
+          "language": "C",
+          "task_count": 6
+        }
+      },
+      {
+        "paradigm": "scripting",
+        "total_tasks": 29,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Perl",
+          "task_count": 6
+        }
+      },
+      {
+        "paradigm": "object_oriented",
+        "total_tasks": 25,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Java",
+          "task_count": 6
+        }
+      },
+      {
+        "paradigm": "scientific",
+        "total_tasks": 18,
+        "num_languages": 5,
+        "top_language": {
+          "language": "Julia",
+          "task_count": 6
+        }
+      }
+    ]
+  },
+  "perception_motor/time_processing": {
+    "paradigm_rankings": [
+      {
+        "paradigm": "scripting",
+        "total_tasks": 6,
+        "num_languages": 6,
+        "top_language": {
+          "language": "JavaScript",
+          "task_count": 1
+        }
+      },
+      {
+        "paradigm": "multi_paradigm",
+        "total_tasks": 6,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Julia",
+          "task_count": 1
+        }
+      },
+      {
+        "paradigm": "system",
+        "total_tasks": 5,
+        "num_languages": 5,
+        "top_language": {
+          "language": "C",
+          "task_count": 1
+        }
+      },
+      {
+        "paradigm": "object_oriented",
+        "total_tasks": 5,
+        "num_languages": 5,
+        "top_language": {
+          "language": "C++",
+          "task_count": 1
+        }
+      },
+      {
+        "paradigm": "functional",
+        "total_tasks": 5,
+        "num_languages": 5,
+        "top_language": {
+          "language": "Erlang",
+          "task_count": 1
+        }
+      }
+    ]
+  },
+  "planning_problem_solving/game_playing": {
+    "paradigm_rankings": [
+      {
+        "paradigm": "scripting",
+        "total_tasks": 12,
+        "num_languages": 6,
+        "top_language": {
+          "language": "JavaScript",
+          "task_count": 2
+        }
+      },
+      {
+        "paradigm": "object_oriented",
+        "total_tasks": 11,
+        "num_languages": 6,
+        "top_language": {
+          "language": "C++",
+          "task_count": 2
+        }
+      },
+      {
+        "paradigm": "multi_paradigm",
+        "total_tasks": 11,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Julia",
+          "task_count": 2
+        }
+      },
+      {
+        "paradigm": "system",
+        "total_tasks": 10,
+        "num_languages": 5,
+        "top_language": {
+          "language": "C",
+          "task_count": 2
+        }
+      },
+      {
+        "paradigm": "functional",
+        "total_tasks": 9,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Erlang",
+          "task_count": 2
+        }
+      }
+    ]
+  },
+  "planning_problem_solving/optimization_problems": {
+    "paradigm_rankings": [
+      {
+        "paradigm": "system",
+        "total_tasks": 14,
+        "num_languages": 5,
+        "top_language": {
+          "language": "C",
+          "task_count": 3
+        }
+      },
+      {
+        "paradigm": "object_oriented",
+        "total_tasks": 14,
+        "num_languages": 5,
+        "top_language": {
+          "language": "C++",
+          "task_count": 3
+        }
+      },
+      {
+        "paradigm": "scripting",
+        "total_tasks": 14,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Perl",
+          "task_count": 3
+        }
+      },
+      {
+        "paradigm": "multi_paradigm",
+        "total_tasks": 14,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Julia",
+          "task_count": 3
+        }
+      },
+      {
+        "paradigm": "functional",
+        "total_tasks": 13,
+        "num_languages": 5,
+        "top_language": {
+          "language": "Elixir",
+          "task_count": 3
+        }
+      }
+    ]
+  },
+  "planning_problem_solving/path_planning": {
+    "paradigm_rankings": [
+      {
+        "paradigm": "scripting",
+        "total_tasks": 17,
+        "num_languages": 6,
+        "top_language": {
+          "language": "JavaScript",
+          "task_count": 3
+        }
+      },
+      {
+        "paradigm": "multi_paradigm",
+        "total_tasks": 16,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Julia",
+          "task_count": 3
+        }
+      },
+      {
+        "paradigm": "object_oriented",
+        "total_tasks": 15,
+        "num_languages": 5,
+        "top_language": {
+          "language": "C++",
+          "task_count": 3
+        }
+      },
+      {
+        "paradigm": "system",
+        "total_tasks": 14,
+        "num_languages": 5,
+        "top_language": {
+          "language": "C++",
+          "task_count": 3
+        }
+      },
+      {
+        "paradigm": "functional",
+        "total_tasks": 11,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Erlang",
+          "task_count": 3
+        }
+      }
+    ]
+  },
+  "planning_problem_solving/puzzle_solving": {
+    "paradigm_rankings": [
+      {
+        "paradigm": "scripting",
+        "total_tasks": 32,
+        "num_languages": 6,
+        "top_language": {
+          "language": "JavaScript",
+          "task_count": 6
+        }
+      },
+      {
+        "paradigm": "object_oriented",
+        "total_tasks": 29,
+        "num_languages": 5,
+        "top_language": {
+          "language": "C++",
+          "task_count": 6
+        }
+      },
+      {
+        "paradigm": "multi_paradigm",
+        "total_tasks": 29,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Julia",
+          "task_count": 6
+        }
+      },
+      {
+        "paradigm": "system",
+        "total_tasks": 26,
+        "num_languages": 5,
+        "top_language": {
+          "language": "C++",
+          "task_count": 6
+        }
+      },
+      {
+        "paradigm": "functional",
+        "total_tasks": 19,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Elixir",
+          "task_count": 4
+        }
+      }
+    ]
+  },
+  "planning_problem_solving/search_strategies": {
+    "paradigm_rankings": []
+  },
+  "symbolic_reasoning/constraint_solving": {
+    "paradigm_rankings": [
+      {
+        "paradigm": "scripting",
+        "total_tasks": 34,
+        "num_languages": 6,
+        "top_language": {
+          "language": "JavaScript",
+          "task_count": 6
+        }
+      },
+      {
+        "paradigm": "multi_paradigm",
+        "total_tasks": 31,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Julia",
+          "task_count": 6
+        }
+      },
+      {
+        "paradigm": "object_oriented",
+        "total_tasks": 30,
+        "num_languages": 5,
+        "top_language": {
+          "language": "C++",
+          "task_count": 6
+        }
+      },
+      {
+        "paradigm": "system",
+        "total_tasks": 28,
+        "num_languages": 5,
+        "top_language": {
+          "language": "C++",
+          "task_count": 6
+        }
+      },
+      {
+        "paradigm": "functional",
+        "total_tasks": 22,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Elixir",
+          "task_count": 6
+        }
+      }
+    ]
+  },
+  "symbolic_reasoning/formal_computation": {
+    "paradigm_rankings": [
+      {
+        "paradigm": "functional",
+        "total_tasks": 6,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Elixir",
+          "task_count": 1
+        }
+      },
+      {
+        "paradigm": "scripting",
+        "total_tasks": 6,
+        "num_languages": 6,
+        "top_language": {
+          "language": "JavaScript",
+          "task_count": 1
+        }
+      },
+      {
+        "paradigm": "multi_paradigm",
+        "total_tasks": 6,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Julia",
+          "task_count": 1
+        }
+      },
+      {
+        "paradigm": "system",
+        "total_tasks": 4,
+        "num_languages": 4,
+        "top_language": {
+          "language": "C",
+          "task_count": 1
+        }
+      },
+      {
+        "paradigm": "object_oriented",
+        "total_tasks": 4,
+        "num_languages": 4,
+        "top_language": {
+          "language": "C-sharp",
+          "task_count": 1
+        }
+      }
+    ]
+  },
+  "symbolic_reasoning/logic_fundamentals": {
+    "paradigm_rankings": [
+      {
+        "paradigm": "object_oriented",
+        "total_tasks": 15,
+        "num_languages": 6,
+        "top_language": {
+          "language": "C-sharp",
+          "task_count": 3
+        }
+      },
+      {
+        "paradigm": "scripting",
+        "total_tasks": 15,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Perl",
+          "task_count": 3
+        }
+      },
+      {
+        "paradigm": "multi_paradigm",
+        "total_tasks": 13,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Julia",
+          "task_count": 3
+        }
+      },
+      {
+        "paradigm": "system",
+        "total_tasks": 12,
+        "num_languages": 5,
+        "top_language": {
+          "language": "Nim",
+          "task_count": 3
+        }
+      },
+      {
+        "paradigm": "functional",
+        "total_tasks": 12,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Haskell",
+          "task_count": 3
+        }
+      }
+    ]
+  },
+  "symbolic_reasoning/theorem_proving": {
+    "paradigm_rankings": [
+      {
+        "paradigm": "functional",
+        "total_tasks": 12,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Elixir",
+          "task_count": 2
+        }
+      },
+      {
+        "paradigm": "scripting",
+        "total_tasks": 12,
+        "num_languages": 6,
+        "top_language": {
+          "language": "JavaScript",
+          "task_count": 2
+        }
+      },
+      {
+        "paradigm": "multi_paradigm",
+        "total_tasks": 12,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Julia",
+          "task_count": 2
+        }
+      },
+      {
+        "paradigm": "object_oriented",
+        "total_tasks": 11,
+        "num_languages": 6,
+        "top_language": {
+          "language": "C++",
+          "task_count": 2
+        }
+      },
+      {
+        "paradigm": "system",
+        "total_tasks": 10,
+        "num_languages": 5,
+        "top_language": {
+          "language": "C",
+          "task_count": 2
+        }
+      }
+    ]
+  },
+  "uncertainty_reasoning/distributions": {
+    "paradigm_rankings": []
+  },
+  "uncertainty_reasoning/monte_carlo": {
+    "paradigm_rankings": [
+      {
+        "paradigm": "scripting",
+        "total_tasks": 6,
+        "num_languages": 6,
+        "top_language": {
+          "language": "JavaScript",
+          "task_count": 1
+        }
+      },
+      {
+        "paradigm": "multi_paradigm",
+        "total_tasks": 6,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Julia",
+          "task_count": 1
+        }
+      },
+      {
+        "paradigm": "system",
+        "total_tasks": 5,
+        "num_languages": 5,
+        "top_language": {
+          "language": "C",
+          "task_count": 1
+        }
+      },
+      {
+        "paradigm": "object_oriented",
+        "total_tasks": 5,
+        "num_languages": 5,
+        "top_language": {
+          "language": "C++",
+          "task_count": 1
+        }
+      },
+      {
+        "paradigm": "functional",
+        "total_tasks": 5,
+        "num_languages": 5,
+        "top_language": {
+          "language": "Elixir",
+          "task_count": 1
+        }
+      }
+    ]
+  },
+  "uncertainty_reasoning/probability_basics": {
+    "paradigm_rankings": [
+      {
+        "paradigm": "system",
+        "total_tasks": 37,
+        "num_languages": 5,
+        "top_language": {
+          "language": "C",
+          "task_count": 8
+        }
+      },
+      {
+        "paradigm": "object_oriented",
+        "total_tasks": 36,
+        "num_languages": 5,
+        "top_language": {
+          "language": "C++",
+          "task_count": 8
+        }
+      },
+      {
+        "paradigm": "scripting",
+        "total_tasks": 36,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Perl",
+          "task_count": 8
+        }
+      },
+      {
+        "paradigm": "multi_paradigm",
+        "total_tasks": 34,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Julia",
+          "task_count": 8
+        }
+      },
+      {
+        "paradigm": "functional",
+        "total_tasks": 26,
+        "num_languages": 6,
+        "top_language": {
+          "language": "Haskell",
+          "task_count": 8
+        }
+      }
+    ]
+  },
+  "uncertainty_reasoning/statistical_tests": {
+    "paradigm_rankings": [
+      {
+        "paradigm": "object_oriented",
+        "total_tasks": 10,
+        "num_languages": 5,
+        "top_language": {
+          "language": "C++",
+          "task_count": 2
+        }
+      },
+      {
+        "paradigm": "system",
+        "total_tasks": 9,
+        "num_languages": 5,
+        "top_language": {
+          "language": "C",
+          "task_count": 2
+        }
+      },
+      {
+        "paradigm": "scripting",
+        "total_tasks": 9,
+        "num_languages": 5,
+        "top_language": {
+          "language": "Perl",
+          "task_count": 2
+        }
+      },
+      {
+        "paradigm": "multi_paradigm",
+        "total_tasks": 9,
+        "num_languages": 5,
+        "top_language": {
+          "language": "Julia",
+          "task_count": 2
+        }
+      },
+      {
+        "paradigm": "functional",
+        "total_tasks": 6,
+        "num_languages": 4,
+        "top_language": {
+          "language": "Elixir",
+          "task_count": 2
+        }
+      }
+    ]
+  }
+}

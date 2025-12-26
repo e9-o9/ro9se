@@ -1,0 +1,7 @@
+(function bogo-sort order list
+  (return-unless (1 list) [])
+  (if (... order list)
+    list
+    (recur order (shuffle list))))
+
+(bogo-sort < [7 5 12 1 4 2 23 18])

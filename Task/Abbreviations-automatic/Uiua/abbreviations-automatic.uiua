@@ -1,0 +1,11 @@
+# Find shortest distinct abbreviation per line
+
+Lines ← {"Sunday Monday Tuesday Wednesday Thursday Friday Saturday"
+         "sing_kei_yaht sing_kei_yat sing_kei_yee sing_kei_saam sing_kei_sie sing_kei_ng sing_kei_luk"
+         ""
+         "Diu_prima Diu_sequima Diu_tritima Diu_quartima Diu_quintima Diu_sextima Diu_sabbata"
+         "sunnudagur mánadagur tÿsdaguy mikudagur hósdagur friggjadagur leygardagur"
+         "Yek_Sham'beh Do_Sham'beh Seh_Sham'beh Cha'har_Sham'beh Panj_Sham'beh Jom'eh Sham'beh"}
+Split ← ⊜□⊸(≠@ )
+Pref ← +1⬚¯1⊢⊚¬⬚@ ≡≍ # for two strings give pos of first diff char
+≡◇(&p$"_: _" :/$"_ _"⟜(⧻⊢)≡◇⬚@ ↙/↥/↥⊞◇Pref..Split)▽⊸≡(>0◇⧻)Lines

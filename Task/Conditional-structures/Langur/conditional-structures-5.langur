@@ -1,0 +1,7 @@
+switch x {
+    case true:
+        # implicit fallthrough
+    case null: 0
+        # no fallthrough
+    default: 1
+}

@@ -1,0 +1,50 @@
+with javascript_semantics
+include mpfr.e
+mpz state = mpz_init(),
+    shift = mpz_init("0x9e3779b97f4a7c15"),
+    mult1 = mpz_init("0xbf58476d1ce4e5b9"),
+    mult2 = mpz_init("0x94d049bb133111eb"),
+      b64 = mpz_init("0x10000000000000000"),  -- (truncate to 64 bits)
+      tmp = mpz_init(),
+        z = mpz_init()
+
+procedure seed(integer num)
+    mpz_set_si(state,num)
+end procedure
+
+procedure next_int()
+    mpz_add(state, state, shift)    -- state += shift
+    mpz_fdiv_r(state, state, b64)   -- state := remainder(z,b64)
+    mpz_set(z, state)               -- z := state
+    mpz_tdiv_q_2exp(tmp, z, 30)     -- tmp := trunc(z/2^30)
+    mpz_xor(z, z, tmp)              -- z := xor_bits(z,tmp)
+    mpz_mul(z, z, mult1)            -- z *= mult1
+    mpz_fdiv_r(z, z, b64)           -- z := remainder(z,b64)
+    mpz_tdiv_q_2exp(tmp, z, 27)     -- tmp := trunc(z/2^27)
+    mpz_xor(z, z, tmp)              -- z := xor_bits(z,tmp)
+    mpz_mul(z, z, mult2)            -- z *= mult2
+    mpz_fdiv_r(z, z, b64)           -- z := remainder(z,b64)
+    mpz_tdiv_q_2exp(tmp, z, 31)     -- tmp := trunc(z/2^31)
+    mpz_xor(z, z, tmp)              -- z := xor_bits(z,tmp)
+    -- (result left in z)
+end procedure
+
+function next_float()
+    next_int()
+    mpfr f = mpfr_init_set_z(z)
+    mpfr_div_z(f, f, b64)
+    return mpfr_get_d(f)
+end function
+
+seed(1234567)
+for i=1 to 5 do
+    next_int()
+    printf(1,"%s\n",mpz_get_str(z))
+end for
+seed(987654321)
+sequence r = repeat(0,5)
+for i=1 to 100000 do
+    integer rdx = floor(next_float()*5)+1
+    r[rdx] += 1
+end for
+?r

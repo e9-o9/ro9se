@@ -1,0 +1,10 @@
+import system'routines;
+import extensions;
+
+public program()
+{
+   Console.printLine(Console.readLine()
+                              .split()
+                              .selectBy(mssgconst toInt<intConvertOp>[1])
+                              .summarize())
+}

@@ -1,0 +1,23 @@
+sieve templates
+  limit is $;
+  @ set [ 2..$limit ];
+  1 -> !#
+  $@ !
+
+  when <|..$@::length ?($@($) * $@($) matches <|..$limit>)> do
+    sift sink
+      prime is $;
+      @ set $prime * $prime;
+      @sieve set [ $@sieve... -> # ];
+      when <|..~$@> do
+        $ !
+      when <|$@~..> do
+        @ set $@ + $prime;
+        $ -> #!
+    end sift
+
+    $@($) -> !sift
+    $ + 1 -> !#
+end sieve
+
+1000 -> sieve ...->  '$; ' !

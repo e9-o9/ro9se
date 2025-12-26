@@ -1,0 +1,18 @@
+{{language|Blade
+|strength=strong
+|express=implicit
+|checking=dynamic
+|gc=yes
+|parampass=value
+|LCT=yes}}{{language programming paradigm|Object-oriented}}{{language programming paradigm|functional}}
+
+'''Blade''' is a modern general-purpose programming language focused on enterprise Web, IoT, and secure application development. '''Blade''' offers a comprehensive set of tools and libraries out of the box leading to reduced reliance on third-party packages. 
+
+'''Blade''' comes equipped with an integrated package management system, simplifying the management of both internal and external dependencies and a self-hostable repository server making it ideal for private organisational and personal use. Its intuitive syntax and gentle learning curve ensure an accessible experience for developers of all skill levels. Leveraging the best features from JavaScript, Python, Ruby, and Dart, '''Blade''' provides a familiar and robust ecosystem that enables developers to harness the strengths of these languages effortlessly.
+
+While '''Blade''' focuses on Web and IoT, it is also great for general software development.
+
+==Links==
+* [https://bladelang.org https://bladelang.org]
+* [https://github.com/blade-lang/blade https://github.com/blade-lang/blade]
+* [https://bladelang.org/quick-learn.html Quick Language Introduction]

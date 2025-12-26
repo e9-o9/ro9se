@@ -1,0 +1,31 @@
+queens templates
+  n is $;
+  addColumn templates
+    prev is $;
+    addIfPossible templates
+      row is $;
+      minor is $ - $prev::length - 1;
+      major is $ + $prev::length + 1;
+      -- If prev is not an array that contains row, send it on...
+      $prev -> if <~|[<|=$row>]>
+            -> if <|?($(.. as i; -> $ - $i) matches <~|[<|=$minor>]>)>
+            -> if <|?($(.. as i; -> $ + $i) matches <~|[<|=$major>]>)>
+            -> [ $..., $row] !
+    end addIfPossible
+    1..$n -> addIfPossible !
+  end addColumn
+  1..$n -> [$] -> # !
+  when <|[](=$n)> do $ !
+  otherwise $ -> addColumn -> # !
+end queens
+
+solutions is [ 8 -> queens ];
+'For 8 queens there are $solutions::length; solutions
+' !
+
+columns is ['abcdefgh'...];
+'One of them is $solutions(1) -> $(.. as i; -> '$columns($i);$;');
+' !
+
+'For 3 queens there are $:[3 -> queens] -> $::length; solutions
+' !

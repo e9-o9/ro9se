@@ -1,0 +1,24 @@
+val words = less(split(readfile("./data/unixdict.txt"), by="\n"), of=1)
+
+val print = fn*(support, against) {
+    val ratio = support / against
+    writeln "{{support}} / {{against}} = {{ratio : r2}}:", (ratio < 2) * " NOT", " PLAUSIBLE"
+    return if(ratio >= 2: 1; 0)
+}
+
+val ks = fw/ei cei ie cie/
+var cnt = {:}
+
+for w in words {
+    for k in ks {
+        cnt[k; 0] += if(k in w: 1; 0)
+    }
+}
+
+val support = cnt'ie - cnt'cie
+val against = cnt'ei - cnt'cei
+
+var result = print(support, against)
+result += print(cnt'cei, cnt'cie)
+
+writeln "Overall:", (result < 2) * " NOT", " PLAUSIBLE\n"

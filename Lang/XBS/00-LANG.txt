@@ -1,0 +1,17 @@
+{{language|XBS}}
+
+== What is XBS? ==
+
+XBS is an interpreted language written in [[JavaScript]]. The language does not have its own sandbox, and relies on methods passed down from JavaScript. XBS was created originally to help its creator understand how to create a basic programming language, and later branched out its syntax in creative ways.
+
+----
+
+== Links ==
+
+[https://github.com/FIREYAUTO/XBS Github]<br>
+[https://fireyauto.github.io/site/xbseditor2.html XBS Code Editor]
+
+== Notes ==
+
+* XBS was re-written back in 2021 as the language had a lot of issues with expressional parsing priorities. Most XBS examples on this site are outdated.
+* XBS is a slow language, as it is interpreted using [[JavaScript]]

@@ -1,0 +1,20 @@
+REM Leonardo numbers
+DECLARE SUB leonardo (L0!, L1!, suma!, texto$)
+
+CONST limit = 25
+CALL leonardo(1, 1, 1, "Numeros de Leonardo")
+CALL leonardo(0, 1, 0, "Numeros de Fibonacci")
+END
+
+SUB leonardo (L0, L1, suma, texto$)
+    PRINT texto$; " ("; L0; ","; L1; ","; suma; "):"
+    IF limit >= 1 THEN PRINT L0;
+    IF limit >= 2 THEN PRINT L1;
+    FOR i = 3 TO limit
+        PRINT L0 + L1 + suma;
+        LET tmp = L0
+        LET L0 = L1
+        LET L1 = tmp + L1 + suma
+    NEXT i
+    PRINT
+END SUB

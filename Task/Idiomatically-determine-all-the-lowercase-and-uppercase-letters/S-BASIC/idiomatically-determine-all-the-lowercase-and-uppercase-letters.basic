@@ -1,0 +1,13 @@
+var c = byte
+print "Upper Case: ";
+for c = 'A' to 'Z'
+  print c;
+next c
+print
+print "Lower Case: ";
+for c = 'a' to 'z'
+  print c;
+next c
+print
+
+end

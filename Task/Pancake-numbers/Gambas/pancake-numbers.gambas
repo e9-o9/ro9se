@@ -1,0 +1,43 @@
+Public numbers[20] As Integer
+Public results[20] As Integer
+
+Public Sub Main()
+
+  Dim i As Integer, row As Integer, col As Integer, idx As Integer
+
+  ' Generate sequence 1 to 20
+  For i = 0 To 19
+    numbers[i] = i + 1
+    results[i] = pancake(i + 1)
+  Next
+
+  For row = 0 To 3
+    For col = 0 To
+      idx = row * 5 + col
+      Print "p("; Format$(numbers[idx], "##"); ") = "; Format$(results[idx], "##"); "  ";
+    Next
+    Print
+  Next
+
+End
+
+Function pancake(n As Integer) As Integer
+
+  Dim gap As Integer, pg As Integer, gapsum As Integer, adj As Integer, tmp As Integer
+
+  gap = 2
+  pg = 1
+  gapsum = gap
+  adj = -1
+
+  While gapsum < n
+    adj += 1
+    tmp = gap
+    gap += pg
+    pg = tmp
+    gapsum += gap
+  Wend
+
+  Return n + adj
+
+End Function

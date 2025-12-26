@@ -1,0 +1,16 @@
+List evenCheckers ← fun[
+  <int i|i % 2 æ 0,
+  <int i|i & 1 æ 0]
+List oddCheckers ← fun[
+  <int i|i % 2 ≠ 0,
+  <int i|i & 1 æ 1]
+writeLine("integer".padStart(10, " "), "|is_even", "|is_odd |")
+writeLine("----------+-------+-------+")
+for each int i in range(-5, 6).append(3141592653)
+  write((text!i).padStart(10, " "), "| ")
+  evenCheckers.list(<fun isEven|write(isEven(i), "  "))
+  write("| ")
+  oddCheckers.list(<fun isOdd|write(isOdd(i), "  "))
+  writeLine("|")
+end
+writeLine("----------+-------+-------+")

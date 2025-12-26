@@ -1,0 +1,16 @@
+lexicalPermutations templates
+  when <|=1> do [1] !
+  otherwise
+    n is $;
+    p is [ $n - 1 -> # ];
+    1..$n -> templates
+      k is $;
+      $p... -> [ $k, $... -> templates
+        when <|$k..> do $+1!
+        otherwise $!
+      end] !
+    end!
+end lexicalPermutations
+
+alpha is ['ABCD'...];
+[ $alpha::length -> lexicalPermutations -> '$alpha($)...;' ] !

@@ -1,0 +1,67 @@
+{{language
+|exec=interpreted
+|tags=basic, qbasic, freebasic, thinbasic
+|hopl id=176
+|LCT=yes
+}}
+'''BASIC''' is the ''Beginner's All-purpose Symbolic Instruction Code''. John G. Kemeny and Thomas E. Kurtz invented BASIC at Dartmouth College during 1963 and 1964. (Their implementation evolved into [[True BASIC]].)
+
+BASIC became popular, with many different implementations for various computers. As the decades passed, the many dialects of BASIC diverged from the original language. Though an ANSI standard exists for BASIC, it is irrelevant to most BASIC programmers, who only target one implementation of BASIC.
+
+[[:Category:BASIC Implementations]] lists the many implementations of BASIC in Rosetta Code.
+
+==Links==
+*[[wp:BASIC|Wikipedia:BASIC]]
+**[[wp:ASIC]]
+**[[wp:Atari BASIC]]
+**[[wp:BASIC-PLUS]]
+**[[wp:Basic-256]]
+**[[wp:Batari BASIC]]
+**[[wp:BBC BASIC]]
+**[[wp:Benton Harbor BASIC]]
+**[[wp:Beta BASIC]]
+**[[wp:CBASIC]]
+**[[wp:Chipmunk Basic]]
+**[[wp:DarkBASIC]]
+**[[wp:Dartmouth BASIC]]
+**[[wp:FreeBASIC]]
+**[[wp:FutureBASIC]]
+**[[wp:GFA BASIC]]
+**[[wp:GLBasic]]
+**[[wp:Integer BASIC]]
+**[[wp:Liberty BASIC]]
+**[[wp:Locomotive BASIC]]
+**[[wp:Microsoft BASIC]]
+***[[wp:Altair BASIC]]
+***[[wp:Amiga BASIC]]
+***[[wp:Applesoft BASIC]]
+***[[wp:Atari Microsoft BASIC]]
+***[[wp:Commodore BASIC]]
+***[[wp:Extended Color BASIC]]
+***[[wp:IBM BASIC]]
+***[[wp:MS BASIC for Macintosh]]
+***[[wp:MSX BASIC]]
+***[[wp:Small Basic]]
+***[[wp:QBasic]]
+***[[wp:QuickBASIC]]‎
+***[[wp:TRS-80 Level II BASIC]]
+***[[wp:Visual Basic‎]]
+**[[wp:PowerBASIC]]
+**[[wp:PureBasic]]
+**[[wp:QB64‎]]
+**[[wp:Quite BASIC]]‎
+**[[wp:RapidQ]]
+**[[wp:Realbasic]]
+**[[wp:Rocky Mountain BASIC]]
+**[[wp:Run BASIC]]
+**[[wp:S-BASIC]]
+**[[wp:ScriptBasic]]
+**[[wp:Sinclair BASIC]]
+**[[wp:SmileBASIC‎]]
+**[[wp:SuperBASIC]]
+**[[wp:TI BASIC (TI 99/4A)]]
+**[[wp:Tiny BASIC‎]]
+**[[wp:True BASIC]]
+**[[wp:UBASIC]]
+**[[wp:Yabasic]]
+{{language programming paradigm|Procedural}}

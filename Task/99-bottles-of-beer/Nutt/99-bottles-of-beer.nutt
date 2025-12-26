@@ -1,0 +1,8 @@
+module main
+import $native 'io' : output#sayn
+
+funct main () : () =
+  [1, 2; 99]#reverse#each {
+    sayn "\(it) bottles of beer on the wall, \(it) bottles of beer";
+    sayn "Take one down and pass it around, \(it# - 1) bottles of beer on the wall."
+  }

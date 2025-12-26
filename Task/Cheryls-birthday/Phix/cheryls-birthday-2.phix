@@ -1,0 +1,45 @@
+with javascript_semantics
+enum MONTH, DAY
+
+function unique_month(sequence si, months)
+    return sum(sq_eq(months,si[MONTH]))=1
+end function
+
+function unique_day(sequence si, days)
+    return sum(sq_eq(days,si[DAY]))=1
+end function
+
+function month_without_unique_day(sequence si, months_with_unique_day)
+    return not find(si[MONTH],months_with_unique_day)
+end function
+
+sequence choices = {{5, 15}, {5, 16}, {5, 19}, {6, 17}, {6, 18},
+                    {7, 14}, {7, 16}, {8, 14}, {8, 15}, {8, 17}}
+
+-- Albert knows the month but does not know the day.
+-- So the month cannot be unique within the choices.
+-- However this step would change nothing, hence omit it.
+--  (obvs. non_unique_month() would be as above, but !=1)
+--choices = filter(choices,non_unique_month,vslice(choices,MONTH))
+
+-- Albert also knows that Bernard doesn't know the answer.
+-- So the month cannot have a unique day.
+sequence unique_days = filter(choices,unique_day,vslice(choices,DAY))
+sequence months_with_unique_day = unique(vslice(unique_days,MONTH))
+
+choices = filter(choices,month_without_unique_day,months_with_unique_day)
+
+-- Bernard now knows the answer.
+-- So the day must be unique within the remaining choices.
+choices = filter(choices,unique_day,vslice(choices,DAY))
+
+-- Albert now knows the answer too.
+-- So the month must be unique within the remaining choices.
+choices = filter(choices,unique_month,vslice(choices,MONTH))
+
+if length(choices)!=1 then crash("Something went wrong!") end if
+
+include builtins\timedate.e
+timedate td = repeat(0,6)
+{td[DT_MONTH],td[DT_DAY]} = choices[1]
+printf(1,"Cheryl's birthday is %s\n", {format_timedate(td,"Mmmm ddth")})

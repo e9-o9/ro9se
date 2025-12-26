@@ -1,0 +1,19 @@
+import extensions;
+
+extension testOp
+{
+   bitwiseTest(y)
+   {
+      Console.printLine(self," and ",y," = ",self.band(y));
+      Console.printLine(self," or ",y," = ",self.bor(y));
+      Console.printLine(self," xor ",y," = ",self.bxor(y));
+      Console.printLine("not ",self," = ",self.BInverted);
+      Console.printLine(self," shr ",y," = ",self.shiftRight(y));
+      Console.printLine(self," shl ",y," = ",self.shiftLeft(y));
+   }
+}
+
+public program()
+{
+   Console.loadLineTo(new Integer()).bitwiseTest(Console.loadLineTo(new Integer()))
+}

@@ -1,0 +1,16 @@
+Function contar_joyas(piedras As String, joyas As String) As Integer
+    Dim As Integer i, bc, cnt = 0
+    For i = 1 To Len(piedras)
+        bc = Instr(1, joyas, Mid(piedras, i, 1))
+        If bc <> 0 Then cnt += 1
+    Next i
+    Return cnt
+End Function
+
+Print contar_joyas("aAAbbbb", "aA")
+Print contar_joyas("ZZ", "z")
+Print contar_joyas("ABCDEFGHIJKLMNOPQRSTUVWXYZ@abcdefghijklmnopqrstuvwxyz", _
+                   "ABCDEFGHIJKLMNOPQRSTUVWXYZ@abcdefghijklmnopqrstuvwxyz")
+Print contar_joyas("AB", "")
+
+Sleep

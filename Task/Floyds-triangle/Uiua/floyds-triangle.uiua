@@ -1,0 +1,11 @@
+Floyd ← ⊜□▽.⟜(+1⇡/+)+1⇡
+Print ← (
+  ⬚""≡°⋕       # Stringify terms
+  /↥≡◇⧻♭.      # Get max length
+  ≡≡◇⬚@ ↙¯     # Pad strings
+  ≡(&p/$"_ _") # Print
+)
+
+Print Floyd 4
+&p""
+Print Floyd 14

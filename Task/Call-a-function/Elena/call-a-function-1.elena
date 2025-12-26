@@ -1,0 +1,2 @@
+var c0 := { Console.writeLine("No argument provided") };
+var c2 := (int a, int b){ Console.printLine("Arguments ",a," and ",b," provided") };

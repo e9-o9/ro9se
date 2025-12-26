@@ -1,0 +1,9 @@
+{{language|Maxima|site=https://maxima.sourceforge.io/}}
+
+Maxima is the language used in the computer algebra system of the same name.
+
+[[Category:Mathematical programming languages]]
+[[Category:Lisp related]]
+
+==Todo==
+[[Tasks_not_implemented_in_Maxima]]

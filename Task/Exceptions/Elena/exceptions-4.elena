@@ -1,0 +1,8 @@
+try
+{
+    foo.fail()
+}
+catch(Exception e)
+{
+    // handle any type of exception
+};

@@ -1,0 +1,30 @@
+The Almkvist-Giullera formula for calculating <math>\frac{1}{\pi^2}</math> is based on the Calabi-Yau
+differential equations of order 4 and 5, &nbsp; which were originally used to describe certain manifolds
+in string theory. 
+
+
+The formula is:
+:<math>\frac{1}{\pi^{2}}=32 \sum_{n=0}^{\infty}\frac{(6n)!}{3 \cdot n!^{6}}(532n^{2}+126n+9)\frac{1}{10^{6n+3}}</math>
+
+
+This formula can be used to calculate the constant <math>\frac{1}{\pi^2}</math>, &nbsp; and thus to calculate <math>\pi</math>.
+
+Note that, because the product of all terms but the power of 1000 can be calculated as an integer,
+the terms in the series can be separated into a large integer term:
+
+:<math>\frac{32(6n)!}{3 \cdot n!^{6}}(532n^{2}+126n+9)</math>
+
+multiplied by a negative integer power of 10:
+
+:<math>10^{-(6n + 3)}</math>
+
+
+;Task:
+:* Print the integer portions (the starred formula, which is without the power of 1000 divisor) of the first 10 terms of the series.
+:* Use the complete formula to calculate and print <math>\pi</math> to 70 decimal digits of precision.
+
+
+;Reference:
+:* &nbsp;[https://arxiv.org/pdf/1009.5202.pdf Gert Almkvist and Jesús Guillera, Ramanujan-like series for 1/π<sup>2</sup> and string theory, Experimental Mathematics, 21 (2012), page 2, formula 1].
+<br><br>
+

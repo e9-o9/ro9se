@@ -1,0 +1,85 @@
+struct vec2{x,y;};
+struct line_t{a,b,c;};
+struct triangle_calc_t{
+  vec2 origin;
+  line_t lines[3];
+  vec2 min,max;
+  double area2;
+  winding_dir; // +1 if clockwise (positive angle) -1 if negative.
+};
+//static vec2 vertices[3] = {0,-2, -2,2, 4,0};
+static vec2 vertices[3] = {-3,7, -6,-5, 2,2};
+enum{TRI_OUT, TRI_ZERO, TRI_EDGE, TRI_INSIDE}
+static triangle_calc_t triangle;
+(x,y,t,&r,&g,&b)
+{
+  if (numframes==0) {
+    precalc_tri( triangle, vertices);
+  }
+  d0 = d1 = d2 = 0; // Distances of point to lines
+  vec2 point = {x, y};
+  side = isPointInsideTriangle(point,triangle,d0,d1,d2);
+  if (side == TRI_INSIDE) {
+    if (triangle.winding_dir == -1) {
+      swap(d1,d2);
+      swap(d1,d0);
+    }
+    r_area = 1.0 / (triangle.winding_dir * triangle.area2);
+    r = 255 * r_area * d2;
+    g = 255 * r_area * d0;
+    b = 255 * r_area * d1; return 1;
+  }
+  r=0; g=0; b=0; return 0; // Set color to 0 if outside.
+}
+
+precalc_tri(triangle_calc_t t, vec2 verts[3]) {
+  t.area2 = triangleAreaTimes2(verts[0], verts[1], verts[2]);
+  if (t.area2 == 0) return;
+  t.winding_dir = sgn(t.area2);
+  t.origin = verts[0];
+  vec2 relative_vertices[3];
+  t.min.x = 1e32;
+  t.min.y = 1e32;
+  t.max.x = -1e32;
+  t.max.y = -1e32;
+  for(i=0; i<3; i++) {
+    t.min.x = min(t.min.x, verts[i].x);
+    t.min.y = min(t.min.y, verts[i].y);
+    t.max.x = max(t.max.x, verts[i].x);
+    t.max.y = max(t.max.y, verts[i].y);
+    relative_vertices[i].x = verts[i].x + t.origin.x;
+    relative_vertices[i].y = verts[i].y + t.origin.y;
+  }
+  makeLine(t.lines[0], relative_vertices[0], relative_vertices[1]);
+  makeLine(t.lines[1], relative_vertices[1], relative_vertices[2]);
+  makeLine(t.lines[2], relative_vertices[2], relative_vertices[0]);
+}
+triangleAreaTimes2(vec2 a, vec2 b, vec2 c) { // Same as the determinant, but dont div by 2
+  return c.x*(a.y-b.y)+a.x*(b.y-c.y)+b.x*(-a.y+c.y);
+}
+isPointInsideTriangle( vec2 point, triangle_calc_t t, &d0,&d1,&d2) {
+  if (t.area2 == 0) return TRI_ZERO;
+  if (point.x < t.min.x) return TRI_OUT;
+  if (point.y < t.min.y) return TRI_OUT;
+  if (point.x > t.max.x) return TRI_OUT;
+  if (point.y > t.max.y) return TRI_OUT;
+  vec2 p = {point.x + t.origin.x, point.y + t.origin.y };
+  d0 = t.winding_dir * lineDist( t.lines[0], p.x, p.y);
+  if (d0==0) { return TRI_EDGE; }else if ( sgn(d0) < 0 ) return TRI_OUT;
+
+  d1 = t.winding_dir * lineDist( t.lines[1], p.x, p.y);
+  if (d1==0) { return TRI_EDGE; } else if ( sgn(d1) < 0 ) return TRI_OUT;
+
+  d2 = t.winding_dir * lineDist( t.lines[2], p.x, p.y);
+  if (d2==0) { return TRI_EDGE; } else if ( sgn(d2) < 0 ) return TRI_OUT;
+
+  return TRI_INSIDE; // on inside
+}
+
+makeLine(line_t line, vec2 a, vec2 b) { // -dy,dx,axby-aybx
+  line.a = -(b.y - a.y);
+  line.b = (b.x - a.x);
+  line.c = a.x*b.y - a.y*b.x;
+}
+lineDist(line_t line, x,y) { return x*line.a + y*line.b + line.c; }
+swap(&a,&b) {tmp = a; a=b; b=tmp; }

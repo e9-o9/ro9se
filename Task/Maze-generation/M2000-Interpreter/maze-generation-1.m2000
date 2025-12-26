@@ -1,0 +1,52 @@
+MODULE  Maze {
+      INTEGER W = 40, H = 20, X, Y, CX, CY, OX, OY, I
+      BOOLEAN DONE
+      DIM MAZE(0 TO W, 0 TO  H) AS STRING
+      FOR X = 0 TO W
+          FOR Y = 0 TO H
+              MAZE(X, Y) = "#"
+          NEXT Y
+      NEXT X
+
+      CX = RND * (W - 1)
+      CY = RND * (H - 1)
+
+      IF CX MOD 2 = 0 THEN CX++
+      IF CY MOD 2 = 0 THEN CY++
+      MAZE(CX, CY) = " "
+
+      WHILE NOT DONE
+          FOR I = 0 TO 99
+              OX = CX
+              OY = CY
+              SELECT CASE RANDOM(0, 3)
+                  CASE 0
+                      IF CX + 2 < W THEN CX+=2
+                  CASE 1
+                      IF CY + 2 < H THEN CY+=2
+                  CASE 2
+                      IF CX - 2 > 0 THEN CX-=2
+                  CASE 3
+                      IF CY - 2 > 0 THEN CY-=2
+              END SELECT
+              IF MAZE(CX, CY) = "#"  THEN
+                  MAZE(CX, CY) = " "
+                  MAZE((CX + OX) DIV 2, (CY + OY) DIV 2) = " "
+             END IF
+          NEXT I
+          DONE = TRUE
+          FOR X = 1 TO W - 1 STEP 2
+              FOR Y = 1 TO H - 1 STEP 2
+                  IF MAZE(X, Y) = "#" THEN DONE = FALSE
+              NEXT Y
+          NEXT X
+      END WHILE
+
+      FOR Y = 0 TO H
+          FOR X = 0 TO W
+              PRINT MAZE(X, Y);
+          NEXT X
+          PRINT
+      NEXT Y
+}
+Maze

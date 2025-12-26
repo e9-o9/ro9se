@@ -1,0 +1,3 @@
+\\ A is a pointer to array
+A=("Apple", "Orange")
+Print  Len(A)=2  ' True

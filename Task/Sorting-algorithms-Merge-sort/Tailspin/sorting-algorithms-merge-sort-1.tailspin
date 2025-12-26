@@ -1,0 +1,21 @@
+templates mergesort
+  templates merge
+    @: $(2);
+    [ $(1)... -> #, $@...] !
+
+    when <?($@ <[](0)>)
+    | ..$@(1)> do
+      $ !
+    otherwise
+      ^@(1) !
+      $ -> #
+  end merge
+  $ -> #
+
+  when <[](0..1)> do $!
+  otherwise
+    def half: $::length ~/ 2;
+    [$(1..$half) -> mergesort, $($half+1..last) -> mergesort] -> merge !
+end mergesort
+
+[4,5,3,8,1,2,6,7,9,8,5] -> mergesort -> !OUT::write

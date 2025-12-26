@@ -1,0 +1,4 @@
+val r = re:block END
+a regex pattern here
+Still here, Doc.
+END

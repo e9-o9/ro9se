@@ -1,0 +1,8 @@
+{{language|Nial
+|strength=strong
+|checking=dynamic
+|site=https://www.nial-array-language.org/
+|LCT=yes}}'''Nial''' (Nested interactive programming language) is an array programming language similar to [[APL]] and its successor [[J]].
+
+==References==
+* [[Wikipedia:Nial]]

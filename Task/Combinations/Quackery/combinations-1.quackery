@@ -1,0 +1,21 @@
+  [ over 0 = iff
+      [ 2drop ' [ [ ] ] ]
+      done
+    dup [] = iff nip done
+    1 split rot tuck
+    1 - over recurse
+    dip [ rot [] ]
+    witheach
+      [ dip over join
+        nested join ]
+    nip unrot recurse join ] is comb ( n [ --> [ )
+
+  [ [] swap times
+      [ i^ join ]
+    comb
+    witheach
+      [ witheach
+          [ echo sp ]
+        cr ] ]               is task ( n n -->   )
+
+  3 5 task

@@ -1,0 +1,13 @@
+# RosettaCog Dependencies
+
+# Core dependencies
+pyyaml>=6.0
+
+# Testing dependencies
+pytest>=7.0
+pytest-cov>=4.0
+
+# Optional: Code quality tools (for development)
+# black>=23.0
+# isort>=5.0
+# flake8>=6.0

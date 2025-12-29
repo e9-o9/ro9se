@@ -10,7 +10,10 @@ import json
 from pathlib import Path
 from collections import defaultdict
 from typing import Dict, List, Set, Tuple
-from .opencog_analyzer import OpenCogAnalyzer
+try:
+    from .opencog_analyzer import OpenCogAnalyzer
+except ImportError:
+    from opencog_analyzer import OpenCogAnalyzer
 
 
 class HypergraphAnalyzer(OpenCogAnalyzer):

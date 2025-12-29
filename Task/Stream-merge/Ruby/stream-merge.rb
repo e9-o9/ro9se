@@ -1,6 +1,6 @@
 def stream_merge(*files)
-  fio = files.map{|fname| open(fname)}
-  merge(fio.map{|io| [io, io.gets]})
+  fio = files.map { |fname| File.open(fname) }
+  merge(fio.map { |io| [io, io.gets] })
 end
 
 def merge(fdata)
@@ -19,7 +19,7 @@ end
 
 files = %w(temp1.dat temp2.dat temp3.dat)
 files.each do |fname|
-  data = IO.read(fname).gsub("\n", " ")
+  data = File.read(fname).gsub("\n", " ")
   puts "#{fname}: #{data}"
 end
 stream_merge(*files)

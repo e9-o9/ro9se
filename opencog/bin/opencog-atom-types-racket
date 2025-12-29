@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# OpenCog Atom Type Builder - Racket Implementation
+# Populates the atom type system from RosettaCog data.
+# Creates concrete instances of cognitive domain and language paradigm atoms.
+
+set -e -u -o pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ROOT_DIR="$(cd "${SCRIPT_DIR}/../.." && pwd)"
+RACKET_DIR="${SCRIPT_DIR}/../racket"
+
+# Check if Racket is installed
+if ! command -v racket &> /dev/null; then
+    echo "Error: Racket is not installed. Please install Racket first."
+    echo "Visit: https://racket-lang.org/download/"
+    exit 1
+fi
+
+# Run the Racket atom type builder
+exec racket "${RACKET_DIR}/atom-type-builder.rkt" "${ROOT_DIR}"

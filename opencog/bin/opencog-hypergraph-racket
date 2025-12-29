@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# OpenCog Hypergraph Analyzer - Racket Implementation
+# Extends the base analyzer with subcategory analysis and hypergraph
+# generation to reveal patterns of peak performance by language and paradigm.
+
+set -e -u -o pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ROOT_DIR="$(cd "${SCRIPT_DIR}/../.." && pwd)"
+RACKET_DIR="${SCRIPT_DIR}/../racket"
+
+# Check if Racket is installed
+if ! command -v racket &> /dev/null; then
+    echo "Error: Racket is not installed. Please install Racket first."
+    echo "Visit: https://racket-lang.org/download/"
+    exit 1
+fi
+
+# Run the Racket hypergraph analyzer
+exec racket "${RACKET_DIR}/hypergraph-analyzer.rkt" "${ROOT_DIR}"

@@ -9,12 +9,21 @@ Creates concrete instances of cognitive domain and language paradigm atoms.
 import yaml
 from pathlib import Path
 from typing import Dict, List
-from .atom_types import (
-    AtomTypeSystem, 
-    CognitiveDomainAtom, 
-    LanguageParadigmAtom
-)
-from .opencog_analyzer import OpenCogAnalyzer
+
+try:
+    from .atom_types import (
+        AtomTypeSystem,
+        CognitiveDomainAtom,
+        LanguageParadigmAtom
+    )
+    from .opencog_analyzer import OpenCogAnalyzer
+except ImportError:
+    from atom_types import (
+        AtomTypeSystem,
+        CognitiveDomainAtom,
+        LanguageParadigmAtom
+    )
+    from opencog_analyzer import OpenCogAnalyzer
 
 
 class AtomTypeBuilder:

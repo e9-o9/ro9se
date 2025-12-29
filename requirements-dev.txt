@@ -1,0 +1,19 @@
+# RosettaCog Development Dependencies
+
+-r requirements.txt
+
+# Code formatting
+black>=23.0
+isort>=5.0
+
+# Linting
+flake8>=6.0
+mypy>=1.0
+
+# Testing extras
+pytest-xdist>=3.0  # Parallel test execution
+pytest-timeout>=2.0  # Test timeouts
+
+# Documentation
+mkdocs>=1.4
+mkdocs-material>=9.0

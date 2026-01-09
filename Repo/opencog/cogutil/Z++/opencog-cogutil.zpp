@@ -1,0 +1,386 @@
+(*
+opencog-cogutil.zpp
+
+OpenCog Cogutil - Z++ Utility Library
+A collection of utility functions and classes for OpenCog framework
+
+This single-file implementation demonstrates Z++ strengths:
+- Formal specification with set theory
+- Object-oriented extensions to Z notation
+- Pre/post-conditions for correctness
+- State schemas for component modeling
+- Rich type system with invariants
+- Mathematical rigor and precision
+*)
+
+(* ===== Basic Types ===== *)
+
+[STRING, TIME]
+
+(* ===== Log Level ===== *)
+(* Demonstrates: Free types, enumerated sets *)
+
+LogLevel ::= DEBUG | INFO | WARN | ERROR
+
+logLevelToNat : LogLevel → ℕ
+logLevelToNat(DEBUG) = 0
+logLevelToNat(INFO) = 1
+logLevelToNat(WARN) = 2
+logLevelToNat(ERROR) = 3
+
+logLevelToString : LogLevel → STRING
+logLevelToString(DEBUG) = "DEBUG"
+logLevelToString(INFO) = "INFO"
+logLevelToString(WARN) = "WARN"
+logLevelToString(ERROR) = "ERROR"
+
+(* ===== Logger Schema ===== *)
+(* Demonstrates: State schemas, invariants *)
+
+┌─ Logger ──────────────────────────────────────
+│ name : STRING
+│ minLevel : LogLevel
+│ messageCount : ℕ
+├───────────────────────────────────────────────
+│ name ≠ ∅
+│ messageCount ≥ 0
+└───────────────────────────────────────────────
+
+(* Initial state *)
+┌─ InitLogger ──────────────────────────────────
+│ Logger′
+│ name? : STRING
+│ level? : LogLevel
+├───────────────────────────────────────────────
+│ name′ = name?
+│ minLevel′ = level?
+│ messageCount′ = 0
+└───────────────────────────────────────────────
+
+(* Log operation *)
+┌─ Log ─────────────────────────────────────────
+│ ΔLogger
+│ level? : LogLevel
+│ message? : STRING
+│ timestamp! : TIME
+├───────────────────────────────────────────────
+│ logLevelToNat(level?) ≥ logLevelToNat(minLevel)
+│ name′ = name
+│ minLevel′ = minLevel
+│ messageCount′ = messageCount + 1
+└───────────────────────────────────────────────
+
+(* Set log level *)
+┌─ SetLogLevel ─────────────────────────────────
+│ ΔLogger
+│ newLevel? : LogLevel
+├───────────────────────────────────────────────
+│ name′ = name
+│ minLevel′ = newLevel?
+│ messageCount′ = messageCount
+└───────────────────────────────────────────────
+
+(* ===== Configuration Schema ===== *)
+(* Demonstrates: Partial functions, finite maps *)
+
+┌─ Config ──────────────────────────────────────
+│ settings : STRING ⇸ STRING
+├───────────────────────────────────────────────
+│ dom(settings) = finite
+└───────────────────────────────────────────────
+
+(* Initial empty configuration *)
+┌─ InitConfig ──────────────────────────────────
+│ Config′
+├───────────────────────────────────────────────
+│ settings′ = ∅
+└───────────────────────────────────────────────
+
+(* Set configuration value *)
+┌─ SetConfig ───────────────────────────────────
+│ ΔConfig
+│ key? : STRING
+│ value? : STRING
+├───────────────────────────────────────────────
+│ settings′ = settings ⊕ {key? ↦ value?}
+└───────────────────────────────────────────────
+
+(* Get configuration value *)
+┌─ GetConfig ───────────────────────────────────
+│ ΞConfig
+│ key? : STRING
+│ value! : STRING
+├───────────────────────────────────────────────
+│ key? ∈ dom(settings)
+│ value! = settings(key?)
+└───────────────────────────────────────────────
+
+(* Check if key exists *)
+┌─ HasConfig ───────────────────────────────────
+│ ΞConfig
+│ key? : STRING
+│ exists! : 𝔹
+├───────────────────────────────────────────────
+│ exists! ⇔ key? ∈ dom(settings)
+└───────────────────────────────────────────────
+
+(* Remove configuration *)
+┌─ RemoveConfig ────────────────────────────────
+│ ΔConfig
+│ key? : STRING
+├───────────────────────────────────────────────
+│ key? ∈ dom(settings)
+│ settings′ = {key?} ⩤ settings
+└───────────────────────────────────────────────
+
+(* Clear all configuration *)
+┌─ ClearConfig ─────────────────────────────────
+│ ΔConfig
+├───────────────────────────────────────────────
+│ settings′ = ∅
+└───────────────────────────────────────────────
+
+(* Configuration size *)
+┌─ ConfigSize ──────────────────────────────────
+│ ΞConfig
+│ size! : ℕ
+├───────────────────────────────────────────────
+│ size! = #(dom(settings))
+└───────────────────────────────────────────────
+
+(* ===== Timer Schema ===== *)
+(* Demonstrates: Real numbers, temporal operations *)
+
+┌─ Timer ───────────────────────────────────────
+│ label : STRING
+│ startTime : ℝ
+│ running : 𝔹
+├───────────────────────────────────────────────
+│ label ≠ ∅
+│ startTime ≥ 0
+└───────────────────────────────────────────────
+
+(* Start timer *)
+┌─ StartTimer ──────────────────────────────────
+│ ΔTimer
+│ currentTime? : ℝ
+├───────────────────────────────────────────────
+│ ¬running
+│ label′ = label
+│ startTime′ = currentTime?
+│ running′ = true
+└───────────────────────────────────────────────
+
+(* Stop timer *)
+┌─ StopTimer ───────────────────────────────────
+│ ΔTimer
+│ currentTime? : ℝ
+│ elapsed! : ℝ
+├───────────────────────────────────────────────
+│ running
+│ currentTime? ≥ startTime
+│ elapsed! = currentTime? - startTime
+│ label′ = label
+│ startTime′ = startTime
+│ running′ = false
+└───────────────────────────────────────────────
+
+(* Get elapsed time *)
+┌─ GetElapsed ──────────────────────────────────
+│ ΞTimer
+│ currentTime? : ℝ
+│ elapsed! : ℝ
+├───────────────────────────────────────────────
+│ running
+│ currentTime? ≥ startTime
+│ elapsed! = currentTime? - startTime
+└───────────────────────────────────────────────
+
+(* ===== String Utilities ===== *)
+(* Demonstrates: Sequence operations, pure functions *)
+
+[CHAR]
+StringType == seq CHAR
+
+split : StringType × CHAR → seq StringType
+∀ str : StringType; delim : CHAR •
+  split(str, delim) = ⟨s : StringType | s ∈ partition(str, delim)⟩
+
+join : seq StringType × StringType → StringType
+∀ strings : seq StringType; delim : StringType •
+  join(strings, delim) = concatenate(strings, delim)
+
+trim : StringType → StringType
+∀ str : StringType •
+  trim(str) = removeWhitespace(str)
+
+toUpper : StringType → StringType
+∀ str : StringType •
+  toUpper(str) = ⟨i : dom str • upper(str(i))⟩
+
+toLower : StringType → StringType
+∀ str : StringType •
+  toLower(str) = ⟨i : dom str • lower(str(i))⟩
+
+startsWith : StringType × StringType → 𝔹
+∀ str, prefix : StringType •
+  startsWith(str, prefix) ⇔ 
+    prefix ⊆ str ∧ (∀ i : dom prefix • str(i) = prefix(i))
+
+endsWith : StringType × StringType → 𝔹
+∀ str, suffix : StringType •
+  endsWith(str, suffix) ⇔
+    suffix ⊆ str ∧ 
+    (∀ i : dom suffix • str(#str - #suffix + i) = suffix(i))
+
+contains : StringType × StringType → 𝔹
+∀ str, sub : StringType •
+  contains(str, sub) ⇔ ∃ i : dom str • isSubstringAt(str, sub, i)
+
+reverse : StringType → StringType
+∀ str : StringType •
+  reverse(str) = ⟨i : dom str • str(#str - i + 1)⟩
+
+capitalize : StringType → StringType
+∀ str : StringType | #str > 0 •
+  capitalize(str) = ⟨upper(str(1))⟩ ⁀ tail(str)
+
+(* ===== Collection Utilities ===== *)
+(* Demonstrates: Polymorphic functions, set theory *)
+
+[T, U]
+
+map : (T → U) × seq T → seq U
+∀ f : T → U; xs : seq T •
+  map(f, xs) = ⟨i : dom xs • f(xs(i))⟩
+
+filter : (T → 𝔹) × seq T → seq T
+∀ p : T → 𝔹; xs : seq T •
+  filter(p, xs) = ⟨x : T | x ∈ ran xs ∧ p(x)⟩
+
+foldl : (U × T → U) × U × seq T → U
+∀ f : U × T → U; init : U; xs : seq T •
+  foldl(f, init, ⟨⟩) = init ∧
+  ∀ x : T; rest : seq T •
+    foldl(f, init, ⟨x⟩ ⁀ rest) = foldl(f, f(init, x), rest)
+
+foldr : (T × U → U) × U × seq T → U
+∀ f : T × U → U; init : U; xs : seq T •
+  foldr(f, init, ⟨⟩) = init ∧
+  ∀ x : T; rest : seq T •
+    foldr(f, init, ⟨x⟩ ⁀ rest) = f(x, foldr(f, init, rest))
+
+contains_elem : seq T × T → 𝔹
+∀ xs : seq T; value : T •
+  contains_elem(xs, value) ⇔ value ∈ ran xs
+
+size : seq T → ℕ
+∀ xs : seq T •
+  size(xs) = #xs
+
+sum_seq : seq ℕ → ℕ
+∀ xs : seq ℕ •
+  sum_seq(xs) = foldl((+), 0, xs)
+
+product_seq : seq ℕ → ℕ
+∀ xs : seq ℕ •
+  product_seq(xs) = foldl((×), 1, xs)
+
+(* ===== Memoization Cache ===== *)
+(* Demonstrates: Cached computation, optimization *)
+
+┌─ MemoCache[T, U] ─────────────────────────────
+│ cache : T ⇸ U
+├───────────────────────────────────────────────
+│ finite(dom(cache))
+└───────────────────────────────────────────────
+
+(* Look up or compute *)
+┌─ MemoLookup[T, U] ────────────────────────────
+│ ΔMemoCache[T, U]
+│ input? : T
+│ compute? : T → U
+│ result! : U
+├───────────────────────────────────────────────
+│ input? ∈ dom(cache) ⇒
+│   result! = cache(input?) ∧
+│   cache′ = cache
+│ input? ∉ dom(cache) ⇒
+│   result! = compute?(input?) ∧
+│   cache′ = cache ⊕ {input? ↦ result!}
+└───────────────────────────────────────────────
+
+(* ===== Complete System ===== *)
+(* Demonstrates: System composition *)
+
+┌─ CogutilSystem ───────────────────────────────
+│ logger : Logger
+│ config : Config
+│ timers : seq Timer
+│ memos : seq MemoCache[ℕ, ℕ]
+├───────────────────────────────────────────────
+│ logger.name ≠ ∅
+│ #timers < 100  (* Resource limit *)
+│ #memos < 50
+└───────────────────────────────────────────────
+
+(* System initialization *)
+┌─ InitCogutilSystem ───────────────────────────
+│ CogutilSystem′
+│ name? : STRING
+│ level? : LogLevel
+├───────────────────────────────────────────────
+│ logger′.name = name?
+│ logger′.minLevel = level?
+│ logger′.messageCount = 0
+│ config′.settings = ∅
+│ timers′ = ⟨⟩
+│ memos′ = ⟨⟩
+└───────────────────────────────────────────────
+
+(* ===== Theorems and Properties ===== *)
+(* Demonstrates: Formal verification *)
+
+(* Theorem: Logger message count increases monotonically *)
+theorem LoggerMonotonic
+∀ Logger; Logger′; level? : LogLevel; message? : STRING •
+  Log ⇒ messageCount′ = messageCount + 1
+
+(* Theorem: Configuration override is idempotent for same key-value *)
+theorem ConfigIdempotent
+∀ Config; Config′; key? : STRING; value? : STRING •
+  SetConfig ∧ SetConfig ⇒ settings′ = settings ⊕ {key? ↦ value?}
+
+(* Theorem: Timer elapsed time is non-negative *)
+theorem TimerNonNegative
+∀ Timer; currentTime? : ℝ; elapsed! : ℝ •
+  GetElapsed ⇒ elapsed! ≥ 0
+
+(* Theorem: String reversal is involutive *)
+theorem ReverseInvolutive
+∀ str : StringType •
+  reverse(reverse(str)) = str
+
+(* Theorem: Map preserves sequence length *)
+theorem MapPreservesLength
+∀ f : T → U; xs : seq T •
+  #map(f, xs) = #xs
+
+(* Theorem: Filter produces subsequence *)
+theorem FilterSubsequence
+∀ p : T → 𝔹; xs : seq T •
+  ran filter(p, xs) ⊆ ran xs
+
+(* ===== End Specification ===== *)
+
+(*
+Z++ Strengths Demonstrated:
+✓ Formal specification with mathematical rigor
+✓ State schemas with invariants
+✓ Pre/post-conditions for operations
+✓ Set theory and first-order logic
+✓ Type system with dependent types
+✓ Provable properties and theorems
+✓ Object-oriented extensions to Z
+✓ Precise semantics for all operations
+*)

@@ -1,0 +1,423 @@
+(*
+opencog-cogserver.zpp
+
+OpenCog CogServer - Network Server for AtomSpace Access in Z++
+
+This single-file implementation demonstrates Z++ strengths:
+- Formal specification of command system
+- State machines for server behavior
+- Pre/post-conditions for all operations
+- Type-safe command dispatch
+- Rigorous error handling semantics
+*)
+
+(* ===== Basic Types ===== *)
+
+[COMMAND_NAME, STRING, TIMESTAMP]
+
+(* ===== Command Result ===== *)
+(* Demonstrates: Sum types with formal semantics *)
+
+CommandResult ::= Success⟨⟨STRING⟩⟩ | Failure⟨⟨STRING⟩⟩
+
+getMessage : CommandResult → STRING
+getMessage(Success⟨⟨msg⟩⟩) = msg
+getMessage(Failure⟨⟨msg⟩⟩) = msg
+
+isSuccess : CommandResult → 𝔹
+isSuccess(Success⟨⟨msg⟩⟩) = true
+isSuccess(Failure⟨⟨msg⟩⟩) = false
+
+(* ===== Command Handler ===== *)
+(* Demonstrates: Function types with context *)
+
+[CONTEXT]
+CommandHandler == seq STRING × CONTEXT → CommandResult
+
+(* ===== Command Info ===== *)
+(* Demonstrates: Record types *)
+
+┌─ CommandInfo ─────────────────────────────────
+│ handler : CommandHandler
+│ description : STRING
+├───────────────────────────────────────────────
+│ description ≠ ∅
+└───────────────────────────────────────────────
+
+(* ===== Command Registry ===== *)
+(* Demonstrates: Partial functions for registration *)
+
+┌─ CommandRegistry ─────────────────────────────
+│ commands : COMMAND_NAME ⇸ CommandInfo
+├───────────────────────────────────────────────
+│ finite(dom(commands))
+│ #dom(commands) < 100  (* Resource limit *)
+└───────────────────────────────────────────────
+
+(* Initialize empty registry *)
+┌─ InitRegistry ────────────────────────────────
+│ CommandRegistry′
+├───────────────────────────────────────────────
+│ commands′ = ∅
+└───────────────────────────────────────────────
+
+(* Register command *)
+┌─ RegisterCommand ─────────────────────────────
+│ ΔCommandRegistry
+│ name? : COMMAND_NAME
+│ handler? : CommandHandler
+│ description? : STRING
+├───────────────────────────────────────────────
+│ description? ≠ ∅
+│ let info == (handler?: handler?, description?: description?) •
+│   commands′ = commands ⊕ {name? ↦ info}
+└───────────────────────────────────────────────
+
+(* Check if command exists *)
+┌─ HasCommand ──────────────────────────────────
+│ ΞCommandRegistry
+│ name? : COMMAND_NAME
+│ exists! : 𝔹
+├───────────────────────────────────────────────
+│ exists! ⇔ name? ∈ dom(commands)
+└───────────────────────────────────────────────
+
+(* Execute command *)
+┌─ ExecuteCommand ──────────────────────────────
+│ ΞCommandRegistry
+│ name? : COMMAND_NAME
+│ args? : seq STRING
+│ context? : CONTEXT
+│ result! : CommandResult
+├───────────────────────────────────────────────
+│ name? ∈ dom(commands) ⇒
+│   result! = commands(name?).handler(args?, context?)
+│ name? ∉ dom(commands) ⇒
+│   result! = Failure⟨⟨"Unknown command"⟩⟩
+└───────────────────────────────────────────────
+
+(* Get all command names *)
+┌─ GetCommandNames ─────────────────────────────
+│ ΞCommandRegistry
+│ names! : ℙ COMMAND_NAME
+├───────────────────────────────────────────────
+│ names! = dom(commands)
+└───────────────────────────────────────────────
+
+(* Get command description *)
+┌─ GetDescription ──────────────────────────────
+│ ΞCommandRegistry
+│ name? : COMMAND_NAME
+│ description! : STRING
+├───────────────────────────────────────────────
+│ name? ∈ dom(commands) ⇒
+│   description! = commands(name?).description
+│ name? ∉ dom(commands) ⇒
+│   description! = "No description available"
+└───────────────────────────────────────────────
+
+(* ===== History Entry ===== *)
+
+┌─ HistoryEntry ────────────────────────────────
+│ command : STRING
+│ timestamp : TIMESTAMP
+│ result : CommandResult
+├───────────────────────────────────────────────
+│ command ≠ ∅
+└───────────────────────────────────────────────
+
+(* ===== Atom Representation ===== *)
+(* Simplified for server operations *)
+
+AtomId == ℕ
+
+AtomRepr ::= NodeRepr⟨⟨STRING × STRING⟩⟩ | 
+             LinkRepr⟨⟨STRING × seq AtomId⟩⟩
+
+(* ===== Command Context ===== *)
+(* Demonstrates: Complex state with multiple components *)
+
+┌─ CommandContext ──────────────────────────────
+│ atomspace : seq AtomRepr
+│ variables : STRING ⇸ STRING
+│ history : seq HistoryEntry
+├───────────────────────────────────────────────
+│ #atomspace < 10000  (* Size limit *)
+│ finite(dom(variables))
+│ #history < 1000
+└───────────────────────────────────────────────
+
+(* Initialize context *)
+┌─ InitContext ─────────────────────────────────
+│ CommandContext′
+├───────────────────────────────────────────────
+│ atomspace′ = ⟨⟩
+│ variables′ = ∅
+│ history′ = ⟨⟩
+└───────────────────────────────────────────────
+
+(* Set variable *)
+┌─ SetVariable ─────────────────────────────────
+│ ΔCommandContext
+│ name? : STRING
+│ value? : STRING
+├───────────────────────────────────────────────
+│ variables′ = variables ⊕ {name? ↦ value?}
+│ atomspace′ = atomspace
+│ history′ = history
+└───────────────────────────────────────────────
+
+(* Get variable *)
+┌─ GetVariable ─────────────────────────────────
+│ ΞCommandContext
+│ name? : STRING
+│ value! : STRING ∪ {undefined}
+├───────────────────────────────────────────────
+│ name? ∈ dom(variables) ⇒ value! = variables(name?)
+│ name? ∉ dom(variables) ⇒ value! = undefined
+└───────────────────────────────────────────────
+
+(* Add to history *)
+┌─ AddToHistory ────────────────────────────────
+│ ΔCommandContext
+│ command? : STRING
+│ timestamp? : TIMESTAMP
+│ result? : CommandResult
+├───────────────────────────────────────────────
+│ let entry == (command: command?, 
+│               timestamp: timestamp?,
+│               result: result?) •
+│   history′ = history ⁀ ⟨entry⟩
+│ atomspace′ = atomspace
+│ variables′ = variables
+└───────────────────────────────────────────────
+
+(* Add node to atomspace *)
+┌─ AddNodeToContext ────────────────────────────
+│ ΔCommandContext
+│ nodeType? : STRING
+│ name? : STRING
+│ atomId! : AtomId
+├───────────────────────────────────────────────
+│ let node == NodeRepr⟨⟨nodeType?, name?⟩⟩ •
+│   atomspace′ = atomspace ⁀ ⟨node⟩ ∧
+│   atomId! = #atomspace′
+│ variables′ = variables
+│ history′ = history
+└───────────────────────────────────────────────
+
+(* Add link to atomspace *)
+┌─ AddLinkToContext ────────────────────────────
+│ ΔCommandContext
+│ linkType? : STRING
+│ outgoing? : seq AtomId
+│ atomId! : AtomId
+├───────────────────────────────────────────────
+│ (* All outgoing IDs must be valid *)
+│ ∀ id : AtomId | id ∈ ran outgoing? •
+│   1 ≤ id ≤ #atomspace
+│ let link == LinkRepr⟨⟨linkType?, outgoing?⟩⟩ •
+│   atomspace′ = atomspace ⁀ ⟨link⟩ ∧
+│   atomId! = #atomspace′
+│ variables′ = variables
+│ history′ = history
+└───────────────────────────────────────────────
+
+(* Clear atomspace *)
+┌─ ClearAtomspace ──────────────────────────────
+│ ΔCommandContext
+├───────────────────────────────────────────────
+│ atomspace′ = ⟨⟩
+│ variables′ = variables
+│ history′ = history
+└───────────────────────────────────────────────
+
+(* Get atomspace size *)
+┌─ GetAtomspaceSize ────────────────────────────
+│ ΞCommandContext
+│ size! : ℕ
+├───────────────────────────────────────────────
+│ size! = #atomspace
+└───────────────────────────────────────────────
+
+(* ===== Server State ===== *)
+(* Demonstrates: State machine for server *)
+
+ServerStatus ::= Stopped | Starting | Running | Stopping
+
+┌─ CogServer ───────────────────────────────────
+│ registry : CommandRegistry
+│ context : CommandContext
+│ status : ServerStatus
+│ connectionCount : ℕ
+├───────────────────────────────────────────────
+│ #dom(registry.commands) > 0
+│ connectionCount ≥ 0
+│ (status = Running) ⇒ connectionCount ≤ 100
+└───────────────────────────────────────────────
+
+(* Initialize server *)
+┌─ InitServer ──────────────────────────────────
+│ CogServer′
+├───────────────────────────────────────────────
+│ registry′.commands ≠ ∅  (* Must have commands *)
+│ context′.atomspace = ⟨⟩
+│ context′.variables = ∅
+│ context′.history = ⟨⟩
+│ status′ = Stopped
+│ connectionCount′ = 0
+└───────────────────────────────────────────────
+
+(* Start server *)
+┌─ StartServer ─────────────────────────────────
+│ ΔCogServer
+├───────────────────────────────────────────────
+│ status = Stopped
+│ status′ = Running
+│ registry′ = registry
+│ context′ = context
+│ connectionCount′ = connectionCount
+└───────────────────────────────────────────────
+
+(* Stop server *)
+┌─ StopServer ──────────────────────────────────
+│ ΔCogServer
+├───────────────────────────────────────────────
+│ status = Running
+│ status′ = Stopped
+│ registry′ = registry
+│ context′ = context
+│ connectionCount′ = 0
+└───────────────────────────────────────────────
+
+(* Process command *)
+┌─ ProcessCommand ──────────────────────────────
+│ ΔCogServer
+│ commandLine? : STRING
+│ result! : CommandResult
+├───────────────────────────────────────────────
+│ status = Running
+│ let parts == parseCommandLine(commandLine?) •
+│   let name == parts(1) •
+│   let args == tail(parts) •
+│     name ∈ dom(registry.commands) ⇒
+│       result! = registry.commands(name).handler(args, context)
+│   name ∉ dom(registry.commands) ⇒
+│     result! = Failure⟨⟨"Unknown command"⟩⟩
+│ status′ = status
+│ registry′ = registry
+│ connectionCount′ = connectionCount
+└───────────────────────────────────────────────
+
+(* ===== Standard Commands ===== *)
+(* Demonstrates: Formal command specifications *)
+
+helpCommand : CommandHandler
+∀ args : seq STRING; ctx : CommandContext •
+  helpCommand(args, ctx) = Success⟨⟨commandList⟩⟩
+  where commandList contains all registered command names
+
+versionCommand : CommandHandler
+∀ args : seq STRING; ctx : CommandContext •
+  versionCommand(args, ctx) = Success⟨⟨"OpenCog CogServer v1.0.0 (Z++)"⟩⟩
+
+statusCommand : CommandHandler
+∀ args : seq STRING; ctx : CommandContext •
+  statusCommand(args, ctx) = 
+    Success⟨⟨statusInfo⟩⟩
+    where statusInfo = formatStatus(#ctx.atomspace, 
+                                    #dom(ctx.variables),
+                                    #ctx.history)
+
+listCommand : CommandHandler
+∀ args : seq STRING; ctx : CommandContext •
+  #ctx.atomspace = 0 ⇒
+    listCommand(args, ctx) = Success⟨⟨"AtomSpace is empty"⟩⟩
+  #ctx.atomspace > 0 ⇒
+    listCommand(args, ctx) = Success⟨⟨atomList⟩⟩
+    where atomList = formatAtoms(ctx.atomspace)
+
+echoCommand : CommandHandler
+∀ args : seq STRING; ctx : CommandContext •
+  echoCommand(args, ctx) = Success⟨⟨concatenate(args, " ")⟩⟩
+
+(* ===== Command Parsing ===== *)
+
+parseCommandLine : STRING → seq STRING
+∀ line : STRING •
+  parseCommandLine(line) = splitByWhitespace(trim(line))
+
+(* ===== Utility Functions ===== *)
+
+formatStatus : ℕ × ℕ × ℕ → STRING
+formatAtoms : seq AtomRepr → STRING
+concatenate : seq STRING × STRING → STRING
+splitByWhitespace : STRING → seq STRING
+trim : STRING → STRING
+
+(* ===== Theorems and Properties ===== *)
+(* Demonstrates: Formal verification *)
+
+(* Theorem: Command execution is deterministic *)
+theorem CommandDeterministic
+∀ registry : CommandRegistry; name : COMMAND_NAME;
+  args : seq STRING; ctx : CommandContext;
+  result₁, result₂ : CommandResult •
+  ExecuteCommand[result!/result₁] ∧
+  ExecuteCommand[result!/result₂] ⇒
+  result₁ = result₂
+
+(* Theorem: Server can only process commands when running *)
+theorem ProcessOnlyWhenRunning
+∀ server : CogServer; commandLine : STRING; result : CommandResult •
+  ProcessCommand ⇒ server.status = Running
+
+(* Theorem: Registry commands remain registered *)
+theorem RegistryPersistence
+∀ registry : CommandRegistry; name : COMMAND_NAME •
+  name ∈ dom(registry.commands) ⇒
+  (∀ registry′ : CommandRegistry • 
+   RegisterCommand ⇒ name ∈ dom(registry′.commands))
+
+(* Theorem: History grows monotonically *)
+theorem HistoryMonotonic
+∀ ctx, ctx′ : CommandContext •
+  AddToHistory ⇒ #ctx′.history = #ctx.history + 1
+
+(* Theorem: Atomspace IDs are sequential *)
+theorem AtomIdsSequential
+∀ ctx : CommandContext; atomId : AtomId •
+  atomId ≤ #ctx.atomspace ⇒ atomId ≥ 1
+
+(* Theorem: Valid link outgoing references *)
+theorem LinkOutgoingValid
+∀ ctx : CommandContext; link : LinkRepr⟨⟨type, outgoing⟩⟩ •
+  link ∈ ran ctx.atomspace ⇒
+  (∀ id : AtomId | id ∈ ran outgoing •
+   1 ≤ id ≤ #ctx.atomspace)
+
+(* Theorem: Command success is compositional *)
+theorem SuccessCompositional
+∀ cmd₁, cmd₂ : CommandHandler; args : seq STRING; ctx : CommandContext •
+  isSuccess(cmd₁(args, ctx)) ∧ isSuccess(cmd₂(args, ctx)) ⇒
+  isSuccess(cmd₁(args, ctx))
+
+(* Theorem: Server state transitions are valid *)
+theorem ValidStateTransitions
+∀ server, server′ : CogServer •
+  (server.status = Stopped ∧ StartServer ⇒ server′.status = Running) ∧
+  (server.status = Running ∧ StopServer ⇒ server′.status = Stopped)
+
+(* ===== End Specification ===== *)
+
+(*
+Z++ Strengths Demonstrated:
+✓ Formal specification of command system
+✓ State machines with rigorous semantics
+✓ Pre/post-conditions for correctness
+✓ Type-safe command dispatch
+✓ Formal error handling model
+✓ Provable state transition properties
+✓ Mathematical rigor for server behavior
+✓ Deterministic execution guarantees
+*)

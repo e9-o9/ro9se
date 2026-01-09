@@ -1,0 +1,391 @@
+(*
+opencog-atomspace.zpp
+
+OpenCog AtomSpace - Hypergraph Knowledge Representation in Z++
+
+This single-file implementation demonstrates Z++ strengths for AI:
+- Formal graph specification with set theory
+- Invariants for knowledge integrity
+- Mathematical semantics for inference
+- Rigorous type system for atoms
+- Provable correctness properties
+*)
+
+(* ===== Basic Types ===== *)
+
+[NAME]
+AtomId == ℕ
+
+(* ===== Atom Types ===== *)
+(* Demonstrates: Free types for atom taxonomy *)
+
+AtomType ::= Atom | Node | Link | ConceptNode | PredicateNode | 
+             VariableNode | EvaluationLink | InheritanceLink | 
+             SimilarityLink | ListLink | AndLink | OrLink | NotLink
+
+atomTypeToString : AtomType → STRING
+atomTypeToString(Atom) = "Atom"
+atomTypeToString(Node) = "Node"
+atomTypeToString(Link) = "Link"
+atomTypeToString(ConceptNode) = "ConceptNode"
+atomTypeToString(PredicateNode) = "PredicateNode"
+atomTypeToString(VariableNode) = "VariableNode"
+atomTypeToString(EvaluationLink) = "EvaluationLink"
+atomTypeToString(InheritanceLink) = "InheritanceLink"
+atomTypeToString(SimilarityLink) = "SimilarityLink"
+atomTypeToString(ListLink) = "ListLink"
+atomTypeToString(AndLink) = "AndLink"
+atomTypeToString(OrLink) = "OrLink"
+atomTypeToString(NotLink) = "NotLink"
+
+(* ===== Truth Value ===== *)
+(* Demonstrates: Value objects with constraints *)
+
+┌─ TruthValue ──────────────────────────────────
+│ strength : ℝ
+│ confidence : ℝ
+├───────────────────────────────────────────────
+│ 0 ≤ strength ≤ 1
+│ 0 ≤ confidence ≤ 1
+└───────────────────────────────────────────────
+
+defaultTruthValue : TruthValue
+defaultTruthValue.strength = 1.0
+defaultTruthValue.confidence = 1.0
+
+(* ===== Atom (Abstract) ===== *)
+(* Demonstrates: Abstract schema for polymorphism *)
+
+┌─ AbstractAtom ────────────────────────────────
+│ id : AtomId
+│ atomType : AtomType
+│ truthValue : TruthValue
+├───────────────────────────────────────────────
+│ id > 0
+└───────────────────────────────────────────────
+
+(* ===== Node Schema ===== *)
+(* Demonstrates: Specialized schema via inheritance *)
+
+┌─ NodeAtom ────────────────────────────────────
+│ AbstractAtom
+│ name : NAME
+├───────────────────────────────────────────────
+│ name ≠ ∅
+│ atomType ∈ {ConceptNode, PredicateNode, VariableNode}
+└───────────────────────────────────────────────
+
+(* ===== Link Schema ===== *)
+(* Demonstrates: Graph edges with constraints *)
+
+┌─ LinkAtom ────────────────────────────────────
+│ AbstractAtom
+│ outgoing : seq AtomId
+├───────────────────────────────────────────────
+│ atomType ∈ {EvaluationLink, InheritanceLink, SimilarityLink,
+│            ListLink, AndLink, OrLink, NotLink}
+│ #outgoing ≥ 1
+│ (atomType = NotLink) ⇒ #outgoing = 1
+│ (atomType ∈ {InheritanceLink, SimilarityLink}) ⇒ #outgoing = 2
+└───────────────────────────────────────────────
+
+(* ===== AtomSpace Schema ===== *)
+(* Demonstrates: Hypergraph as formal structure *)
+
+┌─ AtomSpace ───────────────────────────────────
+│ nextId : AtomId
+│ atoms : AtomId ⇸ (NodeAtom ∪ LinkAtom)
+│ nodeIndex : (AtomType × NAME) ⇸ AtomId
+│ linkIndex : AtomId ⇸ ℙ AtomId
+├───────────────────────────────────────────────
+│ (* All IDs are valid *)
+│ dom(atoms) = {id : AtomId | 1 ≤ id < nextId}
+│ 
+│ (* Node index consistency *)
+│ ∀ id : AtomId; node : NodeAtom •
+│   atoms(id) = node ⇒
+│   nodeIndex(node.atomType, node.name) = id
+│
+│ (* Link index consistency *)
+│ ∀ id : AtomId; link : LinkAtom •
+│   atoms(id) = link ⇒
+│   (∀ targetId : AtomId | targetId ∈ ran link.outgoing •
+│     id ∈ linkIndex(targetId))
+│
+│ (* All atoms have valid IDs *)
+│ ∀ id : AtomId • id ∈ dom(atoms) ⇒
+│   (atoms(id)).id = id
+│
+│ (* Outgoing atoms exist *)
+│ ∀ link : LinkAtom | link ∈ ran atoms •
+│   ran link.outgoing ⊆ dom(atoms)
+└───────────────────────────────────────────────
+
+(* Initialize empty atomspace *)
+┌─ InitAtomSpace ───────────────────────────────
+│ AtomSpace′
+├───────────────────────────────────────────────
+│ nextId′ = 1
+│ atoms′ = ∅
+│ nodeIndex′ = ∅
+│ linkIndex′ = ∅
+└───────────────────────────────────────────────
+
+(* Add node to atomspace *)
+┌─ AddNode ─────────────────────────────────────
+│ ΔAtomSpace
+│ atomType? : AtomType
+│ name? : NAME
+│ tv? : TruthValue
+│ node! : NodeAtom
+├───────────────────────────────────────────────
+│ atomType? ∈ {ConceptNode, PredicateNode, VariableNode}
+│ name? ≠ ∅
+│
+│ (* If node exists, return existing *)
+│ (atomType?, name?) ∈ dom(nodeIndex) ⇒
+│   node!.id = nodeIndex(atomType?, name?) ∧
+│   node! = atoms(node!.id) ∧
+│   nextId′ = nextId ∧
+│   atoms′ = atoms ∧
+│   nodeIndex′ = nodeIndex ∧
+│   linkIndex′ = linkIndex
+│
+│ (* If node doesn't exist, create new *)
+│ (atomType?, name?) ∉ dom(nodeIndex) ⇒
+│   node!.id = nextId ∧
+│   node!.atomType = atomType? ∧
+│   node!.name = name? ∧
+│   node!.truthValue = tv? ∧
+│   nextId′ = nextId + 1 ∧
+│   atoms′ = atoms ⊕ {node!.id ↦ node!} ∧
+│   nodeIndex′ = nodeIndex ⊕ {(atomType?, name?) ↦ node!.id} ∧
+│   linkIndex′ = linkIndex
+└───────────────────────────────────────────────
+
+(* Add link to atomspace *)
+┌─ AddLink ─────────────────────────────────────
+│ ΔAtomSpace
+│ atomType? : AtomType
+│ outgoing? : seq AtomId
+│ tv? : TruthValue
+│ link! : LinkAtom
+├───────────────────────────────────────────────
+│ atomType? ∈ {EvaluationLink, InheritanceLink, SimilarityLink,
+│              ListLink, AndLink, OrLink, NotLink}
+│ #outgoing? ≥ 1
+│ ran outgoing? ⊆ dom(atoms)
+│
+│ (* Create new link *)
+│ link!.id = nextId ∧
+│ link!.atomType = atomType? ∧
+│ link!.outgoing = outgoing? ∧
+│ link!.truthValue = tv? ∧
+│ nextId′ = nextId + 1 ∧
+│ atoms′ = atoms ⊕ {link!.id ↦ link!} ∧
+│ nodeIndex′ = nodeIndex ∧
+│
+│ (* Update incoming sets *)
+│ ∀ targetId : AtomId | targetId ∈ ran outgoing? •
+│   linkIndex′(targetId) = linkIndex(targetId) ∪ {link!.id}
+└───────────────────────────────────────────────
+
+(* Get atom by ID *)
+┌─ GetAtom ─────────────────────────────────────
+│ ΞAtomSpace
+│ id? : AtomId
+│ atom! : NodeAtom ∪ LinkAtom
+├───────────────────────────────────────────────
+│ id? ∈ dom(atoms)
+│ atom! = atoms(id?)
+└───────────────────────────────────────────────
+
+(* Check if atom exists *)
+┌─ ContainsAtom ────────────────────────────────
+│ ΞAtomSpace
+│ id? : AtomId
+│ exists! : 𝔹
+├───────────────────────────────────────────────
+│ exists! ⇔ id? ∈ dom(atoms)
+└───────────────────────────────────────────────
+
+(* Remove atom *)
+┌─ RemoveAtom ──────────────────────────────────
+│ ΔAtomSpace
+│ id? : AtomId
+├───────────────────────────────────────────────
+│ id? ∈ dom(atoms)
+│
+│ (* Remove from atoms *)
+│ atoms′ = {id?} ⩤ atoms
+│ nextId′ = nextId
+│
+│ (* Remove from node index if node *)
+│ atoms(id?) ∈ NodeAtom ⇒
+│   let node == atoms(id?) •
+│     nodeIndex′ = {(node.atomType, node.name)} ⩤ nodeIndex
+│
+│ (* Update link index if link *)
+│ atoms(id?) ∈ LinkAtom ⇒
+│   let link == atoms(id?) •
+│     ∀ targetId : AtomId | targetId ∈ ran link.outgoing •
+│       linkIndex′(targetId) = linkIndex(targetId) \ {id?}
+└───────────────────────────────────────────────
+
+(* Get incoming links *)
+┌─ GetIncoming ─────────────────────────────────
+│ ΞAtomSpace
+│ id? : AtomId
+│ incoming! : ℙ LinkAtom
+├───────────────────────────────────────────────
+│ id? ∈ dom(atoms)
+│ incoming! = {link : LinkAtom | 
+│              ∃ linkId : AtomId •
+│                linkId ∈ linkIndex(id?) ∧
+│                link = atoms(linkId)}
+└───────────────────────────────────────────────
+
+(* Clear atomspace *)
+┌─ ClearAtomSpace ──────────────────────────────
+│ ΔAtomSpace
+├───────────────────────────────────────────────
+│ nextId′ = 1
+│ atoms′ = ∅
+│ nodeIndex′ = ∅
+│ linkIndex′ = ∅
+└───────────────────────────────────────────────
+
+(* Get atomspace size *)
+┌─ GetSize ─────────────────────────────────────
+│ ΞAtomSpace
+│ size! : ℕ
+├───────────────────────────────────────────────
+│ size! = #dom(atoms)
+└───────────────────────────────────────────────
+
+(* ===== Pattern Matching ===== *)
+(* Demonstrates: Comprehension and predicates *)
+
+findByType : AtomSpace × AtomType → ℙ (NodeAtom ∪ LinkAtom)
+∀ space : AtomSpace; type : AtomType •
+  findByType(space, type) = 
+    {atom : NodeAtom ∪ LinkAtom |
+     atom ∈ ran space.atoms ∧ atom.atomType = type}
+
+findByName : AtomSpace × NAME → ℙ NodeAtom
+∀ space : AtomSpace; name : NAME •
+  findByName(space, name) =
+    {node : NodeAtom |
+     node ∈ ran space.atoms ∧ node.name = name}
+
+findLinksContaining : AtomSpace × AtomId → ℙ LinkAtom
+∀ space : AtomSpace; targetId : AtomId •
+  findLinksContaining(space, targetId) =
+    {link : LinkAtom |
+     link ∈ ran space.atoms ∧ targetId ∈ ran link.outgoing}
+
+(* ===== Inference Operations ===== *)
+(* Demonstrates: Recursive graph traversal *)
+
+transitiveClosure : AtomSpace × AtomId → ℙ AtomId
+∀ space : AtomSpace; startId : AtomId •
+  transitiveClosure(space, startId) = 
+    μ X : ℙ AtomId •
+      {startId} ∪
+      {targetId : AtomId |
+       ∃ linkId : AtomId; link : LinkAtom •
+         linkId ∈ X ∧
+         link = space.atoms(linkId) ∧
+         link.atomType = InheritanceLink ∧
+         #link.outgoing = 2 ∧
+         link.outgoing(1) ∈ X ∧
+         targetId = link.outgoing(2)}
+
+(* Find all concepts reachable via inheritance *)
+inheritanceReachable : AtomSpace × AtomId → ℙ AtomId
+∀ space : AtomSpace; startId : AtomId •
+  inheritanceReachable(space, startId) =
+    transitiveClosure(space, startId)
+
+(* Check if A inherits from B *)
+inheritsFrom : AtomSpace × AtomId × AtomId → 𝔹
+∀ space : AtomSpace; fromId, toId : AtomId •
+  inheritsFrom(space, fromId, toId) ⇔
+    toId ∈ transitiveClosure(space, fromId)
+
+(* ===== Query Operations ===== *)
+
+filterByTruthValue : AtomSpace × (ℝ × ℝ) → ℙ (NodeAtom ∪ LinkAtom)
+∀ space : AtomSpace; threshold : ℝ × ℝ •
+  let minStrength == threshold.1; minConfidence == threshold.2 •
+    filterByTruthValue(space, threshold) =
+      {atom : NodeAtom ∪ LinkAtom |
+       atom ∈ ran space.atoms ∧
+       atom.truthValue.strength ≥ minStrength ∧
+       atom.truthValue.confidence ≥ minConfidence}
+
+(* ===== Theorems and Properties ===== *)
+(* Demonstrates: Formal verification *)
+
+(* Theorem: AtomSpace IDs are unique *)
+theorem UniqueIds
+∀ AtomSpace; id₁, id₂ : AtomId •
+  id₁ ∈ dom(atoms) ∧ id₂ ∈ dom(atoms) ∧
+  atoms(id₁) = atoms(id₂) ⇒ id₁ = id₂
+
+(* Theorem: Adding node preserves existing atoms *)
+theorem AddNodePreservesAtoms
+∀ AtomSpace; AtomSpace′; atomType? : AtomType; 
+  name? : NAME; tv? : TruthValue; node! : NodeAtom •
+  AddNode ⇒
+  ∀ id : AtomId | id ∈ dom(atoms) •
+    id ≠ node!.id ⇒ atoms′(id) = atoms(id)
+
+(* Theorem: Link outgoing atoms exist *)
+theorem LinkOutgoingExist
+∀ space : AtomSpace; link : LinkAtom •
+  link ∈ ran space.atoms ⇒
+  ran link.outgoing ⊆ dom(space.atoms)
+
+(* Theorem: Inheritance is transitive *)
+theorem InheritanceTransitive
+∀ space : AtomSpace; a, b, c : AtomId •
+  inheritsFrom(space, a, b) ∧ inheritsFrom(space, b, c) ⇒
+  inheritsFrom(space, a, c)
+
+(* Theorem: Incoming links are consistent *)
+theorem IncomingConsistent
+∀ space : AtomSpace; targetId, linkId : AtomId •
+  linkId ∈ space.linkIndex(targetId) ⇒
+  ∃ link : LinkAtom •
+    link = space.atoms(linkId) ∧
+    targetId ∈ ran link.outgoing
+
+(* Theorem: Node index is bijective *)
+theorem NodeIndexBijective
+∀ space : AtomSpace •
+  nodeIndex ∈ (AtomType × NAME) ⤖ AtomId
+
+(* Theorem: Truth values are bounded *)
+theorem TruthValuesBounded
+∀ tv : TruthValue •
+  0 ≤ tv.strength ≤ 1 ∧ 0 ≤ tv.confidence ≤ 1
+
+(* Theorem: AtomSpace size equals atom count *)
+theorem SizeCorrect
+∀ space : AtomSpace; size! : ℕ •
+  GetSize ⇒ size! = #dom(space.atoms)
+
+(* ===== End Specification ===== *)
+
+(*
+Z++ Strengths Demonstrated:
+✓ Formal graph specification with set theory
+✓ State schemas with complex invariants
+✓ Mathematical semantics for inference
+✓ Rigorous type system for knowledge
+✓ Provable correctness properties
+✓ Recursive definitions for traversal
+✓ Comprehension for pattern matching
+✓ Constraint-based modeling
+*)

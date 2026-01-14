@@ -12,7 +12,7 @@ import yaml
 import json
 from pathlib import Path
 from collections import defaultdict
-from typing import Dict, List, Set
+from typing import Dict, List, Set, Optional
 
 
 class OpenCogAnalyzer:
@@ -126,7 +126,7 @@ class OpenCogAnalyzer:
             }
         }
     
-    def generate_language_profile(self, language: str) -> Dict:
+    def generate_language_profile(self, language: str, include_spectrum: bool = True) -> Dict:
         """Generate a comprehensive capability profile for a language."""
         analysis = self.analyze_language(language)
         
@@ -137,7 +137,7 @@ class OpenCogAnalyzer:
         
         coverage_score = (covered_categories / total_categories * 100) if total_categories > 0 else 0
         
-        return {
+        profile = {
             'language': language,
             'total_tasks_implemented': analysis['total_tasks'],
             'ai_tasks_implemented': analysis['ai_categorized_tasks'],
@@ -146,6 +146,28 @@ class OpenCogAnalyzer:
             'total_categories': total_categories,
             'detailed_coverage': analysis['coverage_by_category']
         }
+        
+        # Add neuro-symbolic spectrum analysis if requested
+        if include_spectrum:
+            try:
+                from opencog.lib.neurosymbolic_spectrum import NeuroSymbolicAnalyzer
+                spectrum_analyzer = NeuroSymbolicAnalyzer(str(self.root_dir))
+                spectrum_profile = spectrum_analyzer.analyze_language(language)
+                profile['spectrum'] = {
+                    'position': spectrum_profile.position.value,
+                    'neural_score': spectrum_profile.features.neural_score,
+                    'characteristics': {
+                        'preserves_possibility': spectrum_profile.preserves_possibility,
+                        'has_explicit_topology': spectrum_profile.has_explicit_topology,
+                        'supports_metaprogramming': spectrum_profile.supports_metaprogramming,
+                        'homoiconic': spectrum_profile.homoiconic
+                    }
+                }
+            except Exception as e:
+                # Spectrum analysis is optional
+                profile['spectrum'] = None
+        
+        return profile
     
     def analyze_all_languages(self) -> Dict:
         """Analyze all languages and rank by AI capabilities."""

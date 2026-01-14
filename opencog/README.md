@@ -92,6 +92,47 @@ system.print_summary()
 
 See `opencog/ATOM_TYPES.md` for complete mathematical formalism and usage.
 
+## Neuro-Symbolic Spectrum Analysis (NEW)
+
+OpenCog now includes **neuro-symbolic spectrum analysis** that classifies languages by how they balance neural (continuous field) and symbolic (discrete collapse) computation:
+
+### Features
+
+1. **Spectrum Position Classification**
+   - Languages positioned from neural-extreme to symbolic-extreme
+   - Based on 6 key features: structure preservation, meaning distribution, evaluation deferral, control model, syntactic topology, semantic model
+   - Identifies languages at neuro-symbolic equilibrium (e.g., Lisp, Scheme)
+   
+2. **Key Insights**
+   - Functional/Lambda languages (Lisp, Scheme) achieve equilibrium - preserving possibility through deferred evaluation
+   - Logic programming (Prolog) has symbolic surface with neural interior - backtracking preserves possibilities
+   - Array/dataflow languages (APL, J, Julia) are neural-leaning - bulk transformations, field operations
+   - Imperative languages (C, Rust, Java) are symbolic-leaning - immediate state collapse, linear execution
+   - Assembly is maximally symbolic - no abstraction, immediate commitment
+   
+3. **Practical Applications**
+   - Identify languages that preserve computational flexibility
+   - Match problem characteristics to spectrum position
+   - Understand paradigm trade-offs in computation style
+
+### Quick Start
+
+```bash
+# Analyze a specific language
+opencog/bin/opencog-neurosymbolic --language Lisp
+
+# Show all languages with distribution
+opencog/bin/opencog-neurosymbolic --all --distribution
+
+# Find languages at equilibrium position
+opencog/bin/opencog-neurosymbolic --position equilibrium
+
+# Export to JSON
+opencog/bin/opencog-neurosymbolic --all --export spectrum.json
+```
+
+See `neuro-symbo.md` for the theoretical framework and `opencog/lib/neurosymbolic_spectrum.py` for implementation.
+
 ## Inferno Cognitive Kernel (NEW)
 
 OpenCog now includes a **revolutionary pure Inferno kernel-based distributed AGI operating system**:

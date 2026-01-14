@@ -1,0 +1,295 @@
+#!/usr/bin/env bash
+# Neuro-Symbolic Spectrum Analysis Tool
+# Analyzes programming languages based on their position on the neuro-symbolic spectrum
+
+set -e -u -o pipefail
+
+# Get the directory containing this script
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
+
+# Add opencog to Python path
+export PYTHONPATH="${REPO_ROOT}:${PYTHONPATH:-}"
+
+# Run the Python analyzer
+python3 - "$@" <<'PYTHON'
+import sys
+import os
+import json
+import argparse
+from pathlib import Path
+
+# Add repo root to path
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+
+from opencog.lib.neurosymbolic_spectrum import (
+    NeuroSymbolicAnalyzer,
+    SpectrumPosition
+)
+from opencog.lib.opencog_analyzer import OpenCogAnalyzer
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description='Analyze programming languages on the neuro-symbolic spectrum',
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+  # Analyze a specific language
+  opencog-neurosymbolic --language Lisp
+  
+  # Analyze all languages with AI tasks
+  opencog-neurosymbolic --all
+  
+  # Show spectrum distribution
+  opencog-neurosymbolic --all --distribution
+  
+  # Export to JSON
+  opencog-neurosymbolic --all --export output.json
+  
+  # Analyze languages by position
+  opencog-neurosymbolic --position equilibrium
+        """
+    )
+    
+    parser.add_argument(
+        '--language', '-l',
+        help='Analyze a specific language'
+    )
+    
+    parser.add_argument(
+        '--all', '-a',
+        action='store_true',
+        help='Analyze all languages'
+    )
+    
+    parser.add_argument(
+        '--position', '-p',
+        choices=[pos.value for pos in SpectrumPosition],
+        help='Show languages at a specific spectrum position'
+    )
+    
+    parser.add_argument(
+        '--distribution', '-d',
+        action='store_true',
+        help='Show distribution across spectrum positions'
+    )
+    
+    parser.add_argument(
+        '--export', '-e',
+        metavar='FILE',
+        help='Export results to JSON file'
+    )
+    
+    parser.add_argument(
+        '--verbose', '-v',
+        action='store_true',
+        help='Show detailed analysis'
+    )
+    
+    args = parser.parse_args()
+    
+    # Initialize analyzer
+    repo_root = os.getcwd()
+    analyzer = NeuroSymbolicAnalyzer(repo_root)
+    
+    # Single language analysis
+    if args.language:
+        profile = analyzer.analyze_language(args.language)
+        print_profile(profile, verbose=args.verbose)
+        return
+    
+    # Analyze all languages
+    if args.all:
+        # Get all languages from OpenCog analyzer
+        opencog = OpenCogAnalyzer(repo_root)
+        all_languages = opencog.get_all_languages()
+        
+        print(f"Analyzing {len(all_languages)} languages on neuro-symbolic spectrum...")
+        print()
+        
+        profiles = []
+        for lang in all_languages:
+            try:
+                profile = analyzer.analyze_language(lang)
+                profiles.append(profile)
+            except Exception as e:
+                if args.verbose:
+                    print(f"Warning: Could not analyze {lang}: {e}")
+        
+        if args.distribution:
+            print_distribution(analyzer, profiles)
+        elif args.position:
+            print_position_group(profiles, args.position, verbose=args.verbose)
+        else:
+            # Show summary by position
+            print_summary(analyzer, profiles, verbose=args.verbose)
+        
+        # Export if requested
+        if args.export:
+            export_data = analyzer.export_to_dict(profiles)
+            with open(args.export, 'w') as f:
+                json.dump(export_data, f, indent=2)
+            print(f"\nExported to {args.export}")
+        
+        return
+    
+    # Show position group
+    if args.position:
+        opencog = OpenCogAnalyzer(repo_root)
+        all_languages = opencog.get_all_languages()
+        
+        profiles = []
+        for lang in all_languages:
+            try:
+                profile = analyzer.analyze_language(lang)
+                if profile.position.value == args.position:
+                    profiles.append(profile)
+            except Exception as e:
+                if args.verbose:
+                    print(f"Warning: Could not analyze {lang}: {e}")
+        
+        print_position_group(profiles, args.position, verbose=args.verbose)
+        return
+    
+    # No arguments - show help
+    parser.print_help()
+
+
+def print_profile(profile, verbose=False):
+    """Print a single language profile"""
+    print(f"\n{'='*70}")
+    print(f"Language: {profile.language}")
+    print(f"{'='*70}\n")
+    
+    print(f"Primary Paradigm: {profile.primary_paradigm}")
+    print(f"Spectrum Position: {profile.position.value.replace('_', ' ').title()}")
+    print(f"Neural Score: {profile.features.neural_score:.3f}")
+    print()
+    
+    if verbose:
+        print("Features:")
+        print(f"  Structure Preservation:  {profile.features.structure_preservation:.2f}")
+        print(f"  Meaning Distribution:    {profile.features.meaning_distribution:.2f}")
+        print(f"  Evaluation Deferral:     {profile.features.evaluation_deferral:.2f}")
+        print(f"  Control Model:           {profile.features.control_model:.2f}")
+        print(f"  Syntactic Topology:      {profile.features.syntactic_topology:.2f}")
+        print(f"  Semantic Model:          {profile.features.semantic_model:.2f}")
+        print()
+    
+    print("Characteristics:")
+    print(f"  Preserves Possibility:    {'✓' if profile.preserves_possibility else '✗'}")
+    print(f"  Explicit Topology:        {'✓' if profile.has_explicit_topology else '✗'}")
+    print(f"  Metaprogramming Support:  {'✓' if profile.supports_metaprogramming else '✗'}")
+    print(f"  Homoiconic:               {'✓' if profile.homoiconic else '✗'}")
+    print()
+    
+    print("Rationale:")
+    print(f"  {profile.rationale}")
+    print()
+
+
+def print_distribution(analyzer, profiles):
+    """Print distribution across spectrum positions"""
+    distribution = analyzer.get_spectrum_distribution(profiles)
+    total = len(profiles)
+    
+    print(f"\nNeuro-Symbolic Spectrum Distribution ({total} languages)")
+    print("="*70)
+    print()
+    
+    # Order from neural to symbolic
+    positions = [
+        SpectrumPosition.NEURAL_EXTREME,
+        SpectrumPosition.NEURAL_LEANING,
+        SpectrumPosition.BALANCED_NEURAL,
+        SpectrumPosition.EQUILIBRIUM,
+        SpectrumPosition.BALANCED_SYMBOLIC,
+        SpectrumPosition.SYMBOLIC_LEANING,
+        SpectrumPosition.SYMBOLIC_EXTREME,
+    ]
+    
+    for pos in positions:
+        count = distribution[pos.value]
+        percentage = (count / total * 100) if total > 0 else 0
+        bar_length = int(percentage / 2)  # Scale to 50 chars max
+        bar = '█' * bar_length
+        
+        label = pos.value.replace('_', ' ').title()
+        print(f"{label:25} {count:4d} ({percentage:5.1f}%) {bar}")
+    
+    print()
+
+
+def print_position_group(profiles, position_value, verbose=False):
+    """Print all languages at a specific position"""
+    print(f"\nLanguages at {position_value.replace('_', ' ').title()}")
+    print("="*70)
+    print()
+    
+    if not profiles:
+        print("No languages found at this position.")
+        return
+    
+    print(f"Total: {len(profiles)} languages\n")
+    
+    # Sort by neural score
+    profiles.sort(key=lambda p: p.features.neural_score, reverse=True)
+    
+    for profile in profiles:
+        if verbose:
+            print_profile(profile, verbose=False)
+        else:
+            print(f"  {profile.language:20} (score: {profile.features.neural_score:.3f})")
+    
+    print()
+
+
+def print_summary(analyzer, profiles, verbose=False):
+    """Print summary of all languages"""
+    print(f"\nNeuro-Symbolic Spectrum Analysis Summary")
+    print("="*70)
+    print()
+    
+    # Show distribution
+    print_distribution(analyzer, profiles)
+    
+    # Show examples from each category
+    print("\nExample Languages by Position:")
+    print("-"*70)
+    print()
+    
+    # Group by position
+    by_position = {}
+    for profile in profiles:
+        pos = profile.position.value
+        if pos not in by_position:
+            by_position[pos] = []
+        by_position[pos].append(profile)
+    
+    # Order from neural to symbolic
+    positions = [
+        SpectrumPosition.NEURAL_EXTREME,
+        SpectrumPosition.NEURAL_LEANING,
+        SpectrumPosition.BALANCED_NEURAL,
+        SpectrumPosition.EQUILIBRIUM,
+        SpectrumPosition.BALANCED_SYMBOLIC,
+        SpectrumPosition.SYMBOLIC_LEANING,
+        SpectrumPosition.SYMBOLIC_EXTREME,
+    ]
+    
+    for pos in positions:
+        pos_profiles = by_position.get(pos.value, [])
+        if pos_profiles:
+            label = pos.value.replace('_', ' ').title()
+            # Sort by score and take top 5
+            pos_profiles.sort(key=lambda p: p.features.neural_score, reverse=True)
+            examples = [p.language for p in pos_profiles[:5]]
+            print(f"{label:25} {', '.join(examples)}")
+    
+    print()
+
+
+if __name__ == '__main__':
+    main()
+PYTHON

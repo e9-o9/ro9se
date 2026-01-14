@@ -121,6 +121,13 @@ The OpenCog framework provides tools to evaluate languages across AI domains:
     language paradigms. Provides mathematical framework with algebraic operations
     for reasoning about language-domain affinities and paradigm composition.
 
+* `opencog/bin/opencog-neurosymbolic`
+
+    **NEW**: Analyzes languages on the neuro-symbolic spectrum - classifies how
+    languages balance neural (continuous field) and symbolic (discrete collapse)
+    computation. Reveals which languages preserve possibility vs. force commitment,
+    and correlates spectrum position with paradigms and AI capabilities.
+
 * `opencog/bin/opencog-reasoning`
 
     Analyze reasoning tasks and get pattern/strategy recommendations

@@ -177,10 +177,25 @@ class HypergraphAnalyzer(OpenCogAnalyzer):
                 }
                 hypergraph['edges']['language_to_paradigm'].append(edge)
             
+            # Add neuro-symbolic spectrum analysis
+            spectrum_data = None
+            try:
+                from opencog.lib.neurosymbolic_spectrum import NeuroSymbolicAnalyzer
+                spectrum_analyzer = NeuroSymbolicAnalyzer(str(self.root_dir))
+                spectrum_profile = spectrum_analyzer.analyze_language(lang)
+                spectrum_data = {
+                    'position': spectrum_profile.position.value,
+                    'neural_score': spectrum_profile.features.neural_score
+                }
+            except Exception:
+                # Spectrum analysis is optional
+                pass
+            
             language_data[lang] = {
                 'subcategories': len(subcat_analysis),
                 'total_tasks': sum(len(tasks) for tasks in subcat_analysis.values()),
-                'paradigms': paradigms
+                'paradigms': paradigms,
+                'spectrum': spectrum_data
             }
         
         # Calculate subcategory performance rankings
@@ -358,6 +373,111 @@ class HypergraphAnalyzer(OpenCogAnalyzer):
                     print(f"     Best: {top_lang_str}")
             else:
                 print("  No paradigm data available")
+        
+        print("\n" + "=" * 80)
+    
+    def generate_spectrum_analysis(self) -> Dict:
+        """
+        Generate neuro-symbolic spectrum analysis integrated with hypergraph.
+        
+        Returns:
+            Dict with spectrum distribution and correlations
+        """
+        from opencog.lib.neurosymbolic_spectrum import NeuroSymbolicAnalyzer
+        
+        spectrum_analyzer = NeuroSymbolicAnalyzer(str(self.root_dir))
+        languages = self.get_all_languages()
+        
+        # Analyze all languages
+        profiles = []
+        for lang in languages:
+            try:
+                profile = spectrum_analyzer.analyze_language(lang)
+                profiles.append(profile)
+            except Exception:
+                continue
+        
+        # Get distribution
+        distribution = spectrum_analyzer.get_spectrum_distribution(profiles)
+        
+        # Analyze correlation with paradigms
+        paradigm_spectrum = defaultdict(list)
+        for profile in profiles:
+            paradigms = self.get_language_paradigms(profile.language)
+            for paradigm in paradigms:
+                paradigm_spectrum[paradigm].append(profile.features.neural_score)
+        
+        # Calculate average spectrum position per paradigm
+        paradigm_averages = {}
+        for paradigm, scores in paradigm_spectrum.items():
+            if scores:
+                paradigm_averages[paradigm] = {
+                    'average_neural_score': sum(scores) / len(scores),
+                    'count': len(scores),
+                    'min': min(scores),
+                    'max': max(scores)
+                }
+        
+        # Analyze correlation with subcategories
+        subcategory_spectrum = defaultdict(list)
+        for profile in profiles:
+            subcat_analysis = self.analyze_language_subcategories(profile.language)
+            for (category, subcategory), _ in subcat_analysis.items():
+                subcat_key = f"{category}/{subcategory}"
+                subcategory_spectrum[subcat_key].append(profile.features.neural_score)
+        
+        subcategory_averages = {}
+        for subcat, scores in subcategory_spectrum.items():
+            if scores:
+                subcategory_averages[subcat] = {
+                    'average_neural_score': sum(scores) / len(scores),
+                    'count': len(scores),
+                    'min': min(scores),
+                    'max': max(scores)
+                }
+        
+        return {
+            'distribution': distribution,
+            'total_languages_analyzed': len(profiles),
+            'paradigm_spectrum_correlation': paradigm_averages,
+            'subcategory_spectrum_correlation': subcategory_averages,
+            'profiles': [p.to_dict() for p in profiles]
+        }
+    
+    def print_spectrum_report(self):
+        """Print neuro-symbolic spectrum analysis report."""
+        print("=" * 80)
+        print("Neuro-Symbolic Spectrum Analysis: Integrated with Hypergraph")
+        print("=" * 80)
+        print()
+        
+        spectrum_data = self.generate_spectrum_analysis()
+        
+        # Distribution
+        print("Spectrum Distribution:")
+        print("-" * 80)
+        total = spectrum_data['total_languages_analyzed']
+        for position, count in sorted(spectrum_data['distribution'].items()):
+            percentage = (count / total * 100) if total > 0 else 0
+            bar = '█' * int(percentage / 2)
+            print(f"  {position:25} {count:4d} ({percentage:5.1f}%) {bar}")
+        
+        print()
+        
+        # Paradigm correlation
+        print("Paradigm-Spectrum Correlation:")
+        print("-" * 80)
+        paradigm_corr = spectrum_data['paradigm_spectrum_correlation']
+        sorted_paradigms = sorted(
+            paradigm_corr.items(),
+            key=lambda x: x[1]['average_neural_score'],
+            reverse=True
+        )
+        
+        for paradigm, data in sorted_paradigms:
+            print(f"  {paradigm.replace('_', ' ').title():30} "
+                  f"Avg: {data['average_neural_score']:.3f} "
+                  f"({data['count']} langs)")
         
         print("\n" + "=" * 80)
 

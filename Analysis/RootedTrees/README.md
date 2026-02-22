@@ -66,6 +66,19 @@ Analysis of the 48 trees at n=7, where ternary composition and symmetric higher-
 - `n7_synthesis_document.md` - Complete synthesis
 - `n7_initial_analysis.py` - Python analysis script
 
+### n8/ - The Complete Vocabulary
+Analysis of the 115 trees at n=8, where complete cross-level coverage emerges:
+- 96 trees from direct extension of n=7 patterns (48 Nest + 48 Widen)
+- 9 n=5 + n=2 asymmetric combinations (complete n=5 coverage)
+- 8 n=4 + n=3 combinations (complete vocabulary × duality matrix)
+- 2 n=3 + n=2 + n=2 ternary asymmetric combinations
+
+**Key Files:**
+- `n8_complete_taxonomy.md` - Full categorization of all 115 trees
+- `n8_special_combinations.md` - Analysis of the 19 special cases
+- `n8_synthesis_document.md` - Complete synthesis
+- `n8_initial_analysis.py` - Python analysis script
+
 ### synthesis/ - Cross-Level Analysis
 Comprehensive documents connecting all levels:
 - `list-rooted-trees-analysis.md` - Initial forensic analysis
@@ -86,6 +99,7 @@ n=4:  4 trees  [Vocabulary: Duality composes with itself]
 n=5:  9 trees  [Meta-Composition: First special case]
 n=6: 20 trees  [Asymmetric Combinations: Cross-level bridges]
 n=7: 48 trees  [Ternary Breakthrough: Beyond binary composition]
+n=8: 115 trees [Complete Vocabulary: Full cross-level matrix]
 ```
 
 ### The OEIS A000081 Sequence
@@ -109,6 +123,9 @@ This sequence represents the **exponential growth of computational expressivenes
 - **n=7**: `(((()))((())))` - Symmetric: Vertical n=3 + Vertical n=3
 - **n=7**: `((()())(()()))` - Symmetric: Horizontal n=3 + Horizontal n=3
 - **n=7**: `((())(())(()))` - First ternary: Three n=2 structures
+- **n=8**: `(((((()))))(()))` - Complete n=5 coverage begins (9 combinations)
+- **n=8**: `((((())))((())))` - Full n=4 × n=3 cross-product (8 combinations)
+- **n=8**: `(((()))(())(()))` - Ternary asymmetric: n=3 + n=2 + n=2 (2 combinations)
 
 ## Connection to Lisp Bootstrapping
 

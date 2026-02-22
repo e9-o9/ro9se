@@ -92,8 +92,12 @@ def is_widened_from(child, parent):
         return False
     
     child_without_atom = [c for c in child_children if c != '()']
-    return sorted(child_without_atom) == sorted([c for c in parent_children if c != '()']) or \
-           len([c for c in child_children if c == '()']) == len([c for c in parent_children if c == '()']) + 1
+    parent_without_atom = [c for c in parent_children if c != '()']
+    child_atom_count = len([c for c in child_children if c == '()'])
+    parent_atom_count = len([c for c in parent_children if c == '()'])
+    
+    return sorted(child_without_atom) == sorted(parent_without_atom) or \
+           child_atom_count == parent_atom_count + 1
 
 def is_juxtaposed_from(child, parent):
     """Check if child is formed by juxtaposing parent with an atom at root"""

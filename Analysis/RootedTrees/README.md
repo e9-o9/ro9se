@@ -95,6 +95,23 @@ Analysis of the 286 trees at n=9, where quaternary composition and vocabulary se
 - `n9_synthesis_document.md` - Complete synthesis
 - `n9_initial_analysis.py` - Python analysis script
 
+### n10/ - The Ternary Duality Breakthrough
+Analysis of the 719 trees at n=10, where ternary duality and complete cross-level products emerge:
+- 572 trees from direct extension of n=9 patterns (286 Nest + 286 Widen)
+- 48 n=7 + n=2 asymmetric combinations (complete n=7 coverage)
+- 40 n=6 + n=3 combinations (complete n=6 × duality matrix)
+- 36 n=5 + n=4 combinations (complete n=5 × vocabulary matrix)
+- 9 n=5 + n=2 + n=2 ternary combinations
+- 8 n=4 + n=3 + n=2 combinations (vocabulary × duality × container)
+- 4 ternary n=3 combinations: `((()))(()())(()())` — first ternary duality structure
+- 2 n=3 + n=2 + n=2 + n=2 quaternary combinations
+
+**Key Files:**
+- `n10_complete_taxonomy.md` - Full categorization of all 719 trees
+- `n10_special_combinations.md` - Analysis of the 147 special cases
+- `n10_synthesis_document.md` - Complete synthesis
+- `n10_initial_analysis.py` - Python analysis script
+
 ### synthesis/ - Cross-Level Analysis
 Comprehensive documents connecting all levels:
 - `list-rooted-trees-analysis.md` - Initial forensic analysis
@@ -108,15 +125,16 @@ Comprehensive documents connecting all levels:
 ### The Evolutionary Hierarchy
 
 ```
-n=1:  1 tree   [Atom: ()]
-n=2:  1 tree   [Container: (())]
-n=3:  2 trees  [Duality: Vertical vs Horizontal]
-n=4:  4 trees  [Vocabulary: Duality composes with itself]
-n=5:  9 trees  [Meta-Composition: First special case]
-n=6: 20 trees  [Asymmetric Combinations: Cross-level bridges]
-n=7: 48 trees  [Ternary Breakthrough: Beyond binary composition]
-n=8: 115 trees [Complete Vocabulary: Full cross-level matrix]
-n=9: 286 trees [Quaternary Breakthrough: Vocabulary self-pairing, 4-way symmetric]
+n=1:   1 tree   [Atom: ()]
+n=2:   1 tree   [Container: (())]
+n=3:   2 trees  [Duality: Vertical vs Horizontal]
+n=4:   4 trees  [Vocabulary: Duality composes with itself]
+n=5:   9 trees  [Meta-Composition: First special case]
+n=6:  20 trees  [Asymmetric Combinations: Cross-level bridges]
+n=7:  48 trees  [Ternary Breakthrough: Beyond binary composition]
+n=8: 115 trees  [Complete Vocabulary: Full cross-level matrix]
+n=9: 286 trees  [Quaternary Breakthrough: Vocabulary self-pairing, 4-way symmetric]
+n=10: 719 trees [Ternary Duality: Duality × Duality × Duality]
 ```
 
 ### The OEIS A000081 Sequence
@@ -146,6 +164,9 @@ This sequence represents the **exponential growth of computational expressivenes
 - **n=9**: `((((((())))))(()))` - Complete n=6 coverage (20 combinations)
 - **n=9**: `((((())))(((()))))` - First symmetric n=4: Vocabulary × Vocabulary (10 combinations)
 - **n=9**: `((())(())(())(()))` - First quaternary: Four n=2 structures
+- **n=10**: `(((((((()))))))(()))` - Complete n=7 coverage (48 combinations)
+- **n=10**: `(((((()))))(((())))` - Complete n=5 × n=4 cross-product (36 combinations)
+- **n=10**: `((()())(()())(()())` - First ternary duality: Three n=3 structures
 
 ## Connection to Lisp Bootstrapping
 

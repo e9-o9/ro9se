@@ -76,7 +76,7 @@ All 20 trees at n=6 combine with both trees at n=3 in the complete 40-combinatio
 | n=6 Pattern | × Vertical n=3 | × Horizontal n=3 |
 |:------------|:---------------|:-----------------|
 | 6-Chain `((((((()))))))` | Tree 498 | Tree 499 |
-| Nested structures | Trees 502-521 | Trees 503-522 |
+| (17 intermediate structures) | Trees 500-533 | Trees 501-534 |
 | Quinary `(()()()()())` | Tree 536 | Tree 537 |
 
 **Significance**: This 20×2 matrix represents every possible pairing of the n=6 structures with the fundamental duality.

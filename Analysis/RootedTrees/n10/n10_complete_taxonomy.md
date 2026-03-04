@@ -75,8 +75,10 @@ Each of the 48 trees at n=7 combines with the single n=2 container `(())`:
 | 402 | `(((((((()))))))(()))` | `((((((()))))))` (7-Chain) | `(())` | 8 | 2 |
 | 404 | `((((((()())))))(()))` | `(((((()())))))`  | `(())` | 7 | 2 |
 | 406 | `((((((())()))))(()))` | `(((((())()))))`  | `(())` | 7 | 2 |
-| ... | ... | ... | ... | ... | ... |
+| ... | *(45 more trees from indices 403-449)* | ... | ... | ... | ... |
 | 449 | `((()()()()()())(()))` | `(()()()()()())` (Septenary) | `(())` | 3 | 2 |
+
+*Note: Tree indices are not strictly consecutive; shown are representative examples.*
 
 **Significance**: These represent **all 48 ways** to asymmetrically combine each n=7 computational pattern (including the ternary structures from n=7) with a simple container.
 

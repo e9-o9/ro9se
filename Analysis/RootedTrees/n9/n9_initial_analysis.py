@@ -96,6 +96,9 @@ def is_widened_from(child, parent):
     child_atom_count = len([c for c in child_children if c == '()'])
     parent_atom_count = len([c for c in parent_children if c == '()'])
     
+    # A tree is widened from parent if adding one atom sibling at root transforms parent to child
+    # This happens when: non-atom children match exactly (new atom added),
+    # or when the atom count increased by 1 (new atom added to existing atoms)
     return sorted(child_without_atom) == sorted(parent_without_atom) or \
            child_atom_count == parent_atom_count + 1
 
@@ -180,7 +183,7 @@ for i, tree in enumerate(trees_9, 1):
             tree_info['special'].append("n=4 + n=2 + n=2 combination")
         elif sorted_sizes == [3, 3, 2]:
             tree_info['special'].append("n=3 + n=3 + n=2 combination")
-        elif sorted_sizes == [2, 2, 2] and all(s == 2 for s in sorted_sizes):
+        elif sorted_sizes == [2, 2, 2]:
             # This is actually from n=7+1 (ternary + widen), not a new special for n=9
             pass
     

@@ -79,6 +79,22 @@ Analysis of the 115 trees at n=8, where complete cross-level coverage emerges:
 - `n8_synthesis_document.md` - Complete synthesis
 - `n8_initial_analysis.py` - Python analysis script
 
+### n9/ - The Quaternary Breakthrough
+Analysis of the 286 trees at n=9, where quaternary composition and vocabulary self-pairing emerge:
+- 230 trees from direct extension of n=8 patterns (115 Nest + 115 Widen)
+- 20 n=6 + n=2 asymmetric combinations (complete n=6 coverage)
+- 18 n=5 + n=3 combinations (complete n=5 × duality matrix)
+- 10 n=4 + n=4 symmetric combinations (vocabulary × vocabulary)
+- 4 n=4 + n=2 + n=2 ternary combinations
+- 3 n=3 + n=3 + n=2 duality pair combinations
+- 1 quaternary combination: `((())(())(())(()))` — first 4-way symmetric structure
+
+**Key Files:**
+- `n9_complete_taxonomy.md` - Full categorization of all 286 trees
+- `n9_special_combinations.md` - Analysis of the 56 special cases
+- `n9_synthesis_document.md` - Complete synthesis
+- `n9_initial_analysis.py` - Python analysis script
+
 ### synthesis/ - Cross-Level Analysis
 Comprehensive documents connecting all levels:
 - `list-rooted-trees-analysis.md` - Initial forensic analysis
@@ -100,6 +116,7 @@ n=5:  9 trees  [Meta-Composition: First special case]
 n=6: 20 trees  [Asymmetric Combinations: Cross-level bridges]
 n=7: 48 trees  [Ternary Breakthrough: Beyond binary composition]
 n=8: 115 trees [Complete Vocabulary: Full cross-level matrix]
+n=9: 286 trees [Quaternary Breakthrough: Vocabulary self-pairing, 4-way symmetric]
 ```
 
 ### The OEIS A000081 Sequence
@@ -126,6 +143,9 @@ This sequence represents the **exponential growth of computational expressivenes
 - **n=8**: `(((((()))))(()))` - Complete n=5 coverage begins (9 combinations)
 - **n=8**: `((((())))((())))` - Full n=4 × n=3 cross-product (8 combinations)
 - **n=8**: `(((()))(())(()))` - Ternary asymmetric: n=3 + n=2 + n=2 (2 combinations)
+- **n=9**: `((((((())))))(()))` - Complete n=6 coverage (20 combinations)
+- **n=9**: `((((())))(((()))))` - First symmetric n=4: Vocabulary × Vocabulary (10 combinations)
+- **n=9**: `((())(())(())(()))` - First quaternary: Four n=2 structures
 
 ## Connection to Lisp Bootstrapping
 

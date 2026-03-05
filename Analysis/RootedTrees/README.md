@@ -119,6 +119,8 @@ Comprehensive documents connecting all levels:
 - `tree_to_lisp_mapping.md` - Mapping between trees and Lisp primitives
 - `bag_chain_analysis.md` - Analysis of the bag chain algorithm
 - `demonstrate_connection.py` - Python verification of A000081 connection
+- `matula_numbers.py` - Matula number bijection implementation and analysis
+- `matula_prime_patterns.md` - Comprehensive analysis of Matula prime patterns and cognitive grammar
 
 ## Key Insights
 
@@ -142,6 +144,63 @@ n=10: 719 trees [Ternary Duality: Duality × Duality × Duality]
 The number of trees at each level follows the sequence: 1, 1, 2, 4, 9, 20, 48, 115, 286, 719...
 
 This sequence represents the **exponential growth of computational expressiveness** as structures recursively compose.
+
+### The Matula Number Bijection
+
+Each rooted tree has a unique **Matula number**—a bijection between positive integers and rooted trees:
+- Matula(1) = single-node tree `()`
+- For a tree with children m₁, m₂, ..., mₖ: Matula = p(m₁) × p(m₂) × ... × p(mₖ)
+
+#### Twin Mirror Pattern
+At each order n, Matula numbers split into:
+- **Primes**: New structural primitives (genuinely novel tree shapes)
+- **Doubles**: Products with factor 2 (extensions of n-1 structures)
+
+```
+n=2: {2}
+n=3: {3}       | {2²}
+n=4: {5,7}     | {2×3, 2³}
+n=5: {11,13,17,19} | {2×5, 2×7, 2²×3, 2⁴} | {3²}
+n=6: {23,29,31,37,41,43,53,59,67} | doubles... | {3×5, 3×7}
+```
+
+#### Self-Similar Enumeration
+New Matula primes at each order represent genuinely novel tree structures:
+- n=3: 1 new prime (3) — half of A000081(3)=2
+- n=4: 2 new primes (5, 7) — half of A000081(4)=4  
+- n=5: 4 new primes (11, 13, 17, 19) — approximately half of A000081(5)=9
+- n=6: 9 new primes — approximately half of A000081(6)=20
+
+The self-similar pattern: primes at order n become factors in products at orders n+1, n+2, etc.
+
+#### Index Grammar vs Attribute Grammar
+Natural numbers enumerate through the prime/composite split:
+
+```
+N(n-1) → {P(n) | C(n)}
+
+Where:
+  P(n) = p_{N(n-1)} = the N(n-1)th prime (INDEX GRAMMAR)
+  C(n) = 2*N(n-1) = doubles (ATTRIBUTE GRAMMAR)
+```
+
+The pattern unfolds:
+```
+{p₁=c₁=2} → {p₂=3|c₂=4} → {{p₃=5,p₄=7}|{c₃=6,c₄=8}} → ...
+```
+
+**Index Grammars (Primes)**: Point directly to child subtree structure
+**Attribute Grammars (Composites)**: Describe properties of children via factorization
+
+#### The Two Leading 1's
+The sequence A000081: **1, 1**, 2, 4, 9, 20, 48, ... has two leading 1's because:
+- n=1: ATOM `()` — primordial unity, no structure yet
+- n=2: CONTAINER `(())` — first distinction, unique form
+
+The prime/composite split becomes visible starting at n=3.
+
+#### Ancestral Lineage
+Every branch remembers its roots as the nested seed of its ancestral lineage embedded within its own self-image. Each natural is a composition of a rooted tree child with prime index grammar to its rooted forest parents with composite attribute grammars for their children.
 
 ### The Four Generative Operations
 
@@ -186,6 +245,7 @@ All complex Lisp programs are built by recursively combining these two primordia
 ## References
 
 - [OEIS A000081](https://oeis.org/A000081) - Number of unlabeled rooted trees with n nodes
+- [OEIS A061773](https://oeis.org/A061773) - Matula numbers for rooted trees
 - G. Spencer-Brown, *Laws of Form* - The calculus of distinction
 - RosettaCog Repository - Multi-language implementations
 

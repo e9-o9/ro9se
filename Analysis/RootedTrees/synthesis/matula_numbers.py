@@ -451,7 +451,6 @@ def demonstrate_self_similar_enumeration(max_n: int = 8):
                 primes_str = ', '.join(map(str, sorted(matulas_in_group)))
                 print(f"  PRIMES: {{{primes_str}}}")
             else:
-                sig_str = ', '.join(f"n-{n - lvl}" for lvl in sig)
                 for m in sorted(matulas_in_group):
                     factors = prime_factorization(m)
                     factor_str = ' × '.join(f"{p}" for p, e in factors for _ in range(e))

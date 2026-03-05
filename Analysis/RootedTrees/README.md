@@ -165,11 +165,13 @@ n=6: {23,29,31,37,41,43,53,59,67} | doubles... | {3×5, 3×7}
 ```
 
 #### Self-Similar Enumeration
-The number of NEW primes at order n follows the A000081 sequence offset:
-- n=3: 1 new prime (3)
-- n=4: 2 new primes (5, 7)
-- n=5: 4 new primes (11, 13, 17, 19)
-- n=6: 9 new primes (23, 29, 31, 37, 41, 43, 53, 59, 67)
+New Matula primes at each order represent genuinely novel tree structures:
+- n=3: 1 new prime (3) — half of A000081(3)=2
+- n=4: 2 new primes (5, 7) — half of A000081(4)=4  
+- n=5: 4 new primes (11, 13, 17, 19) — approximately half of A000081(5)=9
+- n=6: 9 new primes — approximately half of A000081(6)=20
+
+The self-similar pattern: primes at order n become factors in products at orders n+1, n+2, etc.
 
 ### The Four Generative Operations
 

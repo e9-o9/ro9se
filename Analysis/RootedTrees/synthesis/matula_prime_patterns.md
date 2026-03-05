@@ -65,24 +65,23 @@ n=6 | {23,29,31,37,41,43,53,59,67} | DOUBLES: {2×11, 2×13, 2×17, 2×19, ...} 
 
 ## The Self-Similar Prime Enumeration Sequence
 
-The most profound insight is that the **order n at which primes first appear** follows the same A000081 sequence that counts the trees themselves:
+A striking observation is that the **new Matula primes at order n** approximate half the total tree count, with adjustments for symmetric products:
 
-| Order n | A000081(n) | New Matula Primes |
-|:-------:|:----------:|:------------------|
-| 1 | 1 | {1} (atom, by convention) |
-| 2 | 1 | {2} |
-| 3 | 2 | {3} |
-| 4 | 4 | {5, 7} |
-| 5 | 9 | {11, 13, 17, 19} |
-| 6 | 20 | {23, 29, 31, 37, 41, 43, 53, 59, 67} |
-| 7 | 48 | 23 new primes |
-| 8 | 115 | 48 new primes |
+| Order n | A000081(n) | New Matula Primes | Count | Non-Prime Trees |
+|:-------:|:----------:|:------------------|:-----:|:---------------:|
+| 1 | 1 | {1} (atom) | 1 | 0 |
+| 2 | 1 | {2} | 1 | 0 |
+| 3 | 2 | {3} | 1 | 1 (double: 2²) |
+| 4 | 4 | {5, 7} | 2 | 2 (doubles) |
+| 5 | 9 | {11, 13, 17, 19} | 4 | 5 (4 doubles + 1 product 3²) |
+| 6 | 20 | {23, 29, 31, 37, 41, 43, 53, 59, 67} | 9 | 11 (9 doubles + 2 products) |
+| 7 | 48 | ... | ~20 | ~28 |
 
-The number of new primes at order n equals:
-- **n=3**: 1 prime (half of 2 trees)
-- **n=4**: 2 primes (half of 4 trees)
-- **n=5**: 4 primes (less than half of 9, due to symmetric case {3²})
-- **n=6**: 9 primes (less than half of 20, due to products {3×5, 3×7})
+**Key Pattern**: The number of new primes roughly equals:
+- A000081(n) - (number of doubles) - (number of other products)
+- Primes ≈ A000081(n-1) for larger n
+
+The **self-similar** aspect is that primes appearing at order n become factors in products at order n+1 and beyond, creating a recursive structure where each level builds on the previous.
 
 ## The Prime Factor Offset Pattern
 

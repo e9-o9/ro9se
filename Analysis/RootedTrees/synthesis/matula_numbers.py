@@ -890,6 +890,371 @@ THE UNIVERSAL ARCHETYPAL PATTERN:
 
 
 # ============================================================================
+# PARENS LENGTH TO ORDER CONVERSION
+# ============================================================================
+
+def parens_to_order(parens: str) -> int:
+    """
+    Compute the order (number of nodes) from the parentheses string length.
+    
+    For a complete tree representation (including root):
+        order = len(parens) / 2
+    
+    Each node contributes exactly one '(' and one ')'.
+    
+    Args:
+        parens: A balanced parentheses string representing a tree
+        
+    Returns:
+        The order (number of nodes) of the tree
+    """
+    return len(parens) // 2
+
+
+def matula_to_inner_parens(m: int) -> str:
+    """
+    Convert a Matula number to its inner parentheses representation.
+    
+    This returns the content inside the root node's parentheses,
+    which is what the problem statement shows:
+    
+        mat(2) → inner "()" 
+        mat(3) → inner "(())"
+        mat(4) → inner "()()"
+        etc.
+    
+    Args:
+        m: A Matula number
+        
+    Returns:
+        The inner parentheses string (without root's outer parens)
+    """
+    tree = matula_to_tree(m)
+    return tree[1:-1]  # Strip outer parentheses
+
+
+def inner_parens_to_order(inner_parens: str) -> int:
+    """
+    Compute the order from the inner parentheses string length.
+    
+    As per the problem statement:
+        mat(n) → inner_parens → len(inner_parens)/2 = order
+    
+    Examples from the problem statement:
+        mat(2):len[()]/2=2/2=1=>ord(1)
+        mat(3):len[(())]/2=4/2=2=>ord(2)
+        mat(4):len[()()]/2=4/2=2=>ord(2)
+        mat(5):len[((()))]/2=6/2=3=>ord(3)
+        mat(7):len[(()())]/2=6/2=3=>ord(3)
+        mat(6):len[(())()]/2=6/2=3=>ord(3)
+        mat(8):len[()()()]/2=6/2=3=>ord(3)
+    
+    Args:
+        inner_parens: The inner parentheses string (content of root node)
+        
+    Returns:
+        The order (number of non-root nodes)
+    """
+    return len(inner_parens) // 2
+
+
+def demonstrate_parens_length_order():
+    """
+    Demonstrate the relationship between parentheses length and tree order.
+    
+    The problem statement reveals that converting each Matula number into 
+    a parens expression gives the order as half the inner string length.
+    
+    The "inner string" is the content inside the root node's parentheses.
+    """
+    print("\n" + "=" * 80)
+    print("PARENTHESES LENGTH TO ORDER CONVERSION")
+    print("=" * 80)
+    
+    print("""
+The problem statement reveals a key insight:
+
+    Converting each Matula number into a parens expression gives 
+    the order as half the inner string length.
+
+The "inner string" is the content inside the root node's outer parentheses.
+For a tree (X), the inner string is X, and order = len(X) / 2.
+
+Examples from the problem statement:
+    mat(2):len[()]/2=2/2=1=>ord(1)
+    mat(3):len[(())]/2=4/2=2=>ord(2)  
+    mat(4):len[()()]/2=4/2=2=>ord(2)
+    mat(5):len[((()))]/2=6/2=3=>ord(3)
+    mat(7):len[(()())]/2=6/2=3=>ord(3)
+    mat(6):len[(())()]/2=6/2=3=>ord(3)
+    mat(8):len[()()()]/2=6/2=3=>ord(3)
+""")
+    
+    print("─" * 90)
+    print(f"{'Matula':>6} | {'Full Tree':>15} | {'Inner':>12} | {'len':>4} | {'len/2':>6} | {'tree_order-1':>12} | Match")
+    print("─" * 90)
+    
+    for matula in range(1, 16):
+        full_tree = matula_to_tree(matula)
+        inner = matula_to_inner_parens(matula)
+        inner_order = inner_parens_to_order(inner)
+        expected_order = tree_order(matula) - 1  # Non-root nodes
+        
+        match = "✓" if inner_order == expected_order else "✗"
+        print(f"{matula:>6} | {full_tree:>15} | {inner:>12} | {len(inner):>4} | {inner_order:>6} | {expected_order:>12} | {match}")
+    
+    print("\n" + "─" * 90)
+    print("INTERPRETATION:")
+    print("─" * 90)
+    
+    print("""
+The inner parentheses string counts the NON-ROOT nodes.
+Each such node contributes one '(' and one ')' to the inner string.
+
+Therefore:
+    inner_order = len(inner_string) / 2 = tree_order - 1
+
+The total tree order (including root) is:
+    tree_order = len(full_tree) / 2 = inner_order + 1
+
+This relationship reveals how Matula encoding captures tree structure:
+- The outer parens represent the root node
+- The inner content recursively encodes the subtrees
+- Length always equals twice the node count at each level
+""")
+
+    # Show the exact problem statement examples
+    print("\n" + "─" * 90)
+    print("PROBLEM STATEMENT EXAMPLES (order verification):")
+    print("─" * 90)
+    print("""
+NOTE: Child ordering may vary by convention (e.g., '(())()' vs '()(())').
+      The KEY INSIGHT is that len(inner)/2 ALWAYS equals the order.
+""")
+    
+    examples = [
+        (2, "()", 1, "mat(2):len[()]/2=2/2=1=>ord(1)"),
+        (3, "(())", 2, "mat(3):len[(())]/2=4/2=2=>ord(2)"),
+        (4, "()()", 2, "mat(4):len[()()]/2=4/2=2=>ord(2)"),
+        (5, "((()))", 3, "mat(5):len[((()))]/2=6/2=3=>ord(3)"),
+        (7, "(()())", 3, "mat(7):len[(()())]/2=6/2=3=>ord(3)"),
+        (6, "(())()", 3, "mat(6):len[(())()]/2=6/2=3=>ord(3)"),
+        (8, "()()()", 3, "mat(8):len[()()()]/2=6/2=3=>ord(3)"),
+    ]
+    
+    for matula, expected_inner, expected_order, statement in examples:
+        actual_inner = matula_to_inner_parens(matula)
+        actual_order = inner_parens_to_order(actual_inner)
+        
+        # Key: order must match (child ordering may differ)
+        order_match = "✓" if actual_order == expected_order else "✗"
+        print(f"  {statement}")
+        print(f"    → actual inner: {actual_inner!r}, order: {actual_order} {order_match}")
+
+
+
+# ============================================================================
+# PRIME POWER SERIES ENUMERATION
+# ============================================================================
+
+def prime_power_series(prime: int, max_power: int = 10) -> List[int]:
+    """
+    Generate the power series for a prime: [p, p², p³, p⁴, ...]
+    
+    Args:
+        prime: A prime number
+        max_power: Maximum exponent to generate
+        
+    Returns:
+        List of prime powers [p¹, p², ..., p^max_power]
+    """
+    return [prime ** k for k in range(1, max_power + 1)]
+
+
+def enumerate_prime_power_overlap(primes: List[int], max_value: int = 1000) -> Dict[int, List[Tuple[int, int]]]:
+    """
+    Enumerate prime power series and find overlapping terms.
+    
+    For each set of primes, generates their power series and identifies
+    which values appear in multiple series (revealing the overlap structure).
+    
+    Args:
+        primes: List of primes to analyze
+        max_value: Maximum value to consider
+        
+    Returns:
+        Dict mapping each value to list of (prime, power) tuples that produce it
+    """
+    value_sources: Dict[int, List[Tuple[int, int]]] = defaultdict(list)
+    
+    for p in primes:
+        power = 1
+        value = p
+        while value <= max_value:
+            value_sources[value].append((p, power))
+            power += 1
+            value = p ** power
+    
+    return dict(value_sources)
+
+
+def probability_density_superposition(primes: List[int], max_value: int = 1000) -> Dict[int, float]:
+    """
+    Compute the probability density superposition for prime power series.
+    
+    Each prime p contributes a "density" at each of its powers p^k.
+    The density at p^k is 1/k (inverse of the power).
+    Overlapping contributions create superposition effects.
+    
+    Args:
+        primes: List of primes to analyze
+        max_value: Maximum value to consider
+        
+    Returns:
+        Dict mapping each value to its superposed density
+    """
+    density: Dict[int, float] = defaultdict(float)
+    
+    for p in primes:
+        power = 1
+        value = p
+        while value <= max_value:
+            # Density contribution is 1/power (higher powers have lower density)
+            density[value] += 1.0 / power
+            power += 1
+            value = p ** power
+    
+    return dict(density)
+
+
+def demonstrate_prime_power_series_overlap():
+    """
+    Demonstrate the prime power series enumeration showing overlaps
+    and probability density superpositions.
+    
+    This addresses the first part of the problem statement:
+    "enumerating the prime power series for each set of primes reveals
+     the overlap of common terms and the probability density superpositions"
+    """
+    print("\n" + "=" * 80)
+    print("PRIME POWER SERIES ENUMERATION")
+    print("=" * 80)
+    
+    print("""
+Enumerating the prime power series for sets of primes reveals:
+1. The OVERLAP of common terms (values appearing in multiple series)
+2. The PROBABILITY DENSITY SUPERPOSITIONS (cumulative density at each value)
+
+For Matula number analysis, these patterns show:
+- How different tree structures can share common node counts
+- The distribution of tree complexity across natural numbers
+""")
+    
+    # Use the first 10 primes
+    primes = [nth_prime(i) for i in range(1, 11)]
+    print(f"\nAnalyzing primes: {primes}")
+    
+    print("\n" + "─" * 80)
+    print("INDIVIDUAL PRIME POWER SERIES:")
+    print("─" * 80)
+    
+    for p in primes[:6]:  # Show first 6 primes
+        series = prime_power_series(p, max_power=6)
+        series_str = ', '.join(f"{p}^{k+1}={v}" for k, v in enumerate(series))
+        print(f"  p={p:2}: {series_str}")
+    
+    print("\n" + "─" * 80)
+    print("OVERLAPPING TERMS (values appearing in multiple series):")
+    print("─" * 80)
+    
+    overlap_data = enumerate_prime_power_overlap(primes[:6], max_value=200)
+    
+    # Find values with multiple sources
+    overlaps = {v: sources for v, sources in overlap_data.items() if len(sources) > 1}
+    
+    if overlaps:
+        for value in sorted(overlaps.keys()):
+            sources = overlaps[value]
+            sources_str = ', '.join(f"{p}^{k}" for p, k in sources)
+            print(f"  Value {value:5}: appears as {sources_str}")
+    else:
+        print("  No overlaps found within the analyzed range")
+    
+    print("\n" + "─" * 80)
+    print("PROBABILITY DENSITY SUPERPOSITION:")
+    print("─" * 80)
+    
+    density = probability_density_superposition(primes[:6], max_value=100)
+    
+    print(f"\n  {'Value':>6} | {'Density':>8} | Contributing Primes")
+    print("  " + "─" * 50)
+    
+    for value in sorted(density.keys())[:30]:
+        sources = overlap_data.get(value, [])
+        contrib_str = ', '.join(f"{p}^{k}" for p, k in sources)
+        print(f"  {value:>6} | {density[value]:>8.3f} | {contrib_str}")
+    
+    print("\n" + "─" * 80)
+    print("CONNECTION TO MATULA NUMBERS:")
+    print("─" * 80)
+    
+    print("""
+In Matula number encoding:
+- Each composite Matula number m = p₁^e₁ × p₂^e₂ × ... represents a tree
+- The prime factorization reveals the child subtrees
+- Prime powers (p^k) represent k identical child subtrees
+
+Example: Matula 8 = 2³ means a tree with 3 identical leaf children
+         Each factor 2 contributes a leaf (), giving ()()()
+         The order is len[()()()] / 2 = 6 / 2 = 3
+""")
+    
+    # Show how prime powers relate to tree structures
+    print("  Prime Power Matula Numbers:")
+    for p in [2, 3, 5]:
+        for exp in range(1, 5):
+            m = p ** exp
+            tree = matula_to_tree(m)
+            order = tree_order(m)
+            order_from_len = parens_to_order(tree)
+            print(f"    {p}^{exp} = {m:4} → {tree:20} → order = len/2 = {len(tree)}/{2} = {order_from_len}")
+
+
+# ============================================================================
+# MATULA ORDER BY PARENS LENGTH TABLE
+# ============================================================================
+
+def generate_order_by_length_table(max_matula: int = 50):
+    """
+    Generate a table showing Matula numbers organized by their order,
+    demonstrating the len/2 formula from the problem statement.
+    """
+    print("\n" + "=" * 80)
+    print("MATULA NUMBERS BY ORDER (demonstrating len/2 formula)")
+    print("=" * 80)
+    
+    # Group Matula numbers by order
+    by_order: Dict[int, List[Tuple[int, str]]] = defaultdict(list)
+    
+    for m in range(1, max_matula + 1):
+        tree = matula_to_tree(m)
+        order = parens_to_order(tree)
+        by_order[order].append((m, tree))
+    
+    for order in sorted(by_order.keys()):
+        entries = by_order[order]
+        print(f"\nORDER {order} (len = {order * 2}):")
+        print("─" * 60)
+        
+        # Show entries grouped
+        for m, tree in entries:
+            factors = prime_factorization(m) if m > 1 else []
+            factor_str = ' × '.join(f"{p}^{e}" if e > 1 else str(p) for p, e in factors) if factors else "atom"
+            classification = "PRIME" if is_prime(m) else ("ATOM" if m == 1 else "COMPOSITE")
+            print(f"  mat({m:3}) = {factor_str:15} → {tree:20} [{classification}]")
+
+
+# ============================================================================
 # MAIN DEMONSTRATION
 # ============================================================================
 
@@ -946,6 +1311,15 @@ def main():
     # NEW: Complete Cognitive Grammar
     demonstrate_cognitive_grammar_complete()
     
+    # NEW: Parens length to order conversion (from problem statement)
+    demonstrate_parens_length_order()
+    
+    # NEW: Prime power series enumeration and overlap analysis
+    demonstrate_prime_power_series_overlap()
+    
+    # NEW: Order by length table
+    generate_order_by_length_table(30)
+    
     print("\n" + "=" * 80)
     print("CONCLUSION")
     print("=" * 80)
@@ -981,6 +1355,16 @@ The Matula number bijection reveals a deep structure in rooted tree enumeration:
 7. A000081 OFFSET: The two leading 1's (atom and container) precede the
    visible prime/composite split at n=3. Natural order is the sequence
    offset by 1.
+
+8. PARENS LENGTH TO ORDER: Converting each Matula number to a parentheses
+   expression gives the order as half the string length:
+   order(m) = len(parens(m)) / 2
+   
+   Each node contributes exactly one '(' and one ')'.
+
+9. PRIME POWER SERIES OVERLAP: Enumerating the prime power series reveals
+   the overlap of common terms and probability density superpositions.
+   Prime powers p^k represent k identical child subtrees in Matula encoding.
 
 This self-similar structure is the foundation of the "universal language" 
 of computational forms, where each natural number encodes a unique way to 

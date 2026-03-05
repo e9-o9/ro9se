@@ -146,14 +146,39 @@ class TestEnumeratePrimePowerOverlap:
         for v, sources in overlap.items():
             assert len(sources) == 1
 
-    def test_finds_overlap_at_large_values(self):
-        """Test that we correctly find overlaps when they exist."""
-        # 2^6 = 64 and 4^3 = 64, but we only test prime bases
-        # For primes only, there are no overlaps (fundamental theorem of arithmetic)
-        overlap = enumerate_prime_power_overlap([2, 3, 5, 7], max_value=1000)
+    def test_prime_powers_never_overlap(self):
+        """
+        Test that prime powers never overlap (fundamental theorem of arithmetic).
+        
+        For prime bases, there can never be p₁^a = p₂^b for distinct primes p₁, p₂
+        because each integer has a unique prime factorization.
+        
+        This is a mathematical property we're validating, not a bug in the code.
+        """
+        overlap = enumerate_prime_power_overlap([2, 3, 5, 7, 11], max_value=10000)
         overlapping = {v: s for v, s in overlap.items() if len(s) > 1}
         # Should be empty for prime bases only
-        assert len(overlapping) == 0
+        assert len(overlapping) == 0, f"Found unexpected overlaps: {overlapping}"
+
+    def test_value_source_structure(self):
+        """Test that each value correctly tracks its source (prime, power) tuple."""
+        overlap = enumerate_prime_power_overlap([2, 3], max_value=30)
+        
+        # Check specific values
+        assert (2, 1) in overlap[2]  # 2^1 = 2
+        assert (2, 2) in overlap[4]  # 2^2 = 4
+        assert (2, 3) in overlap[8]  # 2^3 = 8
+        assert (3, 1) in overlap[3]  # 3^1 = 3
+        assert (3, 2) in overlap[9]  # 3^2 = 9
+        assert (3, 3) in overlap[27]  # 3^3 = 27
+
+    def test_handles_large_max_value(self):
+        """Test that the function handles larger ranges correctly."""
+        overlap = enumerate_prime_power_overlap([2], max_value=1024)
+        
+        # 2^10 = 1024 should be included
+        assert 1024 in overlap
+        assert overlap[1024] == [(2, 10)]
 
 
 class TestProbabilityDensitySuperposition:

@@ -264,10 +264,11 @@ Level 5: {{p₅=11,...,p₈=19} | {c₅=10,...,c₈=16}} - Compositional explosi
 Each **prime Matula number** represents an index grammar—it points directly to its child subtree:
 
 ```
-Matula(prime p) = p_{child_matula}
+A tree with Matula number that is prime p has exactly one child.
+The child's Matula number is π(p), where π(p) is the prime index of p.
 
 Example: Matula 11 is prime
-  → 11 = p(5) = 5th prime
+  → π(11) = 5 (11 is the 5th prime)
   → Child has Matula 5
   → Child tree: (((())))
 ```

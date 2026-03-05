@@ -27,6 +27,15 @@ from functools import lru_cache
 
 
 # ============================================================================
+# CONSTANTS
+# ============================================================================
+
+# OEIS A000081: Number of unlabeled rooted trees with n nodes
+# https://oeis.org/A000081
+A000081 = [0, 1, 1, 2, 4, 9, 20, 48, 115, 286, 719, 1842, 4766, 12486, 32973]
+
+
+# ============================================================================
 # PRIME NUMBER UTILITIES
 # ============================================================================
 
@@ -580,12 +589,9 @@ def natural_to_prime_composite_split(max_level: int = 8) -> Dict[int, Dict[str, 
     # Build subsequent levels
     for level in range(3, max_level + 1):
         # Natural numbers from level below
-        prev_result = result[level - 1]
-        prev_naturals = []
-        
-        # Collect all naturals from previous level (both primes and composites)
-        for n in range(1, 2**(level-1) + 1):
-            prev_naturals.append(n)
+        # Use A000081 values when available, otherwise use reasonable upper bound
+        count = A000081[level - 1] if level - 1 < len(A000081) else A000081[-1]
+        prev_naturals = list(range(1, count + 1))
         
         # Generate primes: p_n for each n in previous level's naturals
         new_primes = []
@@ -593,7 +599,7 @@ def natural_to_prime_composite_split(max_level: int = 8) -> Dict[int, Dict[str, 
             try:
                 p_n = nth_prime(n)
                 new_primes.append(p_n)
-            except:
+            except (ValueError, IndexError):
                 break
         
         # Generate composites: 2*n for each n in previous level's naturals
@@ -663,10 +669,8 @@ The twin mirror of the layer below generates both:
             print("  No split yet - unity before distinction")
             continue
         
-        # Compute naturals from level below
-        # At level n, we use naturals 1 through A000081(n-1)
-        a000081 = [1, 1, 2, 4, 9, 20, 48, 115, 286, 719]
-        count = a000081[level - 1] if level - 1 < len(a000081) else 2**(level-2)
+        # Compute naturals from level below using module-level A000081 constant
+        count = A000081[level - 1] if level - 1 < len(A000081) else A000081[-1]
         naturals = list(range(1, count + 1))
         
         print(f"\n  N({level-1}) = {{{', '.join(map(str, naturals[:min(8, len(naturals))]))}{'...' if len(naturals) > 8 else ''}}}")
@@ -777,8 +781,6 @@ def demonstrate_a000081_offset():
     print("A000081 OFFSET: The Two Leading 1's")
     print("=" * 80)
     
-    a000081 = [1, 1, 2, 4, 9, 20, 48, 115, 286, 719]
-    
     print("""
 The A000081 sequence counts unlabeled rooted trees:
   1, 1, 2, 4, 9, 20, 48, 115, 286, 719, ...
@@ -812,13 +814,13 @@ Starting at n=3, the prime/composite split manifests:
     ]
     
     cache = {}
-    for n in range(1, min(len(a000081) + 1, 8)):
+    for n in range(1, min(len(A000081), 8)):
         trees = bags(n, cache)
         tree_preview = ', '.join(t[1] for t in trees[:2])
         if len(trees) > 2:
             tree_preview += ', ...'
         interp = interpretations[n - 1] if n <= len(interpretations) else ""
-        print(f"{n:3} | {a000081[n-1]:10} | {tree_preview:30} | {interp}")
+        print(f"{n:3} | {A000081[n]:10} | {tree_preview:30} | {interp}")
     
     print("\n" + "─" * 60)
     print("KEY INSIGHT: The offset by 1 means:")
@@ -867,15 +869,13 @@ THE UNIVERSAL ARCHETYPAL PATTERN:
     print(f"\n{'Level':>6} | {'N(n-1)':>8} | {'Primes P(n)':>20} | {'Composites C(n)':>20}")
     print("─" * 60)
     
-    a000081 = [1, 1, 2, 4, 9, 20, 48]
-    
     for n in range(1, 7):
         if n == 1:
             print(f"{n:>6} | {'∅':>8} | {'—':>20} | {'—':>20}")
             continue
         
-        # Count of naturals from level below
-        count = a000081[n - 2] if n >= 2 else 1
+        # Count of naturals from level below using module-level A000081
+        count = A000081[n - 1] if n - 1 < len(A000081) else A000081[-1]
         naturals = list(range(1, count + 1))
         
         # Primes

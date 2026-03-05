@@ -119,6 +119,8 @@ Comprehensive documents connecting all levels:
 - `tree_to_lisp_mapping.md` - Mapping between trees and Lisp primitives
 - `bag_chain_analysis.md` - Analysis of the bag chain algorithm
 - `demonstrate_connection.py` - Python verification of A000081 connection
+- `matula_numbers.py` - Matula number bijection implementation and analysis
+- `matula_prime_patterns.md` - Comprehensive analysis of Matula prime patterns and cognitive grammar
 
 ## Key Insights
 
@@ -142,6 +144,32 @@ n=10: 719 trees [Ternary Duality: Duality × Duality × Duality]
 The number of trees at each level follows the sequence: 1, 1, 2, 4, 9, 20, 48, 115, 286, 719...
 
 This sequence represents the **exponential growth of computational expressiveness** as structures recursively compose.
+
+### The Matula Number Bijection
+
+Each rooted tree has a unique **Matula number**—a bijection between positive integers and rooted trees:
+- Matula(1) = single-node tree `()`
+- For a tree with children m₁, m₂, ..., mₖ: Matula = p(m₁) × p(m₂) × ... × p(mₖ)
+
+#### Twin Mirror Pattern
+At each order n, Matula numbers split into:
+- **Primes**: New structural primitives (genuinely novel tree shapes)
+- **Doubles**: Products with factor 2 (extensions of n-1 structures)
+
+```
+n=2: {2}
+n=3: {3}       | {2²}
+n=4: {5,7}     | {2×3, 2³}
+n=5: {11,13,17,19} | {2×5, 2×7, 2²×3, 2⁴} | {3²}
+n=6: {23,29,31,37,41,43,53,59,67} | doubles... | {3×5, 3×7}
+```
+
+#### Self-Similar Enumeration
+The number of NEW primes at order n follows the A000081 sequence offset:
+- n=3: 1 new prime (3)
+- n=4: 2 new primes (5, 7)
+- n=5: 4 new primes (11, 13, 17, 19)
+- n=6: 9 new primes (23, 29, 31, 37, 41, 43, 53, 59, 67)
 
 ### The Four Generative Operations
 
@@ -186,6 +214,7 @@ All complex Lisp programs are built by recursively combining these two primordia
 ## References
 
 - [OEIS A000081](https://oeis.org/A000081) - Number of unlabeled rooted trees with n nodes
+- [OEIS A061773](https://oeis.org/A061773) - Matula numbers for rooted trees
 - G. Spencer-Brown, *Laws of Form* - The calculus of distinction
 - RosettaCog Repository - Multi-language implementations
 

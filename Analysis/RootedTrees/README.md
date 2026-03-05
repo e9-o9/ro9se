@@ -173,6 +173,35 @@ New Matula primes at each order represent genuinely novel tree structures:
 
 The self-similar pattern: primes at order n become factors in products at orders n+1, n+2, etc.
 
+#### Index Grammar vs Attribute Grammar
+Natural numbers enumerate through the prime/composite split:
+
+```
+N(n-1) → {P(n) | C(n)}
+
+Where:
+  P(n) = p_{N(n-1)} = the N(n-1)th prime (INDEX GRAMMAR)
+  C(n) = 2*N(n-1) = doubles (ATTRIBUTE GRAMMAR)
+```
+
+The pattern unfolds:
+```
+{p₁=c₁=2} → {p₂=3|c₂=4} → {{p₃=5,p₄=7}|{c₃=6,c₄=8}} → ...
+```
+
+**Index Grammars (Primes)**: Point directly to child subtree structure
+**Attribute Grammars (Composites)**: Describe properties of children via factorization
+
+#### The Two Leading 1's
+The sequence A000081: **1, 1**, 2, 4, 9, 20, 48, ... has two leading 1's because:
+- n=1: ATOM `()` — primordial unity, no structure yet
+- n=2: CONTAINER `(())` — first distinction, unique form
+
+The prime/composite split becomes visible starting at n=3.
+
+#### Ancestral Lineage
+Every branch remembers its roots as the nested seed of its ancestral lineage embedded within its own self-image. Each natural is a composition of a rooted tree child with prime index grammar to its rooted forest parents with composite attribute grammars for their children.
+
 ### The Four Generative Operations
 
 1. **Deepen**: Add a node inside the deepest nesting (increases depth)

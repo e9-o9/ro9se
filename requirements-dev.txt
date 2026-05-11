@@ -11,6 +11,7 @@ flake8>=6.0
 mypy>=1.0
 
 # Testing extras
+pytest>=8.0
 pytest-xdist>=3.0  # Parallel test execution
 pytest-timeout>=2.0  # Test timeouts
 

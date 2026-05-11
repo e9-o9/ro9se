@@ -9,6 +9,7 @@ Usage:
     opencog-bindgen --lang <language> --component <component> --output <dir>
     opencog-bindgen --auto-complete
     opencog-bindgen --list-missing
+    opencog-bindgen --coverage-json
 """
 
 import argparse
@@ -113,26 +114,52 @@ def get_existing_implementations() -> Dict[str, Set[str]]:
     return implementations
 
 
-def list_missing_implementations():
-    """List missing language implementations."""
+def get_all_implementation_languages(implementations: Dict[str, Set[str]]) -> Set[str]:
+    """Return every language implemented by at least one OpenCog component."""
+    all_languages: Set[str] = set()
+    for languages in implementations.values():
+        all_languages.update(languages)
+    return all_languages
+
+
+def get_coverage_report() -> Dict[str, object]:
+    """Build a parity report for cogutil, atomspace, and cogserver bindings."""
     implementations = get_existing_implementations()
+    all_languages = get_all_implementation_languages(implementations)
+    return {
+        "components": {
+            component: sorted(implementations[component])
+            for component in COMPONENTS
+        },
+        "all_languages": sorted(all_languages),
+        "missing": {
+            component: sorted(all_languages - implementations[component])
+            for component in COMPONENTS
+        },
+    }
+
+
+def list_missing_implementations():
+    """List missing language implementations across the full language union."""
+    report = get_coverage_report()
     
     print("=== Missing Language Implementations ===\n")
     
     for component in COMPONENTS:
         print(f"{component}:")
-        existing = implementations[component]
-        
-        # Get all languages from cogutil as reference
-        all_langs = implementations["cogutil"]
-        missing = all_langs - existing
+        missing = report["missing"][component]
         
         if missing:
-            for lang in sorted(missing):
+            for lang in missing:
                 print(f"  - {lang}")
         else:
             print("  (complete)")
         print()
+
+
+def print_coverage_json():
+    """Print the OpenCog component-language coverage report as JSON."""
+    print(json.dumps(get_coverage_report(), indent=2, sort_keys=True))
 
 
 def generate_template(lang: str, component: str, output_dir: Path):
@@ -424,25 +451,30 @@ def generate_prolog_template(component: str, main_file: Path, test_file: Path,
 
 
 def auto_complete():
-    """Automatically generate missing implementations."""
+    """Automatically generate missing implementations supported by this generator."""
     implementations = get_existing_implementations()
     repo_root = get_repo_root()
+    all_langs = get_all_implementation_languages(implementations)
+    generated = 0
+    skipped = 0
     
     print("=== Auto-generating Missing Implementations ===\n")
     
-    # Use cogutil languages as reference
-    all_langs = implementations["cogutil"]
-    
-    for component in ["atomspace", "cogserver"]:
+    for component in COMPONENTS:
         existing = implementations[component]
         missing = all_langs - existing
         
         for lang in sorted(missing):
-            output_dir = repo_root / "Repo" / "opencog" / component / lang.title()
+            if lang not in LANGUAGES:
+                print(f"Skipping {lang} for {component}: no generator template is registered")
+                skipped += 1
+                continue
+            output_dir = repo_root / "Repo" / "opencog" / component / lang.capitalize()
             print(f"Generating {lang} for {component}...")
-            generate_template(lang, component, output_dir)
+            if generate_template(lang, component, output_dir):
+                generated += 1
     
-    print("\n✓ Auto-generation complete!")
+    print(f"\n✓ Auto-generation complete! generated={generated} skipped={skipped}")
 
 
 def main():
@@ -457,11 +489,15 @@ def main():
                        help="List missing implementations")
     parser.add_argument("--auto-complete", action="store_true",
                        help="Auto-generate all missing implementations")
+    parser.add_argument("--coverage-json", action="store_true",
+                       help="Print component-language coverage as JSON")
     
     args = parser.parse_args()
     
     if args.list_missing:
         list_missing_implementations()
+    elif args.coverage_json:
+        print_coverage_json()
     elif args.auto_complete:
         auto_complete()
     elif args.lang and args.component and args.output:

@@ -1,0 +1,70 @@
+name: polyglot-ksm
+version: 1.0.0
+type: hyper-skill-spellbook
+status: active
+summary: >-
+  Evolves RO9SE's polyglot OpenCog integration by sensing component-language
+  coverage, selecting weak integration centers, applying concrete bindings,
+  validating invariants, and recording reusable transformation patterns.
+components:
+  - cogutil
+  - atomspace
+  - cogserver
+invariants:
+  - id: language-union-parity
+    statement: Component-language parity is computed from the union of all languages implemented by any OpenCog core component.
+    validation: opencog/bin/opencog-bindgen --coverage-json
+  - id: no-placeholder-bindings
+    statement: A binding must expose executable predicates, functions, commands, or types, not only comments or TODOs.
+    validation: make validate
+  - id: machine-readable-state
+    statement: Coverage state is available as JSON for CI and downstream agents.
+    validation: opencog/bin/opencog-bindgen --coverage-json
+spells:
+  - id: coverage-parity
+    objective: Ensure cogutil, atomspace, and cogserver each cover the full OpenCog language union.
+    inputs:
+      - Repo/opencog/cogutil
+      - Repo/opencog/atomspace
+      - Repo/opencog/cogserver
+    commands:
+      - opencog/bin/opencog-bindgen --coverage-json
+      - opencog/bin/opencog-bindgen --list-missing
+    success:
+      missing_arrays_empty: true
+  - id: language-union-propagation
+    objective: Propagate new component languages across all core components or explicitly skip unsupported generator templates.
+    inputs:
+      - opencog/bin/opencog-bindgen
+      - Repo/opencog
+    commands:
+      - opencog/bin/opencog-bindgen --auto-complete
+    success:
+      generated_or_skipped_reported: true
+  - id: interface-crystallization
+    objective: Align language bindings to shared cogutil, atomspace, and cogserver interface contracts.
+    inputs:
+      - OPENCOG_INTEGRATION_DESIGN.md
+      - Repo/opencog
+    commands:
+      - make validate
+    success:
+      validation_passes: true
+  - id: repair-and-seal
+    objective: Fix a failing repository invariant and add a regression test that prevents recurrence.
+    inputs:
+      - failing_command_log
+      - affected_source_files
+    commands:
+      - python3.11 -m pytest -q tests/unit
+    success:
+      regression_test_added: true
+      tests_pass: true
+composition:
+  additive: Languages ⊕ Tasks ⊕ Components ⊕ Agents
+  multiplicative: cogutil ⊗ atomspace ⊗ cogserver
+  cycle: sense -> select -> transform -> validate -> record
+agi_os_mapping:
+  b9: cogutil and low-level language organs
+  p9: atomspace as queryable cognitive namespace
+  j9: cogserver as orchestration and agent dispatch

@@ -1,0 +1,88 @@
+% Continuum Computing Primitives in GNU Octave
+% Score: 0.80 - EXCELLENT for spectral/tensor operations
+
+% === BIND: Spectral Entanglement (Kronecker Product) ===
+% A ⊗ B creates composite state from independent states
+function result = bind(a, b)
+    result = kron(a, b);
+endfunction
+
+% === ROUTE: Phase Rotation ===
+% e^(iθ) transforms state addressing/path  
+function result = route(psi, theta)
+    result = exp(i * theta) * psi;
+endfunction
+
+% Route with matrix phase (Hamiltonian evolution)
+function result = route_matrix(psi, H, t)
+    result = expm(i * H * t) * psi;
+endfunction
+
+% === COMPUTE: Convolution as Transformation ===
+% Signal processing via kernel application
+function result = compute_conv(signal, kernel)
+    result = conv(signal, kernel);
+endfunction
+
+% === DECIDE: Resonance Readout ===
+% argmax_k |⟨Ψ, Φ_k⟩| - maximum correlation selection
+function correlation = inner_product(psi, phi)
+    correlation = abs(conj(phi) * psi');
+endfunction
+
+function [choice, confidence] = decide(psi, basis_vectors)
+    n = rows(basis_vectors);
+    correlations = zeros(1, n);
+    for k = 1:n
+        correlations(k) = inner_product(psi, basis_vectors(k, :));
+    endfor
+    [confidence, choice] = max(correlations);
+    choice = choice - 1;  % 0-indexed basis selection
+endfunction
+
+% ============================================
+% TEST CASES
+% ============================================
+
+printf("=== Continuum Computing Primitives (Octave) ===\n\n");
+
+% Bind Test
+printf("BIND (Kronecker/Tensor Product):\n");
+a = [1, 0];
+b = [1, 0];
+result = bind(a, b);
+printf("  |0⟩ ⊗ |0⟩ = [%s] (Bell basis |00⟩)\n", num2str(result));
+printf("  [1,0] ⊗ [1,0] → [1,0,0,0]\n\n");
+
+% Route Test
+printf("ROUTE (Phase Rotation):\n");
+psi = [1, 0];
+theta = pi/2;
+routed = route(psi, theta);
+printf("  e^(iπ/2) |0⟩ = [%s]\n", num2str(routed));
+printf("  Phase rotation by 90°: real → imaginary axis\n\n");
+
+% Compute Test
+printf("COMPUTE (Convolution):\n");
+signal = [1, 2, 3, 4];
+kernel = [1, 0, -1];
+conv_result = compute_conv(signal, kernel);
+printf("  [1,2,3,4] * [1,0,-1] = [%s]\n", num2str(conv_result));
+printf("  Edge detection via difference kernel\n\n");
+
+% Decide Test
+printf("DECIDE (Resonance Readout):\n");
+psi_superpos = [1/sqrt(2), 1/sqrt(2)];
+basis = [1, 0; 0, 1];  % Computational basis
+[choice, confidence] = decide(psi_superpos, basis);
+printf("  Ψ = |+⟩ = (|0⟩ + |1⟩)/√2\n");
+printf("  ⟨Ψ|0⟩ = ⟨Ψ|1⟩ = %f\n", 1/sqrt(2));
+printf("  Selected basis: |%d⟩ (tie-break)\n\n", choice);
+
+% Advanced: Quantum-like state evolution
+printf("=== Advanced: Complete Computation Cycle ===\n");
+initial_state = [1, 0];
+entangled = bind(initial_state, [1/sqrt(2), 1/sqrt(2)]);
+evolved = route(entangled, pi/4);
+printf("Initial: |0⟩ → Entangled: |0⟩⊗|+⟩ → Rotated by π/4\n");
+printf("Final state: [%s]\n", num2str(evolved));

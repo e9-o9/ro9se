@@ -1,0 +1,69 @@
+;Task:
+Implement the basic primitives of '''Continuum Computing''' - a computational paradigm
+suited for analog AI, control systems, perception, physical simulation, signal reasoning,
+semantic manifolds, and recursive self-models.
+
+;Core Operations:
+
+1. '''bind''' (⊗): a ⊗ b - Spectral entanglement via Kronecker product coupling.
+   Creates composite states from independent quantum-like states.
+
+2. '''route''' (e^(iθ)): Phase rotation as address/path transformation.
+   Rotates state vectors in complex space to change information routing.
+
+3. '''compute''' (*): a * b - Convolution as transformation.
+   Applies filters/kernels for signal transformation and pattern matching.
+
+4. '''decide''': argmax_k |⟨Ψ, Φ_k⟩| - Readout by resonance against basis patterns.
+   Selects the basis vector with maximum correlation to the state.
+
+;Mathematical Foundation:
+
+* '''Spectral Entanglement (Kronecker/Tensor)''': (A ⊗ B)_{(i-1)q+k, (j-1)s+l} = A_{ij} × B_{kl}
+* '''Phase Rotation''': Ψ' = e^(iθ) Ψ where θ can be a scalar or matrix
+* '''Convolution''': (f * g)[n] = Σ_m f[m] g[n-m]  
+* '''Resonance Decision''': k* = argmax_k |⟨Ψ, Φ_k⟩| = argmax_k |Σ_j Ψ_j × conj(Φ_kj)|
+
+;Test Cases:
+
+'''Bind Test''':
+<pre>
+A = [1, 0]    B = [1, 0]
+A ⊗ B = [1, 0, 0, 0]  (Bell state basis |00⟩)
+</pre>
+
+'''Route Test''':
+<pre>
+Ψ = [1, 0]    θ = π/2
+e^(iθ)Ψ = [i, 0] = [0+i, 0+0i]
+</pre>
+
+'''Compute Test (Convolution)''':
+<pre>
+signal = [1, 2, 3, 4]    kernel = [1, 0, -1]
+signal * kernel = [1, 2, 2, 2, -3, -4] (full convolution)
+</pre>
+
+'''Decide Test''':
+<pre>
+Ψ = [0.707, 0.707]   (equal superposition)
+Φ_0 = [1, 0]         (basis |0⟩)
+Φ_1 = [0, 1]         (basis |1⟩)
+⟨Ψ, Φ_0⟩ = 0.707
+⟨Ψ, Φ_1⟩ = 0.707
+Result: Either 0 or 1 (tie-break by first)
+</pre>
+
+;Architecture Note:
+Suitable for: analog AI, control systems, perception, physical simulation, 
+signal reasoning, semantic manifolds, recursive self-models
+
+Not suitable for: exact accounting, legal contracts, tax forms, 
+anything requiring decimal certainty
+
+;Related Tasks:
+* [[Kronecker_product|Kronecker product]]
+* [[Discrete_Fourier_transform|Discrete Fourier transform]]
+* [[Convolution|Convolution]]
+* [[Matrix_multiplication|Matrix multiplication]]
+<br><br>

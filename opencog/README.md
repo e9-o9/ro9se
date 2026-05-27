@@ -133,6 +133,62 @@ opencog/bin/opencog-neurosymbolic --all --export spectrum.json
 
 See `neuro-symbo.md` for the theoretical framework and `opencog/lib/neurosymbolic_spectrum.py` for implementation.
 
+## Continuum Computing Analysis (NEW)
+
+OpenCog now includes **continuum computing analysis** that evaluates languages for their suitability in continuum computing - a paradigm shift from discrete bit-based computation to spectral/harmonic field-based computation:
+
+### Paradigm Shift
+
+Instead of:
+```
+bits → gates → clock steps → memory cells
+```
+
+Continuum computing uses:
+```
+spectral fields → harmonic coupling → phase transport → attractor stabilization
+```
+
+### Features
+
+1. **Spectral Bit-Band Model**
+   - A "bit" is not 0/1 but a spectral packet B_i(ω, φ, A) with frequency, phase, amplitude, bandwidth, and coherence
+   - Machine state is a signal field Ψ(t) = Σ_i A_i(t)sin(ω_i t + φ_i(t))
+   - Computation is shaping a spectrum until the desired attractor resonates
+
+2. **Language Suitability Analysis**
+   - Evaluates 8 features: signal processing, spectral computation, bulk transformations, continuous evaluation, attractor semantics, phase operations, resonance matching, convolution support
+   - Classifies languages from IDEAL to UNSUITABLE for continuum computing
+   - Top languages: Julia, Mathematica, MATLAB, J, APL, R, Python
+
+3. **Architecture Mapping**
+   - Spectral Memory Field - stores harmonic attractors
+   - Gauge/Phase Transport Layer - preserves coherence
+   - Harmonic Operator Fabric - convolution, interference, resonance
+   - Attractor/Fixed-Point Layer - output stabilization
+   - Readout/Quantization Layer - collapse to discrete symbols
+
+### Quick Start
+
+```python
+from opencog.lib.continuum_computing import ContinuumComputingAnalyzer, ContinuumDomain
+
+analyzer = ContinuumComputingAnalyzer('.')
+
+# Analyze a language
+profile = analyzer.analyze_language('Julia')
+print(f"{profile.language}: {profile.suitability.value}")
+
+# Get top languages
+for lang, score in analyzer.get_top_languages(10):
+    print(f"{lang}: {score:.2f}")
+
+# Get recommended languages for a domain
+recommended = analyzer.get_recommended_languages(ContinuumDomain.SPECTRAL_MEMORY)
+```
+
+See `opencog/CONTINUUM_COMPUTING.md` for full documentation and `opencog/lib/continuum_computing.py` for implementation.
+
 ## Inferno Cognitive Kernel (NEW)
 
 OpenCog now includes a **revolutionary pure Inferno kernel-based distributed AGI operating system**:

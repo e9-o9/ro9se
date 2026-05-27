@@ -1,0 +1,25 @@
+name: Continuum-Computing-Primitives
+categories:
+  - Machine Learning
+  - Signal Processing
+  - Mathematics
+  - Quantum Computing
+  - Pattern Recognition
+difficulty: advanced
+description: |
+  Implements the four core primitives of Continuum Computing:
+  bind (spectral entanglement), route (phase rotation),
+  compute (convolution), and decide (resonance readout).
+keywords:
+  - kronecker
+  - tensor product
+  - convolution
+  - phase rotation
+  - quantum
+  - resonance
+  - spectral
+related_tasks:
+  - Kronecker-product
+  - Discrete-Fourier-transform
+  - Convolution
+  - Matrix-multiplication

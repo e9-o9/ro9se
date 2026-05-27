@@ -121,6 +121,7 @@ Comprehensive documents connecting all levels:
 - `demonstrate_connection.py` - Python verification of A000081 connection
 - `matula_numbers.py` - Matula number bijection implementation and analysis
 - `matula_prime_patterns.md` - Comprehensive analysis of Matula prime patterns and cognitive grammar
+- `projective_nesting_dialectics.md` - **NEW**: Shells as hypervisors, nesting as projective operators, change-within-change dialectics
 
 ## Key Insights
 
@@ -138,6 +139,17 @@ n=8: 115 trees  [Complete Vocabulary: Full cross-level matrix]
 n=9: 286 trees  [Quaternary Breakthrough: Vocabulary self-pairing, 4-way symmetric]
 n=10: 719 trees [Ternary Duality: Duality × Duality × Duality]
 ```
+
+### Nesting as Projective Operator (NEW)
+
+The insight that **nesting is projective** connects:
+
+1. **Shells as Hypervisors**: Each `()` pair defines an "arenic execution context" — the enclosed agent is the executor
+2. **Nautilus Principle**: `((change)change)` — change-within-change as meta-transformation  
+3. **Multi-Tenancy Scoping**: `((project)org)global` — projective dimensionality through containment
+4. **Branching as Differential**: Branching IS the differential field within an integral nest
+
+This principle explains why Lisp can "hypervisor the hell out of anything" using `((this)that)` nesting — the cheapest container is also the deepest.
 
 ### The OEIS A000081 Sequence
 
